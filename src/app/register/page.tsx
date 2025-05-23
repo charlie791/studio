@@ -45,7 +45,6 @@ export default function CreateAccountPage() {
 
   useEffect(() => {
     if (authInitializationError) {
-      // console.error("Firebase Initialization Error on Page Load:", authInitializationError); // Intentionally commented out as per previous request
       let errorMessage = "Firebase services could not be initialized. Please contact support.";
       if (authInitializationError.message.includes("auth/invalid-api-key") || 
           authInitializationError.message.includes("Firebase: Error (auth/invalid-api-key)") ||
@@ -56,7 +55,7 @@ export default function CreateAccountPage() {
         title: 'Firebase Initialization Failed',
         description: errorMessage,
         variant: 'destructive',
-        duration: Infinity, // Keep toast visible until dismissed
+        duration: Infinity, 
       });
     }
   }, []);
@@ -80,9 +79,9 @@ export default function CreateAccountPage() {
 
       toast({
         title: 'Account Created!',
-        description: `Welcome, ${data.fullName}! Your account has been successfully created.`,
+        description: `Welcome, ${data.fullName}! Please provide your home details next.`,
       });
-      router.push('/warranty'); 
+      router.push('/register/home-details'); 
     } catch (error: any) {
       console.error("Firebase Auth Error on submit:", error);
       let errorMessage = 'Failed to create account. Please try again.';
@@ -203,3 +202,4 @@ export default function CreateAccountPage() {
     </div>
   );
 }
+

@@ -19,6 +19,14 @@ export interface CreateAccountData {
   password: string;
 }
 
+export interface HomeWarrantyInfoData {
+  streetAddress: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  phoneNumber: string;
+}
+
 export interface LoginData {
   email: string;
   password: string;
@@ -38,3 +46,4 @@ export interface CheckoutData {
   expiryDate: string;
   cvc: string;
 }
+

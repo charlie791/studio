@@ -1,0 +1,175 @@
+
+'use client';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Loader2, Home, MapPin, Phone, ArrowRight, HomeIcon } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import type { HomeWarrantyInfoData } from '@/lib/types';
+import ClientOnly from '@/components/client-only';
+
+const homeWarrantyInfoFormSchema = z.object({
+  streetAddress: z.string().min(5, { message: 'Street address must be at least 5 characters.' }),
+  city: z.string().min(2, { message: 'City must be at least 2 characters.' }),
+  state: z.string().min(2, { message: 'State must be at least 2 characters (e.g., CA).' }),
+  zipCode: z.string().regex(/^\d{5}(-\d{4})?$/, { message: 'Please enter a valid ZIP code (e.g., 12345 or 12345-6789).' }),
+  phoneNumber: z.string().regex(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/, { message: 'Please enter a valid 10-digit phone number.' }),
+});
+
+export default function HomeDetailsPage() {
+  const router = useRouter();
+  const { toast } = useToast();
+  const form = useForm<HomeWarrantyInfoData>({
+    resolver: zodResolver(homeWarrantyInfoFormSchema),
+    defaultValues: {
+      streetAddress: '',
+      city: '',
+      state: '',
+      zipCode: '',
+      phoneNumber: '',
+    },
+  });
+
+  async function onSubmit(data: HomeWarrantyInfoData) {
+    // Simulate saving data - In a real app, you'd save this to Firestore or your backend
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    console.log('Home Warranty Info:', data);
+    toast({
+      title: 'Home Information Saved!',
+      description: 'You can now proceed to select your warranty plan.',
+    });
+    router.push('/warranty');
+  }
+
+  const ClientFallback = (
+    <div className="flex justify-center items-center py-10">
+      <Loader2 className="h-8 w-8 animate-spin text-primary" />
+    </div>
+  );
+
+  return (
+    <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden p-4">
+      <Card className="w-full max-w-lg bg-card/90 backdrop-blur-sm shadow-2xl rounded-xl p-2 sm:p-4 md:p-6">
+        <CardHeader className="text-center items-center pt-6 px-6 pb-4">
+          <Home className="h-10 w-10 text-primary mb-3" />
+          <CardTitle className="text-3xl font-bold text-primary">Warranty Your Home</CardTitle>
+          <CardDescription className="text-muted-foreground mt-2 text-sm">
+            Fill out the information below to bind the warranty to your property.
+          </CardDescription>
+        </CardHeader>
+        <ClientOnly fallback={ClientFallback}>
+          <CardContent className="px-6 pb-6 pt-4">
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="streetAddress"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Street Address</FormLabel>
+                      <div className="relative flex items-center">
+                        <MapPin className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+                        <FormControl>
+                          <Input placeholder="e.g., 123 Main St" {...field} className="pl-10" />
+                        </FormControl>
+                      </div>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="city"
+                    render={({ field }) => (
+                      <FormItem className="sm:col-span-1">
+                        <FormLabel>City</FormLabel>
+                        <FormControl>
+                          <Input placeholder="e.g., Anytown" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="state"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>State</FormLabel>
+                        <FormControl>
+                          <Input placeholder="e.g., CA" {...field} maxLength={2} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="zipCode"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>ZIP Code</FormLabel>
+                        <FormControl>
+                          <Input placeholder="e.g., 90210" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <FormField
+                  control={form.control}
+                  name="phoneNumber"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Phone Number</FormLabel>
+                      <div className="relative flex items-center">
+                        <Phone className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+                        <FormControl>
+                          <Input type="tel" placeholder="e.g., (555) 123-4567" {...field} className="pl-10" />
+                        </FormControl>
+                      </div>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground py-3 text-base" disabled={form.formState.isSubmitting}>
+                  {form.formState.isSubmitting ? (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  ) : (
+                    <ArrowRight className="mr-2 h-4 w-4" />
+                  )}
+                  Save and Continue
+                </Button>
+              </form>
+            </Form>
+          </CardContent>
+          <CardFooter className="flex flex-col items-center justify-center px-6 pb-6 pt-2 space-y-3">
+            <Button variant="link" asChild className="text-sm text-muted-foreground hover:text-accent p-0 h-auto">
+                <Link href="/">
+                    <HomeIcon className="mr-1 h-4 w-4" />
+                    Return to Home
+                </Link>
+            </Button>
+          </CardFooter>
+        </ClientOnly>
+      </Card>
+    </div>
+  );
+}
+
