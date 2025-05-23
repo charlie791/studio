@@ -18,7 +18,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Loader2, Home, MapPin, Phone, ArrowRight, HomeIcon } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
+// Removed useToast import as it's no longer used
 import type { HomeWarrantyInfoData } from '@/lib/types';
 import ClientOnly from '@/components/client-only';
 
@@ -32,7 +32,7 @@ const homeWarrantyInfoFormSchema = z.object({
 
 export default function HomeDetailsPage() {
   const router = useRouter();
-  const { toast } = useToast();
+  // Removed toast from useToast()
   const form = useForm<HomeWarrantyInfoData>({
     resolver: zodResolver(homeWarrantyInfoFormSchema),
     defaultValues: {
@@ -48,11 +48,8 @@ export default function HomeDetailsPage() {
     // Simulate saving data - In a real app, you'd save this to Firestore or your backend
     await new Promise(resolve => setTimeout(resolve, 1000));
     console.log('Home Warranty Info:', data);
-    toast({
-      title: 'Home Information Saved!',
-      description: 'You can now proceed to select your warranty plan.',
-    });
-    router.push('/warranty');
+    // Removed toast message
+    router.push('/register/processing'); // Redirect to the new processing page
   }
 
   const ClientFallback = (
@@ -172,4 +169,3 @@ export default function HomeDetailsPage() {
     </div>
   );
 }
-
