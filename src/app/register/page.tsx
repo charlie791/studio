@@ -1,6 +1,7 @@
 
 'use client';
 
+import Image from 'next/image'; // Added import
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -115,6 +116,15 @@ export default function CreateAccountPage() {
 
   return (
     <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden p-4">
+      <Image
+        src="https://igscountertops.b-cdn.net/kitchencabinets.now%20assets/Cabiets%20assets/ELITECRAFT%20Imperial%20Blue/imperial-blue-main-gallery-image-1.jpg"
+        alt="Modern kitchen background"
+        layout="fill"
+        objectFit="cover"
+        className="-z-10 filter brightness-75"
+        data-ai-hint="kitchen cabinets"
+        priority={false}
+      />
       <Card className="w-full max-w-md bg-card/90 backdrop-blur-sm shadow-2xl rounded-xl p-2 sm:p-4 md:p-6">
         <CardHeader className="text-center items-center pt-6 px-6 pb-4">
           <CardTitle className="text-3xl font-bold text-primary">Create Your Account</CardTitle>
