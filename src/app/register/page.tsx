@@ -23,6 +23,7 @@ import type { CreateAccountData } from '@/lib/types';
 import { authInitializationError, getFirebaseAuthInstance } from '@/lib/firebase'; // Firebase auth instance
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useEffect } from 'react';
+import ClientOnly from '@/components/client-only';
 
 const createAccountFormSchema = z.object({
   fullName: z.string().min(2, { message: 'Full name must be at least 2 characters.' }),
@@ -44,7 +45,7 @@ export default function CreateAccountPage() {
 
   useEffect(() => {
     if (authInitializationError) {
-      console.error("Firebase Initialization Error on Page Load:", authInitializationError);
+      // console.error("Firebase Initialization Error on Page Load:", authInitializationError); // Intentionally commented out as per previous request
       let errorMessage = "Firebase services could not be initialized. Please contact support.";
       if (authInitializationError.message.includes("auth/invalid-api-key") || 
           authInitializationError.message.includes("Firebase: Error (auth/invalid-api-key)") ||
@@ -107,6 +108,12 @@ export default function CreateAccountPage() {
     }
   }
 
+  const ClientFallback = (
+    <div className="flex justify-center items-center py-10">
+      <Loader2 className="h-8 w-8 animate-spin text-primary" />
+    </div>
+  );
+
   return (
     <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden p-4">
       <Card className="w-full max-w-md bg-card/90 backdrop-blur-sm shadow-2xl rounded-xl p-2 sm:p-4 md:p-6">
@@ -116,80 +123,82 @@ export default function CreateAccountPage() {
             Quickly create your account and start protecting your home investments. It only takes a few minutes!
           </CardDescription>
         </CardHeader>
-        <CardContent className="px-6 pb-6 pt-4">
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              <FormField
-                control={form.control}
-                name="fullName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Full Name</FormLabel>
-                    <div className="relative flex items-center">
-                      <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
-                      <FormControl>
-                        <Input placeholder="e.g. Jane Doe" {...field} className="pl-10" />
-                      </FormControl>
-                    </div>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email Address</FormLabel>
-                     <div className="relative flex items-center">
-                      <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
-                      <FormControl>
-                        <Input type="email" placeholder="e.g. jane.doe@example.com" {...field} className="pl-10" />
-                      </FormControl>
-                    </div>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                     <div className="relative flex items-center">
-                      <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
-                      <FormControl>
-                        <Input type="password" placeholder="••••••••" {...field} className="pl-10" />
-                      </FormControl>
-                    </div>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground py-3 text-base" disabled={form.formState.isSubmitting || !!authInitializationError}>
-                {form.formState.isSubmitting ? (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                ) : null}
-                Sign Up
+        <ClientOnly fallback={ClientFallback}>
+          <CardContent className="px-6 pb-6 pt-4">
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="fullName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Full Name</FormLabel>
+                      <div className="relative flex items-center">
+                        <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+                        <FormControl>
+                          <Input placeholder="e.g. Jane Doe" {...field} className="pl-10" />
+                        </FormControl>
+                      </div>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email Address</FormLabel>
+                       <div className="relative flex items-center">
+                        <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+                        <FormControl>
+                          <Input type="email" placeholder="e.g. jane.doe@example.com" {...field} className="pl-10" />
+                        </FormControl>
+                      </div>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Password</FormLabel>
+                       <div className="relative flex items-center">
+                        <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+                        <FormControl>
+                          <Input type="password" placeholder="••••••••" {...field} className="pl-10" />
+                        </FormControl>
+                      </div>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground py-3 text-base" disabled={form.formState.isSubmitting || !!authInitializationError}>
+                  {form.formState.isSubmitting ? (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  ) : null}
+                  Sign Up
+                </Button>
+              </form>
+            </Form>
+          </CardContent>
+          <CardFooter className="flex flex-col items-center justify-center px-6 pb-6 pt-2 space-y-3">
+              <p className="text-sm text-muted-foreground text-center">
+                  Already have an account?{' '}
+                  <Link href="/login" className="font-semibold text-accent hover:underline">
+                    Log in
+                  </Link>
+              </p>
+              <Button variant="link" asChild className="text-sm text-muted-foreground hover:text-accent p-0 h-auto">
+                  <Link href="/">
+                      <HomeIcon className="mr-1 h-4 w-4" />
+                      Return to Home
+                  </Link>
               </Button>
-            </form>
-          </Form>
-        </CardContent>
-        <CardFooter className="flex flex-col items-center justify-center px-6 pb-6 pt-2 space-y-3">
-            <p className="text-sm text-muted-foreground text-center">
-                Already have an account?{' '}
-                <Link href="/login" className="font-semibold text-accent hover:underline">
-                  Log in
-                </Link>
-            </p>
-            <Button variant="link" asChild className="text-sm text-muted-foreground hover:text-accent p-0 h-auto">
-                <Link href="/">
-                    <HomeIcon className="mr-1 h-4 w-4" />
-                    Return to Home
-                </Link>
-            </Button>
-        </CardFooter>
+          </CardFooter>
+        </ClientOnly>
       </Card>
     </div>
   );
