@@ -4,13 +4,14 @@ import { Button } from '@/components/ui/button';
 import WarrantyPlanCard from '@/components/warranty-plan-card';
 import type { WarrantyPlan } from '@/lib/types';
 import { ArrowRight, ShieldQuestion } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 
 const warrantyPlansData: WarrantyPlan[] = [
   {
     id: 'core',
     name: 'SurfaceGuard365 – Core',
-    priceMonthly: 74.75, // 299 / 4
-    priceAnnually: 299, // Total one-time charge
+    priceMonthly: 74.75, 
+    priceAnnually: 299, 
     duration: '5-Year Warranty',
     icon: 'Shield',
     features: [
@@ -24,8 +25,8 @@ const warrantyPlansData: WarrantyPlan[] = [
   {
     id: 'total-combo',
     name: 'SurfaceGuard365 – Total Combo Plan',
-    priceMonthly: 149.75, // 599 / 4
-    priceAnnually: 599, // Total one-time charge
+    priceMonthly: 149.75, 
+    priceAnnually: 599, 
     duration: '10-Year Countertop + Cabinet Warranty',
     icon: 'Gem',
     popular: true,
@@ -41,8 +42,8 @@ const warrantyPlansData: WarrantyPlan[] = [
   {
     id: 'extended',
     name: 'SurfaceGuard365 – Extended',
-    priceMonthly: 124.75, // 499 / 4
-    priceAnnually: 499, // Total one-time charge
+    priceMonthly: 124.75, 
+    priceAnnually: 499, 
     duration: '10-Year Warranty',
     icon: 'Zap',
     features: [
@@ -73,19 +74,26 @@ export default function WarrantyPage() {
         ))}
       </div>
 
-      <div className="text-center pt-8 border-t">
-        <h2 className="text-2xl font-semibold mb-3">Not Ready for a Warranty?</h2>
-        <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
-          Explore our limited-time trade-in offer and give your kitchen a fresh new look with brand new countertops.
-        </p>
-        <Button asChild variant="outline" size="lg" className="border-accent text-accent hover:bg-accent/10 hover:text-accent">
-          <Link href="/trade-in">
-            Explore Trade-In Offer
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Link>
-        </Button>
+      <div className="mt-16">
+        <Card className="max-w-2xl mx-auto shadow-xl border-2 border-accent">
+          <CardHeader className="pt-8 text-center">
+            <CardTitle className="text-3xl font-bold text-primary">Not Ready for a Warranty?</CardTitle>
+          </CardHeader>
+          <CardContent className="text-center px-4">
+            <CardDescription className="text-lg text-muted-foreground">
+              Explore our limited-time trade-in offer and give your kitchen a fresh new look with brand new countertops.
+            </CardDescription>
+          </CardContent>
+          <CardFooter className="flex justify-center pt-2 pb-8">
+            <Button asChild variant="outline" size="lg" className="border-accent text-accent hover:bg-accent/10 hover:text-accent">
+              <Link href="/trade-in">
+                Explore Trade-In Offer
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+          </CardFooter>
+        </Card>
       </div>
     </div>
   );
 }
-
