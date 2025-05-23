@@ -1,0 +1,171 @@
+'use client';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Loader2, Tag, Send, ArrowLeft } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import type { TradeInLeadData } from '@/lib/types';
+
+const tradeInFormSchema = z.object({
+  fullName: z.string().min(2, { message: 'Full name must be at least 2 characters.' }),
+  email: z.string().email({ message: 'Please enter a valid email address.' }),
+  phone: z.string().min(10, { message: 'Phone number must be at least 10 digits.' }),
+  currentCountertopMaterial: z.string().optional(),
+  notes: z.string().optional(),
+});
+
+export default function TradeInPage() {
+  const router = useRouter();
+  const { toast } = useToast();
+  const form = useForm<TradeInLeadData>({
+    resolver: zodResolver(tradeInFormSchema),
+    defaultValues: {
+      fullName: '',
+      email: '',
+      phone: '',
+      currentCountertopMaterial: '',
+      notes: '',
+    },
+  });
+
+  async function onSubmit(data: TradeInLeadData) {
+    // Simulate API call for capturing lead
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    console.log('Trade-In Lead Data (Hot Lead!):', data);
+    toast({
+      title: 'Trade-In Offer Claimed!',
+      description: `Thank you, ${data.fullName}. Our sales team will contact you shortly about your trade-in.`,
+      variant: 'default', // Use default variant for a positive message
+    });
+    // Potentially redirect or show further info
+    // router.push('/');
+  }
+
+  return (
+    <div className="flex flex-col items-center justify-center py-8">
+      <Card className="w-full max-w-lg shadow-xl">
+        <CardHeader className="text-center">
+          <Tag className="mx-auto h-12 w-12 text-accent mb-4" />
+          <CardTitle className="text-3xl font-bold text-accent">Exclusive Trade-In Offer!</CardTitle>
+          <CardDescription>
+            Interested in upgrading? Fill out the form below to learn about our special trade-in deals for new countertops.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <FormField
+                control={form.control}
+                name="fullName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Full Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Jane Smith" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email Address</FormLabel>
+                    <FormControl>
+                      <Input type="email" placeholder="jane.smith@example.com" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="phone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Phone Number</FormLabel>
+                    <FormControl>
+                      <Input type="tel" placeholder="(555) 123-4567" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="currentCountertopMaterial"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Current Countertop Material (Optional)</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select material" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="laminate">Laminate</SelectItem>
+                        <SelectItem value="granite">Granite</SelectItem>
+                        <SelectItem value="quartz">Quartz</SelectItem>
+                        <SelectItem value="marble">Marble</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="notes"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Additional Notes (Optional)</FormLabel>
+                    <FormControl>
+                      <Textarea placeholder="Tell us more about your project or current countertops..." {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" disabled={form.formState.isSubmitting}>
+                {form.formState.isSubmitting ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <Send className="mr-2 h-4 w-4" />
+                )}
+                Claim My Offer
+              </Button>
+            </form>
+          </Form>
+        </CardContent>
+        <CardFooter className="flex justify-center">
+          <Button variant="link" asChild>
+            <Link href="/warranty" className="text-sm">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Warranty Plans
+            </Link>
+          </Button>
+        </CardFooter>
+      </Card>
+    </div>
+  );
+}
