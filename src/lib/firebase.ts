@@ -1,5 +1,6 @@
-import { initializeApp, getApp, getApps } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+
+import { initializeApp, getApp, getApps, type FirebaseApp } from 'firebase/app';
+import { getAuth, type Auth } from 'firebase/auth';
 
 // IMPORTANT: Replace with your actual Firebase project configuration
 // These can be found in your Firebase project settings.
@@ -13,14 +14,37 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-// Initialize Firebase
-let app;
-if (!getApps().length) {
-  app = initializeApp(firebaseConfig);
+let app: FirebaseApp | undefined;
+let authInstance: Auth | undefined;
+let authInitializationError: Error | null = null;
+
+if (!firebaseConfig.apiKey) {
+  authInitializationError = new Error(
+    'Firebase API Key (NEXT_PUBLIC_FIREBASE_API_KEY) is not set in environment variables. Firebase cannot be initialized.'
+  );
+  console.error(authInitializationError.message);
 } else {
-  app = getApp();
+  try {
+    if (!getApps().length) {
+      app = initializeApp(firebaseConfig);
+    } else {
+      app = getApp();
+    }
+    authInstance = getAuth(app);
+  } catch (error) {
+    console.error('Firebase initialization failed:', error);
+    authInitializationError = error instanceof Error ? error : new Error(String(error));
+  }
 }
 
-const auth = getAuth(app);
+export function getFirebaseAuthInstance(): Auth {
+  if (authInitializationError) {
+    throw authInitializationError;
+  }
+  if (!authInstance) {
+    throw new Error('Firebase Auth is not available. Initialization may have failed or API key is missing.');
+  }
+  return authInstance;
+}
 
-export { app, auth };
+export { app, authInitializationError };
