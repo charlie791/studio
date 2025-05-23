@@ -63,9 +63,9 @@ export default function HomeDetailsPage() {
       <Card className="w-full max-w-lg bg-card/90 backdrop-blur-sm shadow-2xl rounded-xl p-2 sm:p-4 md:p-6">
         <CardHeader className="text-center items-center pt-6 px-6 pb-4">
           <Home className="h-10 w-10 text-primary mb-3" />
-          <CardTitle className="text-3xl font-bold text-primary">Warranty Your Home</CardTitle>
+          <CardTitle className="text-3xl font-bold text-primary">You’re Almost Protected</CardTitle>
           <CardDescription className="text-muted-foreground mt-2 text-sm">
-            Fill out the information below to bind the warranty to your property.
+            Add your address to lock in your coverage eligibility — only available for a limited time after move-in.
           </CardDescription>
         </CardHeader>
         <ClientOnly fallback={ClientFallback}>
