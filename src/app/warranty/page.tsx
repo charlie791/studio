@@ -3,15 +3,15 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import WarrantyPlanCard from '@/components/warranty-plan-card';
 import type { WarrantyPlan } from '@/lib/types';
-import { ArrowRight, ShieldQuestion } from 'lucide-react';
+import { ArrowRight, ShieldQuestion, Gem, Shield, Zap } from 'lucide-react'; // Removed Gem, Shield, Zap as they are handled by the card
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 
 const warrantyPlansData: WarrantyPlan[] = [
   {
     id: 'core',
     name: 'SurfaceGuard365 – Core',
-    priceMonthly: 74.75, 
-    priceAnnually: 299, 
+    priceMonthly: 74.75,
+    priceAnnually: 299,
     duration: '5-Year Warranty',
     icon: 'Shield',
     features: [
@@ -25,8 +25,8 @@ const warrantyPlansData: WarrantyPlan[] = [
   {
     id: 'total-combo',
     name: 'SurfaceGuard365 – Total Combo Plan',
-    priceMonthly: 149.75, 
-    priceAnnually: 599, 
+    priceMonthly: 149.75,
+    priceAnnually: 599,
     duration: '10-Year Countertop + Cabinet Warranty',
     icon: 'Gem',
     popular: true,
@@ -42,8 +42,8 @@ const warrantyPlansData: WarrantyPlan[] = [
   {
     id: 'extended',
     name: 'SurfaceGuard365 – Extended',
-    priceMonthly: 124.75, 
-    priceAnnually: 499, 
+    priceMonthly: 124.75,
+    priceAnnually: 499,
     duration: '10-Year Warranty',
     icon: 'Zap',
     features: [
@@ -62,9 +62,9 @@ export default function WarrantyPage() {
     <div className="space-y-12 py-8 px-4 md:px-6 lg:px-8 max-w-7xl mx-auto">
       <header className="text-center space-y-4">
         <ShieldQuestion className="mx-auto h-16 w-16 text-primary" />
-        <h1 className="text-4xl font-bold tracking-tight">Choose Your SurfaceGuard365 Plan</h1>
+        <h1 className="text-4xl font-bold tracking-tight">Finalize Your SurfaceGuard365 Plan</h1>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Select the perfect warranty plan to protect your countertops and cabinets, ensuring lasting beauty and peace of mind.
+          We've curated these warranty plans to best protect your investment. Choose the one that's right for you and secure your peace of mind.
         </p>
       </header>
 
