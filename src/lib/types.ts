@@ -1,3 +1,4 @@
+
 import type { LucideIcon } from 'lucide-react';
 
 export interface WarrantyPlan {
@@ -6,8 +7,8 @@ export interface WarrantyPlan {
   priceMonthly: number;
   priceAnnually: number;
   duration: string;
-  features: { text: string; icon?: LucideIcon }[];
-  icon?: LucideIcon;
+  features: { text: string; icon?: string }[]; // Changed LucideIcon to string
+  icon?: string; // Changed LucideIcon to string
   ctaText?: string;
   popular?: boolean;
 }

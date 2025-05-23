@@ -1,9 +1,10 @@
+
 'use client';
 
 import type { WarrantyPlan } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { CheckCircle, ArrowRight, Star } from 'lucide-react';
+import { CheckCircle, ArrowRight, Star, Shield, Zap, Gem, type LucideIcon } from 'lucide-react'; // Added Shield, Zap, Gem and LucideIcon type
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
@@ -11,7 +12,16 @@ interface WarrantyPlanCardProps {
   plan: WarrantyPlan;
 }
 
+const iconMap: Record<string, LucideIcon> = {
+  Shield: Shield,
+  Zap: Zap,
+  Gem: Gem,
+  CheckCircle: CheckCircle, // For default feature icon
+};
+
 export default function WarrantyPlanCard({ plan }: WarrantyPlanCardProps) {
+  const PlanIconComponent = plan.icon ? iconMap[plan.icon] : null;
+
   return (
     <Card className={cn("flex flex-col shadow-lg hover:shadow-xl transition-shadow duration-300", plan.popular ? "border-primary border-2" : "")}>
       {plan.popular && (
@@ -20,7 +30,7 @@ export default function WarrantyPlanCard({ plan }: WarrantyPlanCardProps) {
         </div>
       )}
       <CardHeader className="text-center items-center">
-        {plan.icon && <plan.icon className="w-12 h-12 text-primary mb-3" />}
+        {PlanIconComponent && <PlanIconComponent className="w-12 h-12 text-primary mb-3" />}
         <CardTitle className="text-2xl font-semibold">{plan.name}</CardTitle>
         <CardDescription>{plan.duration}</CardDescription>
       </CardHeader>
@@ -31,12 +41,18 @@ export default function WarrantyPlanCard({ plan }: WarrantyPlanCardProps) {
           <p className="text-sm text-muted-foreground">or ${plan.priceAnnually} billed annually</p>
         </div>
         <ul className="space-y-2">
-          {plan.features.map((feature, index) => (
-            <li key={index} className="flex items-start">
-              {feature.icon ? <feature.icon className="w-5 h-5 text-green-500 mr-2 mt-0.5 shrink-0" /> : <CheckCircle className="w-5 h-5 text-green-500 mr-2 mt-0.5 shrink-0" />}
-              <span>{feature.text}</span>
-            </li>
-          ))}
+          {plan.features.map((feature, index) => {
+            const FeatureIconComponent = feature.icon ? iconMap[feature.icon] : CheckCircle;
+            return (
+              <li key={index} className="flex items-start">
+                {FeatureIconComponent ? 
+                  <FeatureIconComponent className="w-5 h-5 text-green-500 mr-2 mt-0.5 shrink-0" /> : 
+                  <CheckCircle className="w-5 h-5 text-green-500 mr-2 mt-0.5 shrink-0" /> // Fallback just in case
+                }
+                <span>{feature.text}</span>
+              </li>
+            );
+          })}
         </ul>
       </CardContent>
       <CardFooter>

@@ -1,8 +1,9 @@
+
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import WarrantyPlanCard from '@/components/warranty-plan-card';
 import type { WarrantyPlan } from '@/lib/types';
-import { Shield, Zap, Gem, ArrowRight, ShieldQuestion } from 'lucide-react';
+import { ArrowRight, ShieldQuestion } from 'lucide-react'; // Removed Shield, Zap, Gem
 
 const warrantyPlansData: WarrantyPlan[] = [
   {
@@ -11,7 +12,7 @@ const warrantyPlansData: WarrantyPlan[] = [
     priceMonthly: 9,
     priceAnnually: 99,
     duration: 'Basic Coverage',
-    icon: Shield,
+    icon: 'Shield', // Changed to string
     features: [
       { text: 'Protection against common stains' },
       { text: 'Coverage for minor chips (up to 1cm)' },
@@ -25,7 +26,7 @@ const warrantyPlansData: WarrantyPlan[] = [
     priceMonthly: 19,
     priceAnnually: 199,
     duration: 'Comprehensive Protection',
-    icon: Zap,
+    icon: 'Zap', // Changed to string
     popular: true,
     features: [
       { text: 'All Essential Guard benefits' },
@@ -42,7 +43,7 @@ const warrantyPlansData: WarrantyPlan[] = [
     priceMonthly: 29,
     priceAnnually: 299,
     duration: 'Total Peace of Mind',
-    icon: Gem,
+    icon: 'Gem', // Changed to string
     features: [
       { text: 'All Premium Shield benefits' },
       { text: 'Full replacement for irreparable damage' },
