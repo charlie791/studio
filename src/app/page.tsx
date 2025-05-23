@@ -16,7 +16,7 @@ export default function LandingPage() {
         data-ai-hint="modern kitchen"
         priority
       />
-      <Card className="w-full max-w-md p-8 md:p-10 bg-card/80 backdrop-blur-md shadow-2xl rounded-xl">
+      <Card className="w-full max-w-2xl p-8 md:p-10 bg-card/80 backdrop-blur-md shadow-2xl rounded-xl">
         <div className="flex flex-col items-center text-center">
           <Shield className="mx-auto h-14 w-14 text-accent mb-6" />
           <h1 className="text-3xl md:text-4xl font-bold text-foreground">
