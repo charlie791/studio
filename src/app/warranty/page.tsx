@@ -62,7 +62,7 @@ export default function WarrantyPage() {
     <div className="space-y-12 py-8 px-4 md:px-6 lg:px-8 max-w-7xl mx-auto">
       <header className="text-center space-y-4">
         <ShieldQuestion className="mx-auto h-16 w-16 text-primary" />
-        <h1 className="text-4xl font-bold tracking-tight">Choose Your Surface Guard 365 Plan</h1>
+        <h1 className="text-4xl font-bold tracking-tight">Choose Your SurfaceGuard365 Plan</h1>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
           Select the perfect warranty plan to protect your countertops and cabinets, ensuring lasting beauty and peace of mind.
         </p>
