@@ -1,3 +1,4 @@
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
@@ -8,12 +9,12 @@ export default function LandingPage() {
   return (
     <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden p-4">
       <Image
-        src="https://placehold.co/1920x1080.png"
+        src="https://igscountertops.b-cdn.net/kitchencabinets.now%20assets/Cabiets%20assets/ELITECRAFT%20Imperial%20Blue/imperial-blue-main-gallery-image-1.jpg"
         alt="Modern kitchen background"
         layout="fill"
         objectFit="cover"
         className="-z-10 filter blur-sm brightness-75"
-        data-ai-hint="modern kitchen"
+        data-ai-hint="kitchen cabinets"
         priority
       />
       <Card className="w-full max-w-lg p-8 md:p-10 bg-card/80 backdrop-blur-md shadow-2xl rounded-xl">
