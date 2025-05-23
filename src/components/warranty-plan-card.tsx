@@ -36,8 +36,8 @@ export default function WarrantyPlanCard({ plan }: WarrantyPlanCardProps) {
       </CardHeader>
       <CardContent className="flex-grow">
         <div className="text-center mb-6">
-          <span className="text-4xl font-bold">${plan.priceMonthly.toFixed(2)}</span>
-          <span className="text-muted-foreground"> x 4 Flex Payments</span>
+          <p className="text-4xl font-bold">${plan.priceMonthly.toFixed(2)}</p>
+          <p className="text-muted-foreground">x 4 Flex Payments</p>
           <p className="text-sm text-muted-foreground mt-1">
             Total: ${plan.priceAnnually.toFixed(2)} (One-time charge)
           </p>
@@ -68,4 +68,3 @@ export default function WarrantyPlanCard({ plan }: WarrantyPlanCardProps) {
     </Card>
   );
 }
-
