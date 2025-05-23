@@ -22,7 +22,7 @@ if (!firebaseConfig.apiKey) {
   authInitializationError = new Error(
     'Firebase API Key (NEXT_PUBLIC_FIREBASE_API_KEY) is not set in environment variables. Firebase cannot be initialized.'
   );
-  console.error(authInitializationError.message);
+  // console.error(authInitializationError.message); // Removed this line
 } else {
   try {
     if (!getApps().length) {
