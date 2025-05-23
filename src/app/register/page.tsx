@@ -9,141 +9,96 @@ import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { cn } from "@/lib/utils";
-import { CalendarIcon, Loader2, UserPlus, Package } from 'lucide-react';
-import { format } from "date-fns";
+import { Loader2, User, Mail, Lock, UserPlus, HomeIcon } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import type { RegistrationData } from '@/lib/types';
+import type { CreateAccountData } from '@/lib/types'; // Updated type
+import { auth } from '@/lib/firebase'; // Firebase auth instance
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 
-const registrationFormSchema = z.object({
-  productName: z.string().min(2, { message: 'Product name must be at least 2 characters.' }),
-  purchaseDate: z.date({ required_error: 'Purchase date is required.' }),
-  serialNumber: z.string().min(5, { message: 'Serial number must be at least 5 characters.' }),
+const createAccountFormSchema = z.object({
   fullName: z.string().min(2, { message: 'Full name must be at least 2 characters.' }),
   email: z.string().email({ message: 'Please enter a valid email address.' }),
+  password: z.string().min(6, { message: 'Password must be at least 6 characters.' }),
 });
 
-export default function RegistrationPage() {
+export default function CreateAccountPage() {
   const router = useRouter();
   const { toast } = useToast();
-  const form = useForm<RegistrationData>({
-    resolver: zodResolver(registrationFormSchema),
+  const form = useForm<CreateAccountData>({
+    resolver: zodResolver(createAccountFormSchema),
     defaultValues: {
-      productName: '',
-      serialNumber: '',
       fullName: '',
       email: '',
+      password: '',
     },
   });
 
-  async function onSubmit(data: RegistrationData) {
-    // Simulate API call for registration
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    console.log('Registration Data:', data);
-    toast({
-      title: 'Product Registered!',
-      description: `Thank you, ${data.fullName}, your product ${data.productName} has been successfully registered.`,
-    });
-    router.push('/warranty');
+  async function onSubmit(data: CreateAccountData) {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
+      const user = userCredential.user;
+      await updateProfile(user, { displayName: data.fullName });
+
+      toast({
+        title: 'Account Created!',
+        description: `Welcome, ${data.fullName}! Your account has been successfully created.`,
+      });
+      router.push('/warranty'); // Or to a dashboard/profile page
+    } catch (error: any) {
+      console.error("Firebase Auth Error:", error);
+      let errorMessage = 'Failed to create account. Please try again.';
+      if (error.code === 'auth/email-already-in-use') {
+        errorMessage = 'This email address is already in use. Please try a different email or log in.';
+      } else if (error.code === 'auth/weak-password') {
+        errorMessage = 'The password is too weak. Please choose a stronger password.';
+      } else if (error.code === 'auth/invalid-email') {
+        errorMessage = 'The email address is not valid.';
+      }
+      // Catch missing Firebase config error
+      else if (error.message.includes("Firebase: Error (auth/invalid-api-key)") || error.message.includes("Failed to initialize Firebase")) {
+        errorMessage = "Firebase configuration is missing or invalid. Please contact support.";
+      }
+      toast({
+        title: 'Account Creation Failed',
+        description: errorMessage,
+        variant: 'destructive',
+      });
+    }
   }
 
   return (
-    <div className="flex flex-col items-center justify-center py-8">
-      <Card className="w-full max-w-lg shadow-xl">
-        <CardHeader className="text-center">
-          <UserPlus className="mx-auto h-12 w-12 text-primary mb-4" />
-          <CardTitle className="text-3xl font-bold">Register Your Product</CardTitle>
-          <CardDescription>Secure your investment by registering your countertop and unlock warranty options.</CardDescription>
+    <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden p-4">
+      <Card className="w-full max-w-md bg-card/90 backdrop-blur-sm shadow-2xl rounded-xl p-2 sm:p-4 md:p-6">
+        <CardHeader className="text-center items-center pt-6 px-6 pb-4">
+          {/* UserPlus icon is fine for "Create Account" */}
+          {/* <UserPlus className="mx-auto h-10 w-10 text-primary mb-3" /> */}
+          <CardTitle className="text-3xl font-bold text-primary">Create Your Account</CardTitle>
+          <CardDescription className="text-muted-foreground mt-2 text-sm">
+            Quickly create your account and start protecting your home investments. It only takes a few minutes!
+          </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-6 pb-6 pt-4">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <FormField
-                control={form.control}
-                name="productName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Product Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="E.g., Quartz Kitchen Island" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="purchaseDate"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col">
-                    <FormLabel>Purchase Date</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant={"outline"}
-                            className={cn(
-                              "w-full pl-3 text-left font-normal",
-                              !field.value && "text-muted-foreground"
-                            )}
-                          >
-                            {field.value ? (
-                              format(field.value, "PPP")
-                            ) : (
-                              <span>Pick a date</span>
-                            )}
-                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          disabled={(date) =>
-                            date > new Date() || date < new Date("1900-01-01")
-                          }
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="serialNumber"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Serial Number</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Located on your product documentation" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
                 control={form.control}
                 name="fullName"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Full Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="John Doe" {...field} />
-                    </FormControl>
+                    <div className="relative flex items-center">
+                      <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+                      <FormControl>
+                        <Input placeholder="e.g. Jane Doe" {...field} className="pl-10" />
+                      </FormControl>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -154,28 +109,54 @@ export default function RegistrationPage() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Email Address</FormLabel>
-                    <FormControl>
-                      <Input type="email" placeholder="you@example.com" {...field} />
-                    </FormControl>
+                     <div className="relative flex items-center">
+                      <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+                      <FormControl>
+                        <Input type="email" placeholder="e.g. jane.doe@example.com" {...field} className="pl-10" />
+                      </FormControl>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                     <div className="relative flex items-center">
+                      <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+                      <FormControl>
+                        <Input type="password" placeholder="••••••••" {...field} className="pl-10" />
+                      </FormControl>
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground py-3 text-base" disabled={form.formState.isSubmitting}>
                 {form.formState.isSubmitting ? (
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                ) : (
-                  <Package className="mr-2 h-4 w-4" />
-                )}
-                Register & View Plans
+                ) : null}
+                Sign Up
               </Button>
             </form>
           </Form>
         </CardContent>
-        <CardFooter className="flex justify-center">
-            <p className="text-sm text-muted-foreground">
-                Already registered? <Link href="/warranty" className="text-primary hover:underline">View warranty plans</Link>.
+        <CardFooter className="flex flex-col items-center justify-center px-6 pb-6 pt-2 space-y-3">
+            <p className="text-sm text-muted-foreground text-center">
+                Already have an account?{' '}
+                <Link href="/login" className="font-semibold text-accent hover:underline">
+                  Log in
+                </Link>
             </p>
+            <Button variant="link" asChild className="text-sm text-muted-foreground hover:text-accent p-0 h-auto">
+                <Link href="/">
+                    <HomeIcon className="mr-1 h-4 w-4" />
+                    Return to Home
+                </Link>
+            </Button>
         </CardFooter>
       </Card>
     </div>

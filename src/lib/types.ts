@@ -12,12 +12,11 @@ export interface WarrantyPlan {
   popular?: boolean;
 }
 
-export interface RegistrationData {
-  productName: string;
-  purchaseDate: Date;
-  serialNumber: string;
+// Renamed from RegistrationData and updated fields
+export interface CreateAccountData {
   fullName: string;
   email: string;
+  password: string;
 }
 
 export interface TradeInLeadData {
