@@ -3,69 +3,69 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import WarrantyPlanCard from '@/components/warranty-plan-card';
 import type { WarrantyPlan } from '@/lib/types';
-import { ArrowRight, ShieldQuestion } from 'lucide-react'; // Removed Shield, Zap, Gem
+import { ArrowRight, ShieldQuestion } from 'lucide-react';
 
 const warrantyPlansData: WarrantyPlan[] = [
   {
-    id: 'essential',
-    name: 'Essential Guard',
-    priceMonthly: 9,
-    priceAnnually: 99,
-    duration: 'Basic Coverage',
-    icon: 'Shield', // Changed to string
+    id: 'core',
+    name: 'SurfaceGuard365 – Core',
+    priceMonthly: 25, // Approx $299/12
+    priceAnnually: 299,
+    duration: '5-Year Warranty',
+    icon: 'Shield',
     features: [
       { text: 'Protection against common stains' },
-      { text: 'Coverage for minor chips (up to 1cm)' },
-      { text: '1-year plan duration' },
-      { text: 'Email support' },
+      { text: 'Coverage for minor chips' },
+      { text: '5-year countertop protection' },
+      { text: 'Standard email support' },
     ],
   },
   {
-    id: 'premium',
-    name: 'Premium Shield',
-    priceMonthly: 19,
-    priceAnnually: 199,
-    duration: 'Comprehensive Protection',
-    icon: 'Zap', // Changed to string
+    id: 'total-combo',
+    name: 'SurfaceGuard365 – Total Combo Plan',
+    priceMonthly: 50, // Approx $599/12
+    priceAnnually: 599,
+    duration: '10-Year Countertop + Cabinet Warranty',
+    icon: 'Gem',
     popular: true,
     features: [
-      { text: 'All Essential Guard benefits' },
-      { text: 'Coverage for accidental damage (e.g., heat marks)' },
-      { text: 'Protection against major chips (up to 3cm)' },
-      { text: '3-year plan duration' },
-      { text: 'Priority phone & email support' },
+      { text: 'All Extended Plan benefits' },
+      { text: 'Full coverage for countertops & cabinets' },
+      { text: 'Accidental damage protection included' },
+      { text: 'Annual professional care & inspection visit' },
+      { text: 'Dedicated VIP support line' },
     ],
-    ctaText: 'Get Premium Shield',
+    ctaText: 'Choose Total Combo',
   },
   {
-    id: 'ultimate',
-    name: 'Ultimate Coverage',
-    priceMonthly: 29,
-    priceAnnually: 299,
-    duration: 'Total Peace of Mind',
-    icon: 'Gem', // Changed to string
+    id: 'extended',
+    name: 'SurfaceGuard365 – Extended',
+    priceMonthly: 42, // Approx $499/12
+    priceAnnually: 499,
+    duration: '10-Year Warranty',
+    icon: 'Zap',
     features: [
-      { text: 'All Premium Shield benefits' },
-      { text: 'Full replacement for irreparable damage' },
-      { text: 'Annual professional cleaning & inspection' },
-      { text: '5-year plan duration' },
-      { text: 'Dedicated support agent' },
+      { text: 'All Core Plan benefits' },
+      { text: 'Extended coverage for major damages' },
+      { text: 'Protection against heat marks & scratches' },
+      { text: '10-year countertop protection' },
+      { text: 'Priority phone & email support' },
     ],
   },
 ];
 
 export default function WarrantyPage() {
   return (
-    <div className="space-y-12 py-8">
+    <div className="space-y-12 py-8 px-4 md:px-6 lg:px-8">
       <header className="text-center space-y-4">
         <ShieldQuestion className="mx-auto h-16 w-16 text-primary" />
         <h1 className="text-4xl font-bold tracking-tight">Choose Your Surface Guard 365 Plan</h1>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Select the perfect warranty plan to protect your countertops and enjoy peace of mind.
+          Select the perfect warranty plan to protect your countertops and cabinets, ensuring lasting beauty and peace of mind.
         </p>
       </header>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
         {warrantyPlansData.map((plan) => (
           <WarrantyPlanCard key={plan.id} plan={plan} />
         ))}
