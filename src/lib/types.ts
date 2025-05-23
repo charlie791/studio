@@ -4,18 +4,22 @@ import type { LucideIcon } from 'lucide-react';
 export interface WarrantyPlan {
   id: string;
   name: string;
-  priceMonthly: number;
-  priceAnnually: number;
+  priceMonthly: number; // This now represents the flex payment amount
+  priceAnnually: number; // This now represents the total one-time charge
   duration: string;
-  features: { text: string; icon?: string }[]; // Changed LucideIcon to string
-  icon?: string; // Changed LucideIcon to string
+  features: { text: string; icon?: string }[];
+  icon?: string;
   ctaText?: string;
   popular?: boolean;
 }
 
-// Renamed from RegistrationData and updated fields
 export interface CreateAccountData {
   fullName: string;
+  email: string;
+  password: string;
+}
+
+export interface LoginData {
   email: string;
   password: string;
 }
