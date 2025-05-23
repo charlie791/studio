@@ -4,7 +4,7 @@
 import type { WarrantyPlan } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { CheckCircle, ArrowRight, Star, Shield, Zap, Gem, type LucideIcon } from 'lucide-react'; // Added Shield, Zap, Gem and LucideIcon type
+import { CheckCircle, ArrowRight, Star, Shield, Zap, Gem, type LucideIcon } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
@@ -16,7 +16,7 @@ const iconMap: Record<string, LucideIcon> = {
   Shield: Shield,
   Zap: Zap,
   Gem: Gem,
-  CheckCircle: CheckCircle, // For default feature icon
+  CheckCircle: CheckCircle, 
 };
 
 export default function WarrantyPlanCard({ plan }: WarrantyPlanCardProps) {
@@ -36,9 +36,11 @@ export default function WarrantyPlanCard({ plan }: WarrantyPlanCardProps) {
       </CardHeader>
       <CardContent className="flex-grow">
         <div className="text-center mb-6">
-          <span className="text-4xl font-bold">${plan.priceMonthly}</span>
-          <span className="text-muted-foreground">/month</span>
-          <p className="text-sm text-muted-foreground">or ${plan.priceAnnually} billed annually</p>
+          <span className="text-4xl font-bold">${plan.priceMonthly.toFixed(2)}</span>
+          <span className="text-muted-foreground"> x 4 Flex Payments</span>
+          <p className="text-sm text-muted-foreground mt-1">
+            Total: ${plan.priceAnnually.toFixed(2)} (One-time charge)
+          </p>
         </div>
         <ul className="space-y-2">
           {plan.features.map((feature, index) => {
@@ -47,7 +49,7 @@ export default function WarrantyPlanCard({ plan }: WarrantyPlanCardProps) {
               <li key={index} className="flex items-start">
                 {FeatureIconComponent ? 
                   <FeatureIconComponent className="w-5 h-5 text-green-500 mr-2 mt-0.5 shrink-0" /> : 
-                  <CheckCircle className="w-5 h-5 text-green-500 mr-2 mt-0.5 shrink-0" /> // Fallback just in case
+                  <CheckCircle className="w-5 h-5 text-green-500 mr-2 mt-0.5 shrink-0" />
                 }
                 <span>{feature.text}</span>
               </li>
@@ -66,3 +68,4 @@ export default function WarrantyPlanCard({ plan }: WarrantyPlanCardProps) {
     </Card>
   );
 }
+

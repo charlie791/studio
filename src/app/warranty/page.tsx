@@ -9,8 +9,8 @@ const warrantyPlansData: WarrantyPlan[] = [
   {
     id: 'core',
     name: 'SurfaceGuard365 – Core',
-    priceMonthly: 25, // Approx $299/12
-    priceAnnually: 299,
+    priceMonthly: 74.75, // 299 / 4
+    priceAnnually: 299, // Total one-time charge
     duration: '5-Year Warranty',
     icon: 'Shield',
     features: [
@@ -19,12 +19,13 @@ const warrantyPlansData: WarrantyPlan[] = [
       { text: '5-year countertop protection' },
       { text: 'Standard email support' },
     ],
+    ctaText: 'Choose Core Plan',
   },
   {
     id: 'total-combo',
     name: 'SurfaceGuard365 – Total Combo Plan',
-    priceMonthly: 50, // Approx $599/12
-    priceAnnually: 599,
+    priceMonthly: 149.75, // 599 / 4
+    priceAnnually: 599, // Total one-time charge
     duration: '10-Year Countertop + Cabinet Warranty',
     icon: 'Gem',
     popular: true,
@@ -40,8 +41,8 @@ const warrantyPlansData: WarrantyPlan[] = [
   {
     id: 'extended',
     name: 'SurfaceGuard365 – Extended',
-    priceMonthly: 42, // Approx $499/12
-    priceAnnually: 499,
+    priceMonthly: 124.75, // 499 / 4
+    priceAnnually: 499, // Total one-time charge
     duration: '10-Year Warranty',
     icon: 'Zap',
     features: [
@@ -51,12 +52,13 @@ const warrantyPlansData: WarrantyPlan[] = [
       { text: '10-year countertop protection' },
       { text: 'Priority phone & email support' },
     ],
+    ctaText: 'Choose Extended Plan',
   },
 ];
 
 export default function WarrantyPage() {
   return (
-    <div className="space-y-12 py-8 px-4 md:px-6 lg:px-8">
+    <div className="space-y-12 py-8 px-4 md:px-6 lg:px-8 max-w-7xl mx-auto">
       <header className="text-center space-y-4">
         <ShieldQuestion className="mx-auto h-16 w-16 text-primary" />
         <h1 className="text-4xl font-bold tracking-tight">Choose Your Surface Guard 365 Plan</h1>
@@ -86,3 +88,4 @@ export default function WarrantyPage() {
     </div>
   );
 }
+

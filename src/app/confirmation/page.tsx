@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -8,11 +9,35 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { CheckCircle2, MailCheck, Home, Loader2 } from 'lucide-react';
 import type { WarrantyPlan } from '@/lib/types';
 
-// Mock data for warranty plans
+// Mock data for warranty plans - aligned with warranty/page.tsx
 const mockPlans: Record<string, WarrantyPlan> = {
-  essential: { id: 'essential', name: 'Essential Guard', priceMonthly: 9, priceAnnually: 99, duration: '1 Year', features: [] },
-  premium: { id: 'premium', name: 'Premium Shield', priceMonthly: 19, priceAnnually: 199, duration: '3 Years', features: [] },
-  ultimate: { id: 'ultimate', name: 'Ultimate Coverage', priceMonthly: 29, priceAnnually: 299, duration: '5 Years', features: [] },
+  core: { 
+    id: 'core', 
+    name: 'SurfaceGuard365 – Core', 
+    priceMonthly: 74.75, 
+    priceAnnually: 299, 
+    duration: '5-Year Warranty', 
+    features: [],
+    icon: 'Shield',
+  },
+  'total-combo': { 
+    id: 'total-combo', 
+    name: 'SurfaceGuard365 – Total Combo Plan', 
+    priceMonthly: 149.75, 
+    priceAnnually: 599, 
+    duration: '10-Year Countertop + Cabinet Warranty', 
+    features: [],
+    icon: 'Gem',
+  },
+  extended: { 
+    id: 'extended', 
+    name: 'SurfaceGuard365 – Extended', 
+    priceMonthly: 124.75, 
+    priceAnnually: 499, 
+    duration: '10-Year Warranty', 
+    features: [],
+    icon: 'Zap',
+  },
 };
 
 
@@ -21,7 +46,6 @@ function ConfirmationPageContent() {
   const planId = searchParams.get('planId');
   const purchasedPlan = planId ? mockPlans[planId] : null;
 
-  // In a real app, user email would come from session or context
   const userEmail = "your.email@example.com"; 
 
   return (
@@ -39,7 +63,12 @@ function ConfirmationPageContent() {
             <div className="border p-4 rounded-md bg-muted/50 text-left">
               <h3 className="text-xl font-semibold mb-1">{purchasedPlan.name}</h3>
               <p className="text-muted-foreground">Duration: {purchasedPlan.duration}</p>
-              <p className="text-2xl font-bold text-primary mt-2">${purchasedPlan.priceAnnually} <span className="text-sm font-normal text-muted-foreground">/ year</span></p>
+              <p className="text-2xl font-bold text-primary mt-2">
+                4 Flex Payments of ${purchasedPlan.priceMonthly.toFixed(2)}
+              </p>
+              <p className="text-sm font-normal text-muted-foreground">
+                Total: ${purchasedPlan.priceAnnually.toFixed(2)} (One-time charge)
+              </p>
             </div>
           )}
           <div className="flex items-center justify-center p-4 border border-dashed rounded-md">
@@ -61,9 +90,6 @@ function ConfirmationPageContent() {
               Back to Home
             </Link>
           </Button>
-          {/* <Button asChild variant="outline" size="lg">
-            <Link href="/account/warranty">View My Warranty (Coming Soon)</Link>
-          </Button> */}
         </div>
       </Card>
     </div>
@@ -78,3 +104,4 @@ export default function ConfirmationPage() {
     </Suspense>
   )
 }
+

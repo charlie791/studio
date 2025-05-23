@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Suspense } from 'react';
@@ -18,14 +19,38 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Loader2, CreditCard, ShieldCheck, ArrowLeft } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import type { WarrantyPlan, CheckoutData } from '@/lib/types'; // Assuming CheckoutData is defined
+import type { WarrantyPlan, CheckoutData } from '@/lib/types';
 import Link from 'next/link';
 
-// Mock data for warranty plans - in a real app, this would come from a store or API
+// Mock data for warranty plans - aligned with warranty/page.tsx
 const mockPlans: Record<string, WarrantyPlan> = {
-  essential: { id: 'essential', name: 'Essential Guard', priceMonthly: 9, priceAnnually: 99, duration: '1 Year', features: [] },
-  premium: { id: 'premium', name: 'Premium Shield', priceMonthly: 19, priceAnnually: 199, duration: '3 Years', features: [] },
-  ultimate: { id: 'ultimate', name: 'Ultimate Coverage', priceMonthly: 29, priceAnnually: 299, duration: '5 Years', features: [] },
+  core: { 
+    id: 'core', 
+    name: 'SurfaceGuard365 – Core', 
+    priceMonthly: 74.75, 
+    priceAnnually: 299, 
+    duration: '5-Year Warranty', 
+    features: [],
+    icon: 'Shield',
+  },
+  'total-combo': { 
+    id: 'total-combo', 
+    name: 'SurfaceGuard365 – Total Combo Plan', 
+    priceMonthly: 149.75, 
+    priceAnnually: 599, 
+    duration: '10-Year Countertop + Cabinet Warranty', 
+    features: [],
+    icon: 'Gem',
+  },
+  extended: { 
+    id: 'extended', 
+    name: 'SurfaceGuard365 – Extended', 
+    priceMonthly: 124.75, 
+    priceAnnually: 499, 
+    duration: '10-Year Warranty', 
+    features: [],
+    icon: 'Zap',
+  },
 };
 
 const checkoutFormSchema = z.object({
@@ -53,7 +78,6 @@ function CheckoutPageContent() {
   });
 
   async function onSubmit(data: CheckoutData) {
-    // Simulate Stripe API call
     await new Promise(resolve => setTimeout(resolve, 2500));
     console.log('Checkout Data (Mock Stripe):', data, 'Plan:', selectedPlan?.name);
     toast({
@@ -85,8 +109,12 @@ function CheckoutPageContent() {
         <CardContent className="space-y-6">
           <div className="border p-4 rounded-md bg-muted/50">
             <h3 className="text-lg font-semibold flex items-center gap-2"><ShieldCheck className="text-primary h-5 w-5"/> {selectedPlan.name}</h3>
-            <p className="text-2xl font-bold text-primary">${selectedPlan.priceAnnually} <span className="text-sm font-normal text-muted-foreground">/ year</span></p>
-            <p className="text-sm text-muted-foreground">(or ${selectedPlan.priceMonthly}/month)</p>
+            <p className="text-2xl font-bold text-primary">
+              4 Flex Payments of ${selectedPlan.priceMonthly.toFixed(2)}
+            </p>
+            <p className="text-sm font-normal text-muted-foreground">
+              Total: ${selectedPlan.priceAnnually.toFixed(2)} (One-time charge)
+            </p>
           </div>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -150,7 +178,7 @@ function CheckoutPageContent() {
                 ) : (
                   <CreditCard className="mr-2 h-4 w-4" />
                 )}
-                Pay ${selectedPlan.priceAnnually} Securely
+                Pay ${selectedPlan.priceAnnually.toFixed(2)} Securely
               </Button>
             </form>
           </Form>
