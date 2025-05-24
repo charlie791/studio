@@ -124,17 +124,17 @@ export default function WarrantyPage() {
         priority={false}
       />
       <div className="relative z-10 w-full max-w-3xl mx-auto space-y-8 flex flex-col items-center">
-        <Card className="w-full bg-card/90 backdrop-blur-sm shadow-lg text-center">
-          <CardHeader>
-            <CardTitle className="text-3xl md:text-4xl font-bold tracking-tight text-card-foreground">
-              You’re Eligible for Protection — Pick What Works Best for You
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <CardDescription className="text-lg text-card-foreground max-w-2xl mx-auto">
-              You’ve activated SurfaceGuard365 coverage. Now choose your level of protection — including options for a free 30-day warranty.
-            </CardDescription>
-            {!stepViewActive && (
+        {!stepViewActive && (
+          <Card className="w-full bg-card/90 backdrop-blur-sm shadow-lg text-center">
+            <CardHeader>
+              <CardTitle className="text-3xl md:text-4xl font-bold tracking-tight text-card-foreground">
+                You’re Eligible for Protection — Pick What Works Best for You
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CardDescription className="text-lg text-card-foreground max-w-2xl mx-auto">
+                You’ve activated SurfaceGuard365 coverage. Now choose your level of protection — including options for a free 30-day warranty.
+              </CardDescription>
               <Button 
                 onClick={handleSeeCoverageOptions} 
                 size="lg" 
@@ -143,9 +143,9 @@ export default function WarrantyPage() {
                 See Coverage Options
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-            )}
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        )}
 
         {stepViewActive && (
           <div key={animationKey} className="w-full flex justify-center animate-slideUpFadeIn">
