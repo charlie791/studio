@@ -4,9 +4,16 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
-const LogoShieldSVG = () => (
-  <svg viewBox="0 0 60 70" fill="#002455" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-    <path d="M0 0 H60 V40 C60 55 30 70 30 70 C30 70 0 55 0 40 V0 Z"/>
+const SurfaceGuardLogoSVG = () => (
+  <svg viewBox="0 0 240 70" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-full w-auto">
+    {/* Shield with gold border. Path adjusted for stroke to be visually centered on the 0-60 width */}
+    <path d="M1 1 H59 V40 C59 55 30 69 30 69 C30 69 1 55 1 40 V1 Z" fill="#002455" stroke="#FDA001" strokeWidth="2"/>
+    {/* 365 text in gold */}
+    <text x="30" y="36" fontFamily="var(--font-geist-sans), Arial, sans-serif" fontSize="26" fontWeight="bold" fill="#FDA001" textAnchor="middle" dominantBaseline="middle">365</text>
+    {/* SURFACE text in dark blue */}
+    <text x="75" y="28" fontFamily="var(--font-geist-sans), Arial, sans-serif" fontSize="24" fontWeight="bold" fill="#002455" dominantBaseline="middle">SURFACE</text>
+    {/* GUARD text in dark blue */}
+    <text x="75" y="56" fontFamily="var(--font-geist-sans), Arial, sans-serif" fontSize="24" fontWeight="bold" fill="#002455" dominantBaseline="middle">GUARD</text>
   </svg>
 );
 
@@ -25,21 +32,8 @@ export default function LandingPage() {
       <Card className="w-full max-w-lg p-6 sm:p-8 md:p-10 bg-card text-card-foreground border-[6px] border-primary shadow-2xl rounded-xl">
         <div className="flex flex-col items-center text-center">
           {/* New Logo */}
-          <div className="flex items-center justify-center mb-6 lg:mb-8">
-            <div className="relative w-[60px] h-[70px] sm:w-[70px] sm:h-[80px] mr-3 sm:mr-4">
-              <LogoShieldSVG />
-              <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-primary-foreground text-2xl sm:text-3xl font-bold">
-                365
-              </span>
-            </div>
-            <div className="text-left">
-              <span className="block text-3xl sm:text-4xl font-bold text-primary">
-                SURFACE
-              </span>
-              <span className="block text-3xl sm:text-4xl font-bold text-primary -mt-1 sm:-mt-2">
-                GUARD
-              </span>
-            </div>
+          <div className="mb-6 lg:mb-8 h-[70px] sm:h-[80px] flex justify-center items-center">
+            <SurfaceGuardLogoSVG />
           </div>
 
           {/* Updated Text */}
