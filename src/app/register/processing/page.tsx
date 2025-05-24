@@ -65,7 +65,7 @@ export default function ProcessingPage() {
         <CardHeader className="pt-8 pb-4">
           <ShieldCheck className="mx-auto h-12 w-12 text-primary mb-4" />
           <CardTitle className="text-2xl font-bold text-primary">Registering Your Warranty</CardTitle>
-          <CardDescription className="text-muted-foreground mt-2 px-4">
+          <CardDescription className="text-card-foreground mt-2 px-4">
             Please wait while we process your information. This may take a moment.
           </CardDescription>
         </CardHeader>
@@ -79,3 +79,4 @@ export default function ProcessingPage() {
     </div>
   );
 }
+
