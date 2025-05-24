@@ -54,6 +54,13 @@ export default function LandingPage() {
               ACTIVATE WARRANTY
             </Link>
           </Button>
+
+          <p className="mt-6 text-sm text-card-foreground">
+            Already activated?{' '}
+            <Link href="/login" className="font-semibold text-accent hover:underline">
+              Sign In
+            </Link>
+          </p>
         </div>
       </Card>
     </div>
