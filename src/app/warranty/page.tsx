@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import WarrantyPlanCard from '@/components/warranty-plan-card';
 import type { WarrantyPlan } from '@/lib/types';
-import { ArrowRight } from 'lucide-react'; // Removed ShieldQuestion
+import { ArrowRight } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 
 const warrantyPlansData: WarrantyPlan[] = [
@@ -72,10 +72,9 @@ export default function WarrantyPage() {
       />
       <div className="relative z-10 w-full max-w-7xl mx-auto space-y-12 py-8 px-4 md:px-6 lg:px-8">
         <header className="text-center space-y-4 bg-card/80 backdrop-blur-sm p-6 rounded-lg shadow-lg">
-          {/* Icon removed */}
-          <h1 className="text-4xl font-bold tracking-tight text-card-foreground">Choose the Right Protection for Your Surfaces</h1>
+          <h1 className="text-4xl font-bold tracking-tight text-card-foreground">You’re Eligible for Protection — Pick What Works Best for You</h1>
           <p className="text-lg text-card-foreground max-w-2xl mx-auto">
-            You’re eligible for SurfaceGuard365 coverage — select a plan to lock in lasting protection for your countertops and cabinets.
+            You’ve activated SurfaceGuard365 coverage. Now choose your level of protection — including a free 30-day warranty.
           </p>
         </header>
 
