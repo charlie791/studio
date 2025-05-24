@@ -6,7 +6,7 @@ import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 
 // The SurfaceGuardLogoSVG component definition that was here has been removed.
-// The logo will now be loaded from /public/logo.svg
+// The logo will now be loaded from /public/SG365_Final.svg
 
 export default function LandingPage() {
   return (
@@ -25,7 +25,7 @@ export default function LandingPage() {
           <div className="mb-6 lg:mb-8 h-auto flex justify-center items-center">
             {/* Use next/image to load the SVG from the public folder */}
             <Image
-              src="/logo.svg" // Assumes your SVG is named logo.svg and placed in the public directory
+              src="/SG365_Final.svg" // Updated src to use the new SVG file name
               alt="Surface Guard 365 Logo"
               width={296} // Intrinsic width from SVG viewBox
               height={78} // Intrinsic height from SVG viewBox
