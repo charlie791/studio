@@ -127,7 +127,7 @@ export default function LoginPage() {
       <Card className="w-full max-w-md bg-card/90 backdrop-blur-sm shadow-2xl rounded-xl p-2 sm:p-4 md:p-6 border-[6px] border-primary">
         <CardHeader className="text-center items-center pt-6 px-6 pb-4">
           <CardTitle className="text-3xl font-bold text-card-foreground">Welcome Back!</CardTitle>
-          <CardDescription className="text-muted-foreground mt-2 text-sm">
+          <CardDescription className="text-card-foreground mt-2 text-sm">
             Sign in to access your account and manage your warranties.
           </CardDescription>
         </CardHeader>
