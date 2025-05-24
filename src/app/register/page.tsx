@@ -127,9 +127,9 @@ export default function CreateAccountPage() {
       />
       <Card className="w-full max-w-md bg-card/90 backdrop-blur-sm shadow-2xl rounded-xl p-2 sm:p-4 md:p-6 border-[6px] border-primary">
         <CardHeader className="text-center items-center pt-6 px-6 pb-4">
-          <CardTitle className="text-3xl font-bold text-card-foreground">Create Your Account</CardTitle>
+          <CardTitle className="text-3xl font-bold text-card-foreground">Let’s Get You Covered</CardTitle>
           <CardDescription className="text-card-foreground mt-2 text-sm">
-            Quickly create your account and start protecting your home investments. It only takes a few minutes!
+            Start by creating your account. It’s fast, easy, and just the first step toward protecting your new surfaces
           </CardDescription>
         </CardHeader>
         <ClientOnly fallback={ClientFallback}>
