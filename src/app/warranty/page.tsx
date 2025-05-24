@@ -134,15 +134,18 @@ export default function WarrantyPage() {
             <CardDescription className="text-lg text-card-foreground max-w-2xl mx-auto">
               You’ve activated SurfaceGuard365 coverage. Now choose your level of protection — including options for a free 30-day warranty.
             </CardDescription>
+            {!stepViewActive && (
+              <Button 
+                onClick={handleSeeCoverageOptions} 
+                size="lg" 
+                className="bg-accent hover:bg-accent/90 text-accent-foreground py-3 px-6 text-lg mt-6"
+              >
+                See Coverage Options
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            )}
           </CardContent>
         </Card>
-
-        {!stepViewActive && (
-          <Button onClick={handleSeeCoverageOptions} size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground py-3 px-6 text-lg">
-            See Coverage Options
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
-        )}
 
         {stepViewActive && (
           <div key={animationKey} className="w-full flex justify-center animate-slideUpFadeIn">
@@ -157,17 +160,3 @@ export default function WarrantyPage() {
     </div>
   );
 }
-
-// Add simple animations to globals.css or tailwind.config.js if needed
-// For example, in globals.css:
-// @keyframes slideUpFadeIn {
-//   from { opacity: 0; transform: translateY(20px); }
-//   to { opacity: 1; transform: translateY(0); }
-// }
-// .animate-slideUpFadeIn { animation: slideUpFadeIn 0.5s ease-out forwards; }
-
-// @keyframes fadeIn {
-//  from { opacity: 0; }
-//  to { opacity: 1; }
-// }
-// .animate-fadeIn { animation: fadeIn 0.5s ease-out forwards; }
