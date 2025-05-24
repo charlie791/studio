@@ -194,8 +194,8 @@ export default function CreateAccountPage() {
             </Form>
           </CardContent>
           <CardFooter className="flex flex-col items-center justify-center px-6 pb-6 pt-2 space-y-3">
-              <p className="text-sm text-muted-foreground text-center">
-                  Already have an account?{' '}
+              <p className="text-sm text-card-foreground text-center">
+                  Already activated?{' '}
                   <Link href="/login" className="font-semibold text-accent hover:underline">
                     Log in
                   </Link>
