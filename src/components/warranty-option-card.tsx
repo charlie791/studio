@@ -36,14 +36,18 @@ export default function WarrantyOptionCard({ step, onViewNext, onDecline, classN
 
   return (
     <TooltipProvider>
-      <Card className={cn("w-full max-w-md shadow-xl flex flex-col animate-fadeIn bg-card text-card-foreground", step.bestValue ? "border-primary border-2" : "border-border", className)}>
+      <Card className={cn(
+        "w-full max-w-md shadow-xl flex flex-col animate-fadeIn bg-card text-card-foreground border-[6px] border-primary",
+        className
+      )}>
         {step.bestValue && (
-          <div className="bg-primary text-primary-foreground text-xs font-semibold py-1 px-3 rounded-t-md -mb-px text-center flex items-center justify-center gap-1">
+          <div className="bg-primary text-primary-foreground text-xs font-semibold py-1 px-3 -mb-px text-center flex items-center justify-center gap-1 relative -top-[6px] mx-[calc(-1.5rem_+_6px)] rounded-t-md">
+            {/* Adjusted for thicker border visually*/}
             <Star className="w-3 h-3 fill-current" /> Best Value
           </div>
         )}
-        <CardHeader className="items-center text-center">
-          {/* Icon removed from here: {StepIconComponent && <StepIconComponent className="w-10 h-10 text-primary mb-3" />} */}
+        <CardHeader className="items-center text-center pt-6">
+          {/* Icon removed from here */}
           <CardTitle className="text-2xl font-semibold text-card-foreground">{step.title}</CardTitle>
         </CardHeader>
         <CardContent className="flex-grow text-center">
@@ -58,7 +62,7 @@ export default function WarrantyOptionCard({ step, onViewNext, onDecline, classN
             </div>
           )}
         </CardContent>
-        <CardFooter className="flex flex-col sm:flex-row gap-2 pt-2">
+        <CardFooter className="flex flex-col sm:flex-row gap-2 pt-2 pb-6 px-6">
           {!step.isDeclineStep && step.planId && (
             <Button asChild className="w-full sm:w-auto flex-1 bg-primary hover:bg-primary/90 text-primary-foreground">
               <Link href={`/checkout?planId=${step.planId}`}>
