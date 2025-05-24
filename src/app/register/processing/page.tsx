@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2 } from 'lucide-react'; // Removed ShieldCheck import
+import { Loader2 } from 'lucide-react';
 
 const processingSteps = [
   "Validating Home Details",
@@ -63,10 +63,9 @@ export default function ProcessingPage() {
       />
       <Card className="w-full max-w-md text-center shadow-xl bg-card text-card-foreground">
         <CardHeader className="pt-8 pb-4">
-          {/* Icon removed from here */}
-          <CardTitle className="text-2xl font-bold text-card-foreground">Registering Your Warranty</CardTitle>
+          <CardTitle className="text-2xl font-bold text-card-foreground">Finalizing Your Account</CardTitle>
           <CardDescription className="text-card-foreground mt-2 px-4">
-            Please wait while we process your information. This may take a moment.
+            Please wait while we prepare your personalized warranty options. This may take a moment.
           </CardDescription>
         </CardHeader>
         <CardContent className="py-8">
@@ -79,4 +78,3 @@ export default function ProcessingPage() {
     </div>
   );
 }
-
