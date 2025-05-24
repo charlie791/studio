@@ -18,8 +18,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, Home, MapPin, Phone, ArrowRight, HomeIcon } from 'lucide-react';
-// Removed useToast import as it's no longer used
+import { Loader2, MapPin, Phone, ArrowRight, HomeIcon } from 'lucide-react'; // Home icon import kept for footer, but removed from header
 import type { HomeWarrantyInfoData } from '@/lib/types';
 import ClientOnly from '@/components/client-only';
 
@@ -33,7 +32,6 @@ const homeWarrantyInfoFormSchema = z.object({
 
 export default function HomeDetailsPage() {
   const router = useRouter();
-  // Removed toast from useToast()
   const form = useForm<HomeWarrantyInfoData>({
     resolver: zodResolver(homeWarrantyInfoFormSchema),
     defaultValues: {
@@ -46,11 +44,9 @@ export default function HomeDetailsPage() {
   });
 
   async function onSubmit(data: HomeWarrantyInfoData) {
-    // Simulate saving data - In a real app, you'd save this to Firestore or your backend
     await new Promise(resolve => setTimeout(resolve, 1000));
     console.log('Home Warranty Info:', data);
-    // Removed toast message
-    router.push('/register/processing'); // Redirect to the new processing page
+    router.push('/register/processing');
   }
 
   const ClientFallback = (
@@ -72,7 +68,7 @@ export default function HomeDetailsPage() {
       />
       <Card className="w-full max-w-lg bg-card/90 backdrop-blur-sm shadow-2xl rounded-xl p-2 sm:p-4 md:p-6 border-[6px] border-primary">
         <CardHeader className="text-center items-center pt-6 px-6 pb-4">
-          <Home className="h-10 w-10 text-primary mb-3" />
+          {/* Home icon removed from here */}
           <CardTitle className="text-3xl font-bold text-card-foreground">You’re Almost Protected</CardTitle>
           <CardDescription className="text-card-foreground mt-2 text-sm">
             Add your address to lock in your coverage eligibility — only available for a limited time after move-in.
