@@ -124,7 +124,7 @@ export default function LoginPage() {
         data-ai-hint="kitchen cabinets"
         priority={false}
       />
-      <Card className="w-full max-w-md bg-card/90 backdrop-blur-sm shadow-2xl rounded-xl p-2 sm:p-4 md:p-6">
+      <Card className="w-full max-w-md bg-card/90 backdrop-blur-sm shadow-2xl rounded-xl p-2 sm:p-4 md:p-6 border-[6px] border-primary">
         <CardHeader className="text-center items-center pt-6 px-6 pb-4">
           <CardTitle className="text-3xl font-bold text-primary">Welcome Back!</CardTitle>
           <CardDescription className="text-muted-foreground mt-2 text-sm">
