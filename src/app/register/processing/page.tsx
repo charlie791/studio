@@ -8,11 +8,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Loader2 } from 'lucide-react';
 
 const processingSteps = [
-  "Validating Home Details",
-  "Registering Your Address",
-  "Binding Warranty to Your Property",
-  "Fetching Available Warranty Plans",
-  "Finalizing Setup",
+  "Verifying Property Location…",
+  "Linking Surfaces To Your Account…",
+  "Checking Available Protection Plans…",
+  "Syncing Coverage Options…",
+  "Registering Best-Matched Warranty Tiers…",
+  "Preparing Upgrade Incentives…",
+  "Finalizing Offer Eligibility…",
 ];
 
 const stepDuration = 1500; // ms per step
