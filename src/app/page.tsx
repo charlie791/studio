@@ -22,41 +22,41 @@ export default function LandingPage() {
         data-ai-hint="kitchen cabinets"
         priority
       />
-      <Card className="w-full max-w-lg p-6 sm:p-8 md:p-10 bg-[#717170] border-[6px] border-[#002455] shadow-2xl rounded-xl text-white">
+      <Card className="w-full max-w-lg p-6 sm:p-8 md:p-10 bg-card text-card-foreground border-[6px] border-primary shadow-2xl rounded-xl">
         <div className="flex flex-col items-center text-center">
           {/* New Logo */}
           <div className="flex items-center justify-center mb-6 lg:mb-8">
             <div className="relative w-[60px] h-[70px] sm:w-[70px] sm:h-[80px] mr-3 sm:mr-4">
               <LogoShieldSVG />
-              <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[#FDA001] text-2xl sm:text-3xl font-bold">
+              <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-primary-foreground text-2xl sm:text-3xl font-bold">
                 365
               </span>
             </div>
             <div className="text-left">
-              <span className="block text-3xl sm:text-4xl font-bold text-[#002455]">
+              <span className="block text-3xl sm:text-4xl font-bold text-primary">
                 SURFACE
               </span>
-              <span className="block text-3xl sm:text-4xl font-bold text-[#002455] -mt-1 sm:-mt-2">
+              <span className="block text-3xl sm:text-4xl font-bold text-primary -mt-1 sm:-mt-2">
                 GUARD
               </span>
             </div>
           </div>
 
           {/* Updated Text */}
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight text-card-foreground">
             Protect Your
             <br />
             Countertops & Cabinets
           </h1>
-          <p className="mt-3 sm:mt-4 text-sm sm:text-base md:text-lg">
+          <p className="mt-3 sm:mt-4 text-sm sm:text-base md:text-lg text-card-foreground">
             Warranty your new surfaces in seconds
           </p>
 
-          {/* Updated Button */}
+          {/* Updated Button - Simplified to use theme defaults for primary button */}
           <Button
             asChild
             size="lg"
-            className="w-full mt-8 bg-[#002455] hover:bg-[#001a3b] text-[#FDA001] py-3 text-base sm:text-lg font-semibold"
+            className="w-full mt-8 py-3 text-base sm:text-lg font-semibold" 
           >
             <Link href="/register">
               ACTIVATE WARRANTY
