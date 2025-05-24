@@ -70,11 +70,11 @@ export default function TradeInPage() {
         data-ai-hint="kitchen cabinets"
         priority={false}
       />
-      <Card className="w-full max-w-lg shadow-xl bg-card text-card-foreground">
+      <Card className="w-full max-w-lg shadow-xl bg-card text-card-foreground border-[6px] border-primary">
         <CardHeader className="text-center">
           <Tag className="mx-auto h-12 w-12 text-accent mb-4" />
           <CardTitle className="text-3xl font-bold text-accent">Exclusive Trade-In Offer!</CardTitle>
-          <CardDescription>
+          <CardDescription className="text-card-foreground">
             Interested in upgrading? Fill out the form below to learn about our special trade-in deals for new countertops.
           </CardDescription>
         </CardHeader>
@@ -170,7 +170,7 @@ export default function TradeInPage() {
         </CardContent>
         <CardFooter className="flex justify-center">
           <Button variant="link" asChild>
-            <Link href="/warranty" className="text-sm">
+            <Link href="/warranty" className="text-sm text-muted-foreground hover:text-accent">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Warranty Plans
             </Link>
