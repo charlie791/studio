@@ -1,66 +1,119 @@
 
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import WarrantyPlanCard from '@/components/warranty-plan-card';
-import type { WarrantyPlan } from '@/lib/types';
-import { ArrowRight } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { ArrowRight, Loader2 } from 'lucide-react';
+import type { WarrantyStep } from '@/lib/types';
+import { useState, useEffect } from 'react';
+import WarrantyOptionCard from '@/components/warranty-option-card';
+import { useToast } from '@/hooks/use-toast';
+import { useRouter } from 'next/navigation';
 
-const warrantyPlansData: WarrantyPlan[] = [
+const warrantyFlowStepsData: WarrantyStep[] = [
   {
-    id: 'core',
-    name: 'SurfaceGuard365 – Core',
-    priceMonthly: 74.75, // Flex payment amount
-    priceAnnually: 299, // Total one-time charge
-    duration: '5-Year Warranty',
-    icon: 'Shield',
-    features: [
-      { text: 'Protection against common stains' },
-      { text: 'Coverage for minor chips' },
-      { text: '5-year countertop protection' },
-      { text: 'Standard email support' },
-    ],
-    ctaText: 'Choose Core Plan',
+    id: 'core-step',
+    iconName: 'Shield',
+    title: 'SurfaceGuard365 – Core',
+    summary: '5-Year Countertop Warranty. Protection against common stains and minor chips.',
+    priceMonthly: 74.75,
+    priceAnnually: 299,
+    planId: 'core',
+    isDeclineStep: false,
+    ctaNextText: 'See Next Option',
   },
   {
-    id: 'total-combo',
-    name: 'SurfaceGuard365 – Total Combo Plan',
-    priceMonthly: 149.75, // Flex payment amount
-    priceAnnually: 599, // Total one-time charge
-    duration: '10-Year Countertop + Cabinet Warranty',
-    icon: 'Gem',
-    popular: true,
-    features: [
-      { text: 'All Extended Plan benefits' },
-      { text: 'Full coverage for countertops & cabinets' },
-      { text: 'Accidental damage protection included' },
-      { text: 'Annual professional care & inspection visit' },
-      { text: 'Dedicated VIP support line' },
-    ],
-    ctaText: 'Choose Total Combo',
+    id: 'total-combo-step',
+    iconName: 'Gem',
+    title: 'SurfaceGuard365 – Combo',
+    summary: '10-Year Countertop + Cabinet Warranty. Comprehensive coverage including accidental damage.',
+    priceMonthly: 149.75,
+    priceAnnually: 599,
+    planId: 'total-combo',
+    bestValue: true,
+    isDeclineStep: false,
+    ctaNextText: 'See Next Option',
   },
   {
-    id: 'extended',
-    name: 'SurfaceGuard365 – Extended',
-    priceMonthly: 124.75, // Flex payment amount
-    priceAnnually: 499, // Total one-time charge
-    duration: '10-Year Warranty',
-    icon: 'Zap',
-    features: [
-      { text: 'All Core Plan benefits' },
-      { text: 'Extended coverage for major damages' },
-      { text: 'Protection against heat marks & scratches' },
-      { text: '10-year countertop protection' },
-      { text: 'Priority phone & email support' },
-    ],
-    ctaText: 'Choose Extended Plan',
+    id: 'extended-step',
+    iconName: 'Zap',
+    title: 'SurfaceGuard365 – Extended',
+    summary: '10-Year Countertop Warranty. Includes heat marks, scratches, and VIP support.',
+    priceMonthly: 124.75,
+    priceAnnually: 499,
+    planId: 'extended',
+    isDeclineStep: false,
+    ctaNextText: 'See Final Option',
+  },
+  {
+    id: 'decline-step',
+    iconName: 'XCircle',
+    title: 'Final Option: Decline Full Coverage',
+    summary: 'If a full plan isn\'t for you right now, you can opt for our complimentary 30-day protection.',
+    isDeclineStep: true,
+    ctaDeclineText: 'Choose Free 30-Day Plan',
+    tooltipText: 'You can upgrade to a full plan anytime within the next 30 days.',
   },
 ];
 
 export default function WarrantyPage() {
+  const [stepViewActive, setStepViewActive] = useState(false);
+  const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  const [isClient, setIsClient] = useState(false);
+  const { toast } = useToast();
+  const router = useRouter();
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  const handleSeeCoverageOptions = () => {
+    setStepViewActive(true);
+  };
+
+  const handleViewNext = () => {
+    if (currentStepIndex < warrantyFlowStepsData.length - 1) {
+      setCurrentStepIndex(currentStepIndex + 1);
+    }
+  };
+
+  const handleDecline = () => {
+    console.log('User chose Free 30-Day Plan. Flagging lead for follow-up.');
+    toast({
+      title: 'Complimentary Protection Activated!',
+      description: 'Your 30-day protection is now active. You can upgrade anytime.',
+      duration: 5000,
+    });
+    // Optionally, redirect to trade-in or another page after a delay
+    setTimeout(() => {
+      router.push('/trade-in'); // Example: redirect to trade-in page
+    }, 2000);
+  };
+  
+  // Animation key to force re-render of card for simple "boom" effect
+  const animationKey = `step-${currentStepIndex}`;
+
+  if (!isClient) {
+    return (
+      <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden p-4">
+        <Image
+            src="https://igscountertops.b-cdn.net/kitchencabinets.now%20assets/Cabiets%20assets/ELITECRAFT%20Imperial%20Blue/imperial-blue-main-gallery-image-1.jpg"
+            alt="Modern kitchen background"
+            layout="fill"
+            objectFit="cover"
+            className="-z-10 filter brightness-75"
+            data-ai-hint="kitchen cabinets"
+            priority={false}
+        />
+        <Loader2 className="h-12 w-12 animate-spin text-primary" />
+      </div>
+    );
+  }
+
   return (
-    <div className="relative flex flex-1 flex-col items-center overflow-hidden">
+    <div className="relative flex flex-1 flex-col items-center justify-start overflow-hidden pt-12 pb-8 px-4 md:px-6 lg:px-8 min-h-screen">
       <Image
         src="https://igscountertops.b-cdn.net/kitchencabinets.now%20assets/Cabiets%20assets/ELITECRAFT%20Imperial%20Blue/imperial-blue-main-gallery-image-1.jpg"
         alt="Modern kitchen background"
@@ -70,41 +123,51 @@ export default function WarrantyPage() {
         data-ai-hint="kitchen cabinets"
         priority={false}
       />
-      <div className="relative z-10 w-full max-w-7xl mx-auto space-y-12 py-8 px-4 md:px-6 lg:px-8">
-        <header className="text-center space-y-4 bg-card/80 backdrop-blur-sm p-6 rounded-lg shadow-lg">
-          <h1 className="text-4xl font-bold tracking-tight text-card-foreground">You’re Eligible for Protection — Pick What Works Best for You</h1>
-          <p className="text-lg text-card-foreground max-w-2xl mx-auto">
-            You’ve activated SurfaceGuard365 coverage. Now choose your level of protection — including a free 30-day warranty.
-          </p>
-        </header>
+      <div className="relative z-10 w-full max-w-3xl mx-auto space-y-8 flex flex-col items-center">
+        <Card className="w-full bg-card/90 backdrop-blur-sm shadow-lg text-center">
+          <CardHeader>
+            <CardTitle className="text-3xl md:text-4xl font-bold tracking-tight text-card-foreground">
+              You’re Eligible for Protection — Pick What Works Best for You
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <CardDescription className="text-lg text-card-foreground max-w-2xl mx-auto">
+              You’ve activated SurfaceGuard365 coverage. Now choose your level of protection — including options for a free 30-day warranty.
+            </CardDescription>
+          </CardContent>
+        </Card>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {warrantyPlansData.map((plan) => (
-            <WarrantyPlanCard key={plan.id} plan={plan} />
-          ))}
-        </div>
+        {!stepViewActive && (
+          <Button onClick={handleSeeCoverageOptions} size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground py-3 px-6 text-lg">
+            See Coverage Options
+            <ArrowRight className="ml-2 h-5 w-5" />
+          </Button>
+        )}
 
-        <div className="mt-12">
-          <Card className="max-w-2xl mx-auto shadow-xl border-2 border-accent bg-card text-card-foreground">
-            <CardHeader className="pt-8 text-center">
-              <CardTitle className="text-3xl font-bold text-primary">Not Ready for a Warranty?</CardTitle>
-            </CardHeader>
-            <CardContent className="text-center px-4">
-              <CardDescription className="text-lg text-card-foreground">
-                Explore our limited-time trade-in offer and give your kitchen a fresh new look with brand new countertops.
-              </CardDescription>
-            </CardContent>
-            <CardFooter className="flex justify-center pt-2 pb-8">
-              <Button asChild variant="outline" size="lg" className="border-accent text-accent hover:bg-accent/10 hover:text-accent">
-                <Link href="/trade-in">
-                  Explore Trade-In Offer
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-            </CardFooter>
-          </Card>
-        </div>
+        {stepViewActive && (
+          <div key={animationKey} className="w-full flex justify-center animate-slideUpFadeIn">
+            <WarrantyOptionCard
+              step={warrantyFlowStepsData[currentStepIndex]}
+              onViewNext={currentStepIndex < warrantyFlowStepsData.length - 1 ? handleViewNext : undefined}
+              onDecline={handleDecline}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
 }
+
+// Add simple animations to globals.css or tailwind.config.js if needed
+// For example, in globals.css:
+// @keyframes slideUpFadeIn {
+//   from { opacity: 0; transform: translateY(20px); }
+//   to { opacity: 1; transform: translateY(0); }
+// }
+// .animate-slideUpFadeIn { animation: slideUpFadeIn 0.5s ease-out forwards; }
+
+// @keyframes fadeIn {
+//  from { opacity: 0; }
+//  to { opacity: 1; }
+// }
+// .animate-fadeIn { animation: fadeIn 0.5s ease-out forwards; }
