@@ -184,7 +184,7 @@ export default function CreateAccountPage() {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground py-3 text-base" disabled={form.formState.isSubmitting || !!authInitializationError}>
+                <Button type="submit" className="w-full py-3 text-base" disabled={form.formState.isSubmitting || !!authInitializationError}>
                   {form.formState.isSubmitting ? (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   ) : null}
