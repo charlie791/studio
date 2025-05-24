@@ -63,7 +63,7 @@ export default function ProcessingPage() {
         data-ai-hint="kitchen cabinets"
         priority={false}
       />
-      <Card className="w-full max-w-md text-center shadow-xl bg-card text-card-foreground">
+      <Card className="w-full max-w-md text-center shadow-xl bg-card text-card-foreground border-[6px] border-primary">
         <CardHeader className="pt-8 pb-4">
           <CardTitle className="text-2xl font-bold text-card-foreground">Finalizing Your Account</CardTitle>
           <CardDescription className="text-card-foreground mt-2 px-4">
@@ -72,7 +72,7 @@ export default function ProcessingPage() {
         </CardHeader>
         <CardContent className="py-8">
           <Loader2 className="mx-auto h-10 w-10 animate-spin text-primary mb-6" />
-          <p className="text-lg font-medium text-foreground h-6">
+          <p className="text-lg font-medium text-card-foreground h-6">
             {processingSteps[currentStepIndex]}{dots}
           </p>
         </CardContent>
