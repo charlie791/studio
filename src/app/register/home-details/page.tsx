@@ -70,7 +70,7 @@ export default function HomeDetailsPage() {
         data-ai-hint="kitchen cabinets"
         priority={false}
       />
-      <Card className="w-full max-w-lg bg-card/90 backdrop-blur-sm shadow-2xl rounded-xl p-2 sm:p-4 md:p-6">
+      <Card className="w-full max-w-lg bg-card/90 backdrop-blur-sm shadow-2xl rounded-xl p-2 sm:p-4 md:p-6 border-[6px] border-primary">
         <CardHeader className="text-center items-center pt-6 px-6 pb-4">
           <Home className="h-10 w-10 text-primary mb-3" />
           <CardTitle className="text-3xl font-bold text-card-foreground">You’re Almost Protected</CardTitle>
@@ -155,7 +155,7 @@ export default function HomeDetailsPage() {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground py-3 text-base" disabled={form.formState.isSubmitting}>
+                <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-primary py-3 text-base" disabled={form.formState.isSubmitting}>
                   {form.formState.isSubmitting ? (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   ) : (
