@@ -1,6 +1,7 @@
 
 'use client';
 
+import Image from 'next/image';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -59,8 +60,17 @@ export default function TradeInPage() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center py-8">
-      <Card className="w-full max-w-lg shadow-xl">
+    <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden p-4 py-8">
+      <Image
+        src="https://igscountertops.b-cdn.net/kitchencabinets.now%20assets/Cabiets%20assets/ELITECRAFT%20Imperial%20Blue/imperial-blue-main-gallery-image-1.jpg"
+        alt="Modern kitchen background"
+        layout="fill"
+        objectFit="cover"
+        className="-z-10 filter brightness-75"
+        data-ai-hint="kitchen cabinets"
+        priority={false}
+      />
+      <Card className="w-full max-w-lg shadow-xl bg-card text-card-foreground">
         <CardHeader className="text-center">
           <Tag className="mx-auto h-12 w-12 text-accent mb-4" />
           <CardTitle className="text-3xl font-bold text-accent">Exclusive Trade-In Offer!</CardTitle>

@@ -16,7 +16,7 @@ export default function LandingPage() {
         alt="Modern kitchen background"
         layout="fill"
         objectFit="cover"
-        className="-z-10"
+        className="-z-10 filter brightness-75"
         data-ai-hint="kitchen cabinets"
         priority
       />

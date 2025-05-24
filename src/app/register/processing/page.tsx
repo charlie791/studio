@@ -1,6 +1,7 @@
 
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -50,11 +51,20 @@ export default function ProcessingPage() {
   }, [router]);
 
   return (
-    <div className="flex flex-1 flex-col items-center justify-center p-4 min-h-screen">
-      <Card className="w-full max-w-md text-center shadow-xl">
+    <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden p-4 min-h-screen">
+      <Image
+        src="https://igscountertops.b-cdn.net/kitchencabinets.now%20assets/Cabiets%20assets/ELITECRAFT%20Imperial%20Blue/imperial-blue-main-gallery-image-1.jpg"
+        alt="Modern kitchen background"
+        layout="fill"
+        objectFit="cover"
+        className="-z-10 filter brightness-75"
+        data-ai-hint="kitchen cabinets"
+        priority={false}
+      />
+      <Card className="w-full max-w-md text-center shadow-xl bg-card text-card-foreground">
         <CardHeader className="pt-8 pb-4">
           <ShieldCheck className="mx-auto h-12 w-12 text-primary mb-4" />
-          <CardTitle className="text-2xl font-bold">Registering Your Warranty</CardTitle>
+          <CardTitle className="text-2xl font-bold text-primary">Registering Your Warranty</CardTitle>
           <CardDescription className="text-muted-foreground mt-2 px-4">
             Please wait while we process your information. This may take a moment.
           </CardDescription>

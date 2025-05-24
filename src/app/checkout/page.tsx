@@ -1,6 +1,7 @@
 
 'use client';
 
+import Image from 'next/image';
 import { Suspense } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -99,33 +100,59 @@ function CheckoutPageContent() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center py-8">
-      <Card className="w-full max-w-md shadow-xl">
-        <CardHeader className="text-center">
-          <CreditCard className="mx-auto h-12 w-12 text-primary mb-4" />
-          <CardTitle className="text-3xl font-bold">Complete Your Purchase</CardTitle>
-          <CardDescription>You're one step away from securing your {selectedPlan.name} plan.</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="border p-4 rounded-md bg-muted/50">
-            <h3 className="text-lg font-semibold flex items-center gap-2"><ShieldCheck className="text-primary h-5 w-5"/> {selectedPlan.name}</h3>
-            <p className="text-2xl font-bold text-primary">
-              4 Flex Payments of ${selectedPlan.priceMonthly.toFixed(2)}
-            </p>
-            <p className="text-sm font-normal text-muted-foreground">
-              Total: ${selectedPlan.priceAnnually.toFixed(2)} (One-time charge)
-            </p>
-          </div>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+    <Card className="w-full max-w-md shadow-xl bg-card text-card-foreground">
+      <CardHeader className="text-center">
+        <CreditCard className="mx-auto h-12 w-12 text-primary mb-4" />
+        <CardTitle className="text-3xl font-bold">Complete Your Purchase</CardTitle>
+        <CardDescription>You're one step away from securing your {selectedPlan.name} plan.</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        <div className="border p-4 rounded-md bg-muted/50">
+          <h3 className="text-lg font-semibold flex items-center gap-2"><ShieldCheck className="text-primary h-5 w-5"/> {selectedPlan.name}</h3>
+          <p className="text-2xl font-bold text-primary">
+            4 Flex Payments of ${selectedPlan.priceMonthly.toFixed(2)}
+          </p>
+          <p className="text-sm font-normal text-muted-foreground">
+            Total: ${selectedPlan.priceAnnually.toFixed(2)} (One-time charge)
+          </p>
+        </div>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              control={form.control}
+              name="cardHolderName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Cardholder Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Full Name as on Card" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="cardNumber"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Card Number</FormLabel>
+                  <FormControl>
+                    <Input placeholder="•••• •••• •••• ••••" {...field} maxLength={16} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="grid grid-cols-2 gap-4">
               <FormField
                 control={form.control}
-                name="cardHolderName"
+                name="expiryDate"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Cardholder Name</FormLabel>
+                    <FormLabel>Expiry Date</FormLabel>
                     <FormControl>
-                      <Input placeholder="Full Name as on Card" {...field} />
+                      <Input placeholder="MM/YY" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -133,74 +160,56 @@ function CheckoutPageContent() {
               />
               <FormField
                 control={form.control}
-                name="cardNumber"
+                name="cvc"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Card Number</FormLabel>
+                    <FormLabel>CVC</FormLabel>
                     <FormControl>
-                      <Input placeholder="•••• •••• •••• ••••" {...field} maxLength={16} />
+                      <Input placeholder="123" {...field} maxLength={4} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <div className="grid grid-cols-2 gap-4">
-                <FormField
-                  control={form.control}
-                  name="expiryDate"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Expiry Date</FormLabel>
-                      <FormControl>
-                        <Input placeholder="MM/YY" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="cvc"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>CVC</FormLabel>
-                      <FormControl>
-                        <Input placeholder="123" {...field} maxLength={4} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
-                {form.formState.isSubmitting ? (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                ) : (
-                  <CreditCard className="mr-2 h-4 w-4" />
-                )}
-                Pay ${selectedPlan.priceAnnually.toFixed(2)} Securely
-              </Button>
-            </form>
-          </Form>
-        </CardContent>
-         <CardFooter className="flex justify-center">
-          <Button variant="link" asChild>
-            <Link href="/warranty" className="text-sm">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Change Plan
-            </Link>
-          </Button>
-        </CardFooter>
-      </Card>
-    </div>
+            </div>
+            <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+              {form.formState.isSubmitting ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                <CreditCard className="mr-2 h-4 w-4" />
+              )}
+              Pay ${selectedPlan.priceAnnually.toFixed(2)} Securely
+            </Button>
+          </form>
+        </Form>
+      </CardContent>
+        <CardFooter className="flex justify-center">
+        <Button variant="link" asChild>
+          <Link href="/warranty" className="text-sm">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Change Plan
+          </Link>
+        </Button>
+      </CardFooter>
+    </Card>
   );
 }
 
 export default function CheckoutPage() {
   return (
-    <Suspense fallback={<div className="flex justify-center items-center h-64"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>}>
-      <CheckoutPageContent />
-    </Suspense>
+    <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden p-4 py-8">
+      <Image
+        src="https://igscountertops.b-cdn.net/kitchencabinets.now%20assets/Cabiets%20assets/ELITECRAFT%20Imperial%20Blue/imperial-blue-main-gallery-image-1.jpg"
+        alt="Modern kitchen background"
+        layout="fill"
+        objectFit="cover"
+        className="-z-10 filter brightness-75"
+        data-ai-hint="kitchen cabinets"
+        priority={false}
+      />
+      <Suspense fallback={<div className="flex justify-center items-center h-64"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>}>
+        <CheckoutPageContent />
+      </Suspense>
+    </div>
   )
 }
-
