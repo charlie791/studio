@@ -5,18 +5,18 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'; // Corrected import
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { Crown, Diamond, Check, Flame, ChevronDown, ShoppingCart, XCircle, type LucideIcon as LucideIconType } from 'lucide-react';
+import { Crown, Diamond, Check, Flame, ChevronDown, ShoppingCart, XCircle, Shield, Zap, Gem, type LucideIcon as LucideIconType } from 'lucide-react';
 import type { WarrantyStep } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
 // Icon map to resolve string names to actual Lucide components
 const iconMap: Record<string, LucideIconType | undefined> = {
-  Shield: Shield, // Kept for existing type, though Diamond is used in new design
-  Gem: Diamond, // Kept for existing type, though Diamond is used in new design
-  Zap: Zap, // Kept for existing type
-  CheckCircle: Check, // Changed to Check to match new design
+  Shield: Shield,
+  Gem: Gem,
+  Zap: Zap,
+  CheckCircle: Check,
   Diamond: Diamond,
   Crown: Crown,
   Flame: Flame,
@@ -30,7 +30,6 @@ function FeaturesList({ features }: { features: Array<{ text: string; icon?: str
   return (
     <ul className="space-y-2.5">
       {features.map((feature, index) => {
-        // Use Check icon as per the new design guide, allow override if specified
         const FeatureIcon = feature.icon && iconMap[feature.icon] ? iconMap[feature.icon] : Check;
         return (
           <li
@@ -47,10 +46,17 @@ function FeaturesList({ features }: { features: Array<{ text: string; icon?: str
   );
 }
 
+interface WarrantyAccordionCardProps {
+  step: WarrantyStep;
+  onDecline: () => void;
+  className?: string;
+  defaultOpen?: boolean;
+}
 
 export default function WarrantyAccordionCard({ step, onDecline, className, defaultOpen = false }: WarrantyAccordionCardProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
-  const HeaderIcon = step.iconName && iconMap[step.iconName] ? iconMap[step.iconName] : Diamond; // Default to Diamond
+  // Use step.iconName if provided, otherwise default to Diamond for plan cards, or null for decline
+  const HeaderIcon = !step.isDeclineStep && step.iconName && iconMap[step.iconName] ? iconMap[step.iconName] : (!step.isDeclineStep ? Diamond : null);
 
   return (
     <TooltipProvider>
@@ -62,7 +68,7 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
               
               {step.bestValue && (
                 <div className="absolute top-4 left-6 bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/30 flex items-center gap-1.5 text-xs font-semibold text-white z-10">
-                  <Crown className="w-4 h-4 fill-accent" /> {/* Lumen Gold for crown */}
+                  <Crown className="w-4 h-4 fill-accent" />
                   Most Popular
                 </div>
               )}
@@ -92,6 +98,7 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
           {step.isDeclineStep && (
              <CardHeader className="relative bg-gradient-to-br from-gray-600 to-gray-700 p-8 text-center overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
+               {HeaderIcon && <HeaderIcon className="w-6 h-6 fill-white/80 stroke-white/80 mx-auto mb-4 z-10 relative" />} {/* Optional: Icon for decline */}
               <h2 className="text-2xl font-bold text-white mb-2 z-10 relative">
                 {step.title}
               </h2>
@@ -161,11 +168,4 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
       </div>
     </TooltipProvider>
   );
-}
-
-interface WarrantyAccordionCardProps {
-  step: WarrantyStep;
-  onDecline: () => void;
-  className?: string;
-  defaultOpen?: boolean;
 }
