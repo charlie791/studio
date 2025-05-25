@@ -128,21 +128,21 @@ export default function WarrantyPage() {
           <Card className="w-full shadow-lg text-center border-[6px] border-primary">
             <CardHeader>
               <CardTitle className="text-3xl md:text-4xl font-bold tracking-tight text-card-foreground">
-                You’re Eligible for Protection
+                You’re Eligible for Extended Protection
                 <br />
-                Pick What Works Best for You
+                Peace of mind starts with your free 30-day warranty.
               </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="flex flex-col items-center">
               <CardDescription className="text-lg text-card-foreground max-w-2xl mx-auto">
-                You’ve activated SurfaceGuard365 coverage. Now choose your level of protection — including options for a free 30-day warranty.
+                You’ve activated your 30-day SurfaceGuard365 warranty. Now explore extended coverage options — including 5- and 10-year plans to keep your countertops and cabinets protected for years to come.
               </CardDescription>
               <Button 
                 onClick={handleSeeCoverageOptions} 
                 size="lg" 
                 className="bg-accent hover:bg-accent/90 text-accent-foreground py-3 px-6 text-lg mt-6"
               >
-                See Coverage Options
+                View Extended Coverage Plans
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </CardContent>
