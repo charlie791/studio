@@ -3,9 +3,9 @@
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { Shield, Gem, Zap, XCircle, Ban, ShoppingCart, ArrowRight, Star, type LucideProps } from 'lucide-react';
+import { Shield, Gem, Zap, XCircle, Ban, ShoppingCart, ArrowRight, Star, type LucideProps, Flame } from 'lucide-react';
 import type { WarrantyStep, LucideIconType } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { type ForwardRefExoticComponent, type RefAttributes } from 'react';
@@ -20,20 +20,19 @@ const iconMap: Record<string, LucideIconType> = {
   ShoppingCart: ShoppingCart as LucideIconType,
   ArrowRight: ArrowRight as LucideIconType,
   Star: Star as LucideIconType,
+  Flame: Flame as LucideIconType,
 };
 
 
 interface WarrantyOptionCardProps {
   step: WarrantyStep;
   onViewNext?: () => void;
-  onDecline: () => void; // Renamed for clarity, handles the "Choose Free 30-Day Plan" action
+  onDecline: () => void; 
   className?: string;
 }
 
 export default function WarrantyOptionCard({ step, onViewNext, onDecline, className }: WarrantyOptionCardProps) {
-  // StepIconComponent is no longer used in the header
-  // const StepIconComponent = step.iconName ? iconMap[step.iconName] : null;
-
+  
   return (
     <TooltipProvider>
       <Card className={cn(
@@ -41,13 +40,11 @@ export default function WarrantyOptionCard({ step, onViewNext, onDecline, classN
         className
       )}>
         {step.bestValue && (
-          <div className="bg-primary text-primary-foreground text-xs font-semibold py-1 px-3 -mb-px text-center flex items-center justify-center gap-1 relative -top-[6px] mx-[calc(-1.5rem_+_6px)] rounded-t-md">
-            {/* Adjusted for thicker border visually*/}
+          <div className="bg-primary text-primary-foreground text-xs font-semibold py-1 px-3 text-center flex items-center justify-center gap-1 relative -top-[1px] mx-[calc(0rem)] rounded-t-sm">
             <Star className="w-3 h-3 fill-current" /> Best Value
           </div>
         )}
         <CardHeader className="items-center text-center pt-6">
-          {/* Icon removed from here */}
           <CardTitle className="text-2xl font-semibold text-card-foreground">{step.title}</CardTitle>
         </CardHeader>
         <CardContent className="flex-grow text-center">
@@ -64,7 +61,7 @@ export default function WarrantyOptionCard({ step, onViewNext, onDecline, classN
         </CardContent>
         <CardFooter className="flex flex-col sm:flex-row gap-2 pt-2 pb-6 px-6">
           {!step.isDeclineStep && step.planId && (
-            <Button asChild className="w-full sm:w-auto flex-1 bg-primary hover:bg-primary/90 text-primary-foreground">
+            <Button asChild className="w-full sm:w-auto flex-1">
               <Link href={`/checkout?planId=${step.planId}`}>
                 <ShoppingCart className="mr-2 h-4 w-4" />
                 {step.ctaSelectText || 'Select Plan'}
@@ -99,3 +96,4 @@ export default function WarrantyOptionCard({ step, onViewNext, onDecline, classN
     </TooltipProvider>
   );
 }
+

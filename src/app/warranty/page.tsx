@@ -5,62 +5,86 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight, Loader2 } from 'lucide-react';
+import { ArrowRight, Loader2, ShieldQuestion, Star, Flame } from 'lucide-react'; // Flame for best value
 import type { WarrantyStep } from '@/lib/types';
 import { useState, useEffect } from 'react';
-import WarrantyOptionCard from '@/components/warranty-option-card';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
+import WarrantyAccordionCard from '@/components/warranty-accordion-card';
 
 const warrantyFlowStepsData: WarrantyStep[] = [
   {
-    id: 'core-step',
-    iconName: 'Shield',
-    title: 'SurfaceGuard365 – Core',
-    summary: '5-Year Countertop Warranty. Protection against common stains and minor chips.',
-    priceMonthly: 74.75,
-    priceAnnually: 299,
-    planId: 'core',
-    isDeclineStep: false,
-    ctaNextText: 'See Next Option',
-  },
-  {
     id: 'total-combo-step',
-    iconName: 'Gem',
-    title: 'SurfaceGuard365 – Combo',
-    summary: '10-Year Countertop + Cabinet Warranty. Comprehensive coverage including accidental damage.',
+    title: 'SurfaceGuard365 – Total Combo Plan',
+    summary: 'Premium 10-Year Cabinet + Countertop Protection',
     priceMonthly: 149.75,
     priceAnnually: 599,
     planId: 'total-combo',
-    bestValue: true,
+    bestValue: true, // This will trigger the "Most Popular" badge
     isDeclineStep: false,
-    ctaNextText: 'See Next Option',
+    ctaSelectText: 'Select Total Combo Plan',
+    features: [
+      { text: 'Complete Cabinet warranty protection', icon: 'CheckCircle' },
+      { text: 'Full kitchen surface coverage — countertops, cabinets', icon: 'CheckCircle' },
+      { text: 'Accidental damage protection (chips, cracks, stains)', icon: 'CheckCircle' },
+      { text: 'Professional care kit', icon: 'CheckCircle' },
+      { text: 'VIP 24/7 customer support line', icon: 'CheckCircle' },
+      { text: 'Priority service response', icon: 'CheckCircle' },
+      { text: 'Transferable for life of the plan', icon: 'CheckCircle' },
+      { text: 'Upgrade incentives first day of coverage', icon: 'CheckCircle' },
+      { text: 'Everything included in the Extended Plan', icon: 'CheckCircle' },
+    ],
+    specialOfferText: '🔥 Best Value – Save 30% vs purchasing separately',
   },
   {
     id: 'extended-step',
-    iconName: 'Zap',
     title: 'SurfaceGuard365 – Extended',
-    summary: '10-Year Countertop Warranty. Includes heat marks, scratches, and VIP support.',
+    summary: '10-Year Countertop Warranty + VIP Support',
     priceMonthly: 124.75,
     priceAnnually: 499,
     planId: 'extended',
     isDeclineStep: false,
-    ctaNextText: 'See Final Option',
+    ctaSelectText: 'Select Extended Plan',
+    features: [
+      { text: 'Comprehensive 10-Year Countertop coverage', icon: 'CheckCircle' },
+      { text: 'Protection against heat marks and deep scratches', icon: 'CheckCircle' },
+      { text: 'Includes accidental damage from common kitchen use', icon: 'CheckCircle' },
+      { text: 'VIP priority customer support', icon: 'CheckCircle' },
+      { text: 'Annual professional surface inspection eligibility', icon: 'CheckCircle' },
+    ],
+  },
+  {
+    id: 'core-step',
+    title: 'SurfaceGuard365 – Core',
+    summary: '5-Year Countertop Warranty',
+    priceMonthly: 74.75,
+    priceAnnually: 299,
+    planId: 'core',
+    isDeclineStep: false,
+    ctaSelectText: 'Select Core Plan',
+    features: [
+      { text: 'Solid 5-Year Countertop protection', icon: 'CheckCircle' },
+      { text: 'Covers common stains (coffee, wine, oil)', icon: 'CheckCircle' },
+      { text: 'Protection against minor chips and cracks', icon: 'CheckCircle' },
+      { text: 'Access to standard customer support', icon: 'CheckCircle' },
+    ],
   },
   {
     id: 'decline-step',
-    iconName: 'XCircle',
-    title: 'Final Option: Decline Full Coverage',
-    summary: "If a full plan isn't for you right now, you can opt for our complimentary 30-day protection.",
+    title: 'Continue with Complimentary 30-Day Protection',
+    summary: "If a full plan isn't for you right now, your complimentary 30-day protection is already active. You can upgrade to a full plan anytime within the next 30 days.",
     isDeclineStep: true,
-    ctaDeclineText: 'Choose Free 30-Day Plan',
-    tooltipText: 'You can upgrade to a full plan anytime within the next 30 days.',
+    ctaDeclineText: 'Keep Free 30-Day Plan',
+    tooltipText: 'No immediate action needed. Consider upgrading later for long-term peace of mind.',
+    features: [ // Features for decline step could be a summary or empty
+        { text: 'Basic coverage for 30 days.', icon: 'CheckCircle'},
+        { text: 'Option to upgrade to a full plan.', icon: 'CheckCircle'}
+    ], 
   },
 ];
 
 export default function WarrantyPage() {
   const [stepViewActive, setStepViewActive] = useState(false);
-  const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [isClient, setIsClient] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
@@ -73,28 +97,18 @@ export default function WarrantyPage() {
     setStepViewActive(true);
   };
 
-  const handleViewNext = () => {
-    if (currentStepIndex < warrantyFlowStepsData.length - 1) {
-      setCurrentStepIndex(currentStepIndex + 1);
-    }
-  };
-
   const handleDecline = () => {
     console.log('User chose Free 30-Day Plan. Flagging lead for follow-up.');
     toast({
-      title: 'Complimentary Protection Activated!',
-      description: 'Your 30-day protection is now active. You can upgrade anytime.',
+      title: 'Complimentary Protection Confirmed!',
+      description: 'Your 30-day protection is active. You can upgrade anytime.',
       duration: 5000,
     });
-    // Optionally, redirect to trade-in or another page after a delay
     setTimeout(() => {
-      router.push('/trade-in'); // Example: redirect to trade-in page
+      router.push('/trade-in'); 
     }, 2000);
   };
   
-  // Animation key to force re-render of card for simple "boom" effect
-  const animationKey = `step-${currentStepIndex}`;
-
   if (!isClient) {
     return (
       <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden p-4">
@@ -121,10 +135,10 @@ export default function WarrantyPage() {
         data-ai-hint="kitchen cabinets"
         priority={false}
       />
-      <div className="relative z-10 w-full max-w-3xl mx-auto space-y-8 flex flex-col items-center">
+      <div className="relative z-10 w-full max-w-2xl mx-auto space-y-8 flex flex-col items-center">
         {!stepViewActive && (
           <Card className="w-full shadow-lg text-center bg-card text-card-foreground border-[6px] border-primary">
-            <CardHeader>
+            <CardHeader className="items-center">
               <CardTitle className="text-3xl md:text-4xl font-bold tracking-tight text-card-foreground">
                 You’re Eligible for Extended Protection
                 <br />
@@ -132,7 +146,7 @@ export default function WarrantyPage() {
               </CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col items-center">
-              <CardDescription className="text-lg text-card-foreground max-w-2xl mx-auto">
+              <CardDescription className="text-lg text-card-foreground max-w-xl mx-auto">
                 You’ve activated your 30-day SurfaceGuard365 warranty. Now explore extended coverage options — including 5- and 10-year plans to keep your countertops and cabinets protected for years to come.
               </CardDescription>
               <Button 
@@ -148,12 +162,16 @@ export default function WarrantyPage() {
         )}
 
         {stepViewActive && (
-          <div key={animationKey} className="w-full flex justify-center animate-slideUpFadeIn">
-            <WarrantyOptionCard
-              step={warrantyFlowStepsData[currentStepIndex]}
-              onViewNext={currentStepIndex < warrantyFlowStepsData.length - 1 ? handleViewNext : undefined}
-              onDecline={handleDecline}
-            />
+          <div className="w-full space-y-6">
+            {warrantyFlowStepsData.map((step, index) => (
+              <WarrantyAccordionCard 
+                key={step.id} 
+                step={step} 
+                onDecline={handleDecline}
+                // Open the first accordion (Most Popular) by default
+                defaultOpen={index === 0 && step.bestValue} 
+              />
+            ))}
           </div>
         )}
       </div>
