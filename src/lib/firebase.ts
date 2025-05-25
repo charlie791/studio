@@ -34,7 +34,7 @@ if (
   authInitializationError = new Error(
     `Firebase configuration is missing or invalid. Please ensure environment variables are correctly set (${missingKeys}). Firebase cannot be initialized.`
   );
-  console.error(authInitializationError.message);
+  // Removed console.error(authInitializationError.message);
 } else {
   try {
     if (!getApps().length) {
