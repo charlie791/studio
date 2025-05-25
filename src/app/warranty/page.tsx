@@ -149,13 +149,13 @@ export default function WarrantyPage() {
                 <br />
                 Peace of mind starts with your free 30-day warranty.
               </CardTitle>
-              <CardDescription className="text-lg text-white max-w-xl mx-auto text-center mb-6 z-10 relative">
+              <CardDescription className="text-lg text-white/90 max-w-xl mx-auto text-center mt-2 z-10 relative">
                 You’ve activated your 30-day SurfaceGuard365 warranty. Now explore extended coverage options — including 5- and 10-year plans to keep your countertops and cabinets protected for years to come.
               </CardDescription>
               <Button 
                 onClick={handleSeeCoverageOptions} 
                 size="lg" 
-                className="w-full bg-gradient-to-r from-[#002455] to-[#003875] text-primary-foreground hover:shadow-lg hover:shadow-[#002455]/40 hover:-translate-y-0.5 transition-all duration-300 py-3 text-base rounded-2xl relative overflow-hidden group h-auto"
+                className="w-full bg-gradient-to-r from-[#002455] to-[#003875] text-primary-foreground hover:shadow-lg hover:shadow-[#002455]/40 hover:-translate-y-0.5 transition-all duration-300 py-3 text-base rounded-2xl relative overflow-hidden group h-auto mt-6"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
                 View Extended Coverage Plans
