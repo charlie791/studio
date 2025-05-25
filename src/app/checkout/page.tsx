@@ -24,30 +24,30 @@ import type { WarrantyPlan, CheckoutData } from '@/lib/types';
 import Link from 'next/link';
 
 const mockPlans: Record<string, WarrantyPlan> = {
-  core: { 
-    id: 'core', 
-    name: 'SurfaceGuard365 – Core', 
-    priceMonthly: 74.75, 
-    priceAnnually: 299, 
-    duration: '5-Year Warranty', 
+  core: {
+    id: 'core',
+    name: 'SurfaceGuard365 – Core',
+    priceMonthly: 74.75,
+    priceAnnually: 299,
+    duration: '5-Year Warranty',
     features: [],
     icon: 'Shield',
   },
-  'total-combo': { 
-    id: 'total-combo', 
-    name: 'SurfaceGuard365 – Total Combo Plan', 
-    priceMonthly: 149.75, 
-    priceAnnually: 599, 
-    duration: '10-Year Countertop + Cabinet Warranty', 
+  'total-combo': {
+    id: 'total-combo',
+    name: 'SurfaceGuard365 – Total Combo Plan',
+    priceMonthly: 149.75,
+    priceAnnually: 599,
+    duration: '10-Year Countertop + Cabinet Warranty',
     features: [],
     icon: 'Gem',
   },
-  extended: { 
-    id: 'extended', 
-    name: 'SurfaceGuard365 – Extended', 
-    priceMonthly: 124.75, 
-    priceAnnually: 499, 
-    duration: '10-Year Warranty', 
+  extended: {
+    id: 'extended',
+    name: 'SurfaceGuard365 – Extended',
+    priceMonthly: 124.75,
+    priceAnnually: 499,
+    duration: '10-Year Warranty',
     features: [],
     icon: 'Zap',
   },
@@ -107,13 +107,15 @@ function CheckoutPageContent() {
         <CardDescription className="text-base text-white/90 mt-2 z-10 relative">You're one step away from securing your {selectedPlan.name} plan.</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6 px-6 pt-6 pb-4">
-        <div className="border p-4 rounded-md bg-muted/50">
-          <h3 className="text-lg font-semibold flex items-center gap-2 text-gray-800"><ShieldCheck className="text-primary h-5 w-5"/> {selectedPlan.name}</h3>
-          <p className="text-2xl font-bold text-primary">
-            4 Flex Payments of ${selectedPlan.priceMonthly.toFixed(2)}
+        <div className="border p-4 rounded-md bg-muted/50 text-center">
+          <h3 className="text-lg font-semibold flex items-center justify-center gap-2 text-gray-800 mb-2">
+            <ShieldCheck className="text-primary h-5 w-5"/> {selectedPlan.name}
+          </h3>
+          <p className="text-base text-gray-700">
+            4 Flex Payments of
           </p>
-          <p className="text-sm font-normal text-muted-foreground">
-            Total: ${selectedPlan.priceAnnually.toFixed(2)} (One-time charge)
+          <p className="text-3xl font-bold text-primary mt-1">
+            ${selectedPlan.priceMonthly.toFixed(2)}
           </p>
         </div>
         <Form {...form}>
@@ -172,9 +174,9 @@ function CheckoutPageContent() {
                 )}
               />
             </div>
-            <Button 
-              type="submit" 
-              className="w-full bg-gradient-to-r from-[#002455] to-[#003875] text-primary-foreground hover:shadow-lg hover:shadow-[#002455]/40 hover:-translate-y-0.5 transition-all duration-300 py-3 text-base font-semibold rounded-2xl relative overflow-hidden group h-auto" 
+            <Button
+              type="submit"
+              className="w-full bg-gradient-to-r from-[#002455] to-[#003875] text-primary-foreground hover:shadow-lg hover:shadow-[#002455]/40 hover:-translate-y-0.5 transition-all duration-300 py-3 text-base font-semibold rounded-2xl relative overflow-hidden group h-auto"
               disabled={form.formState.isSubmitting}
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
@@ -183,7 +185,7 @@ function CheckoutPageContent() {
               ) : (
                 <CreditCard className="mr-2 h-4 w-4" />
               )}
-              Pay ${selectedPlan.priceAnnually.toFixed(2)} Securely
+              Activate First Payment - ${selectedPlan.priceMonthly.toFixed(2)}
             </Button>
           </form>
         </Form>
