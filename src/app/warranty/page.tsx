@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight, Loader2 } from 'lucide-react';
+import { ArrowRight, Loader2, ShieldQuestion } from 'lucide-react';
 import type { WarrantyStep } from '@/lib/types';
 import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
@@ -149,11 +149,11 @@ export default function WarrantyPage() {
                 <br />
                 Peace of mind starts with your free 30-day warranty.
               </CardTitle>
-              <CardDescription className="text-lg text-white/90 max-w-xl mx-auto text-center mt-2 z-10 relative">
-                You’ve activated your 30-day SurfaceGuard365 warranty. Now explore extended coverage options — including 5- and 10-year plans to keep your countertops and cabinets protected for years to come.
-              </CardDescription>
             </CardHeader>
             <CardContent className="p-6 pt-6 text-center">
+              <CardDescription className="text-lg text-gray-700 max-w-xl mx-auto text-center mt-2 mb-6 z-10 relative">
+                You’ve activated your 30-day SurfaceGuard365 warranty. Now explore extended coverage options — including 5- and 10-year plans to keep your countertops and cabinets protected for years to come.
+              </CardDescription>
               <Button 
                 onClick={handleSeeCoverageOptions} 
                 size="lg" 
@@ -183,4 +183,3 @@ export default function WarrantyPage() {
     </div>
   );
 }
-
