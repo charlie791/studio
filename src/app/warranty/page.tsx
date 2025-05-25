@@ -51,7 +51,7 @@ const warrantyFlowStepsData: WarrantyStep[] = [
     id: 'decline-step',
     iconName: 'XCircle',
     title: 'Final Option: Decline Full Coverage',
-    summary: 'If a full plan isn\'t for you right now, you can opt for our complimentary 30-day protection.',
+    summary: "If a full plan isn't for you right now, you can opt for our complimentary 30-day protection.",
     isDeclineStep: true,
     ctaDeclineText: 'Choose Free 30-Day Plan',
     tooltipText: 'You can upgrade to a full plan anytime within the next 30 days.',
@@ -101,9 +101,8 @@ export default function WarrantyPage() {
         <Image
             src="https://igscountertops.b-cdn.net/kitchencabinets.now%20assets/Cabiets%20assets/ELITECRAFT%20Imperial%20Blue/imperial-blue-main-gallery-image-1.jpg"
             alt="Modern kitchen background"
-            layout="fill"
-            objectFit="cover"
-            className="-z-10 filter brightness-75"
+            fill={true}
+            className="-z-10 filter brightness-75 object-cover"
             data-ai-hint="kitchen cabinets"
             priority={false}
         />
@@ -117,9 +116,8 @@ export default function WarrantyPage() {
       <Image
         src="https://igscountertops.b-cdn.net/kitchencabinets.now%20assets/Cabiets%20assets/ELITECRAFT%20Imperial%20Blue/imperial-blue-main-gallery-image-1.jpg"
         alt="Modern kitchen background"
-        layout="fill"
-        objectFit="cover"
-        className="-z-10 filter brightness-75"
+        fill={true}
+        className="-z-10 filter brightness-75 object-cover"
         data-ai-hint="kitchen cabinets"
         priority={false}
       />

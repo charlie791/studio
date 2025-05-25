@@ -102,9 +102,8 @@ export default function ConfirmationPage() {
       <Image
         src="https://igscountertops.b-cdn.net/kitchencabinets.now%20assets/Cabiets%20assets/ELITECRAFT%20Imperial%20Blue/imperial-blue-main-gallery-image-1.jpg"
         alt="Modern kitchen background"
-        layout="fill"
-        objectFit="cover"
-        className="-z-10 filter brightness-75"
+        fill={true}
+        className="-z-10 filter brightness-75 object-cover"
         data-ai-hint="kitchen cabinets"
         priority={false}
       />
