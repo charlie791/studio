@@ -141,23 +141,21 @@ export default function WarrantyPage() {
       />
       <div className="relative z-10 w-full max-w-2xl mx-auto space-y-8 flex flex-col items-center">
         {!stepViewActive && (
-          <Card className="w-full bg-white/95 backdrop-blur-sm border-0 shadow-2xl rounded-xl">
-            <CardHeader className="items-center text-center pt-8 pb-6 px-6 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
-              <CardTitle className="text-3xl md:text-4xl font-bold tracking-tight text-white z-10 relative leading-snug">
+          <Card className="w-full bg-card text-card-foreground border-[6px] border-primary rounded-xl">
+            <CardHeader className="items-center text-center pt-8 pb-6 px-6">
+              <CardTitle className="text-3xl md:text-4xl font-bold tracking-tight text-primary leading-snug">
                 You’re Eligible for Extended Protection
                 <br />
                 Peace of mind starts with your free 30-day warranty.
               </CardTitle>
-              <CardDescription className="text-lg text-white/90 max-w-xl mx-auto text-center mt-2 z-10 relative">
+              <CardDescription className="text-lg text-muted-foreground max-w-xl mx-auto text-center mt-2">
                 You’ve activated your 30-day SurfaceGuard365 warranty. Now explore extended coverage options — including 5- and 10-year plans to keep your countertops and cabinets protected for years to come.
               </CardDescription>
               <Button 
                 onClick={handleSeeCoverageOptions} 
                 size="lg" 
-                className="w-full bg-gradient-to-r from-[#002455] to-[#003875] text-primary-foreground hover:shadow-lg hover:shadow-[#002455]/40 hover:-translate-y-0.5 transition-all duration-300 py-3 text-base rounded-2xl relative overflow-hidden group h-auto mt-6"
+                className="w-full max-w-xs mt-6 bg-primary text-primary-foreground hover:bg-primary/90"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
                 View Extended Coverage Plans
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
