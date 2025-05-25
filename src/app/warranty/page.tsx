@@ -17,9 +17,9 @@ const warrantyFlowStepsData: WarrantyStep[] = [
     id: 'total-combo-step',
     iconName: 'Gem',
     title: 'SurfaceGuard365 – Total Combo Plan',
-    summary: 'Premium 10-Year Cabinet + Countertop Protection',
-    priceMonthly: 149.75,
-    priceAnnually: 599,
+    summary: '10-Year Countertop + Cabinet Warranty', 
+    priceMonthly: 149.75, 
+    priceAnnually: 599, 
     planId: 'total-combo',
     bestValue: true, 
     isDeclineStep: false,
@@ -41,9 +41,9 @@ const warrantyFlowStepsData: WarrantyStep[] = [
     id: 'extended-step',
     iconName: 'Zap',
     title: 'SurfaceGuard365 – Extended',
-    summary: '10-Year Countertop Warranty + VIP Support',
-    priceMonthly: 124.75,
-    priceAnnually: 499,
+    summary: '10-Year Countertop Warranty + VIP Support', 
+    priceMonthly: 124.75, 
+    priceAnnually: 499, 
     planId: 'extended',
     isDeclineStep: false,
     ctaSelectText: 'Select Extended Plan',
@@ -149,9 +149,7 @@ export default function WarrantyPage() {
                 <br />
                 Peace of mind starts with your free 30-day warranty.
               </CardTitle>
-            </CardHeader>
-            <CardContent className="flex flex-col items-center p-6 pt-4">
-              <CardDescription className="text-lg text-white/90 max-w-xl mx-auto text-center mb-6">
+              <CardDescription className="text-lg text-white max-w-xl mx-auto text-center mb-6 z-10 relative">
                 You’ve activated your 30-day SurfaceGuard365 warranty. Now explore extended coverage options — including 5- and 10-year plans to keep your countertops and cabinets protected for years to come.
               </CardDescription>
               <Button 
@@ -163,7 +161,7 @@ export default function WarrantyPage() {
                 View Extended Coverage Plans
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-            </CardContent>
+            </CardHeader>
           </Card>
         )}
 
