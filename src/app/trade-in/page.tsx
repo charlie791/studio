@@ -77,8 +77,8 @@ export default function TradeInPage() {
         <CardHeader className="text-center items-center pt-6 px-6 pb-4 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
           <Tag className="mx-auto h-12 w-12 text-accent mb-4 z-10 relative" />
-          <CardTitle className="text-3xl font-bold text-accent z-10 relative">Exclusive Trade-In Offer!</CardTitle>
-          <CardDescription className="text-white/90 mt-2 z-10 relative">
+          <CardTitle className="text-3xl font-bold tracking-tight text-accent z-10 relative">Exclusive Trade-In Offer!</CardTitle>
+          <CardDescription className="text-base text-white/90 mt-2 z-10 relative">
             Interested in upgrading? Fill out the form below to learn about our special trade-in deals for new countertops.
           </CardDescription>
         </CardHeader>
@@ -164,7 +164,7 @@ export default function TradeInPage() {
                 />
                 <Button 
                   type="submit" 
-                  className="w-full bg-gradient-to-r from-[#002455] to-[#003875] text-primary-foreground hover:shadow-lg hover:shadow-[#002455]/40 hover:-translate-y-0.5 transition-all duration-300 py-3 text-base rounded-2xl relative overflow-hidden group h-auto" 
+                  className="w-full bg-gradient-to-r from-[#002455] to-[#003875] text-primary-foreground hover:shadow-lg hover:shadow-[#002455]/40 hover:-translate-y-0.5 transition-all duration-300 py-3 text-base font-semibold rounded-2xl relative overflow-hidden group h-auto" 
                   disabled={form.formState.isSubmitting}
                 >
                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />

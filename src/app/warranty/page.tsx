@@ -157,7 +157,7 @@ export default function WarrantyPage() {
               <Button 
                 onClick={handleSeeCoverageOptions} 
                 size="lg" 
-                className="w-full max-w-xs mt-0 bg-gradient-to-r from-[#002455] to-[#003875] text-primary-foreground hover:shadow-lg hover:shadow-[#002455]/40 hover:-translate-y-0.5 transition-all duration-300 py-3 text-base rounded-2xl relative overflow-hidden group h-auto"
+                className="w-full max-w-xs mt-0 bg-gradient-to-r from-[#002455] to-[#003875] text-primary-foreground hover:shadow-lg hover:shadow-[#002455]/40 hover:-translate-y-0.5 transition-all duration-300 py-3 text-base font-semibold rounded-2xl relative overflow-hidden group h-auto"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
                 <ArrowRight className="mr-2 h-5 w-5" />

@@ -29,19 +29,19 @@ export default function LandingPage() {
             />
           </div>
 
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight text-gray-800">
+          <h1 className="text-3xl sm:text-4xl font-bold leading-tight tracking-tight text-gray-800">
             Protect Your
             <br />
             Countertops & Cabinets
           </h1>
-          <p className="mt-3 sm:mt-4 text-sm sm:text-base md:text-lg text-gray-700">
+          <p className="mt-3 sm:mt-4 text-base md:text-lg text-gray-700">
             Warranty your new surfaces in seconds
           </p>
 
           <Button
             asChild
             size="lg"
-            className="w-full mt-8 bg-gradient-to-r from-[#002455] to-[#003875] hover:shadow-lg hover:shadow-[#002455]/40 hover:-translate-y-0.5 transition-all duration-300 text-base font-semibold py-4 rounded-2xl relative overflow-hidden group text-primary-foreground h-auto"
+            className="w-full mt-8 bg-gradient-to-r from-[#002455] to-[#003875] text-primary-foreground hover:shadow-lg hover:shadow-[#002455]/40 hover:-translate-y-0.5 transition-all duration-300 text-base font-semibold py-4 rounded-2xl relative overflow-hidden group h-auto"
           >
             <Link href="/register">
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
