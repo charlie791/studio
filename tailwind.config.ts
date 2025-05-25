@@ -64,7 +64,9 @@ export default {
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
-  			sm: 'calc(var(--radius) - 4px)'
+  			sm: 'calc(var(--radius) - 4px)',
+        xl: 'calc(var(--radius) + 4px)', // Added for pricing card
+        '2xl': 'calc(var(--radius) + 8px)', // Added for pricing card button
   		},
   		keyframes: {
   			'accordion-down': {
@@ -82,11 +84,21 @@ export default {
   				to: {
   					height: '0'
   				}
-  			}
+  			},
+        shimmer: {
+          '0%, 100%': { transform: 'translateX(-100%)' },
+          '50%': { transform: 'translateX(100%)' },
+        },
+        slideIn: {
+          'from': { opacity: '0', transform: 'translateX(-10px)' },
+          'to': { opacity: '1', transform: 'translateX(0)' },
+        },
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
+  			'accordion-up': 'accordion-up 0.2s ease-out',
+        'shimmer': 'shimmer 3s ease-in-out infinite',
+        'slide-in': 'slideIn 0.3s ease-out forwards',
   		}
   	}
   },
