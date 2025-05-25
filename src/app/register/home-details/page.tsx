@@ -68,7 +68,6 @@ export default function HomeDetailsPage() {
       />
       <Card className="w-full max-w-lg shadow-2xl rounded-xl p-2 sm:p-4 md:p-6 border-[6px] border-primary">
         <CardHeader className="text-center items-center pt-6 px-6 pb-4">
-          {/* Icon removed as per previous request */}
           <CardTitle className="text-3xl font-bold text-card-foreground">You’re Almost Protected</CardTitle>
           <CardDescription className="text-card-foreground mt-2 text-sm">
             Add your address to lock in your coverage eligibility — only available for a limited time after move-in.
@@ -94,7 +93,6 @@ export default function HomeDetailsPage() {
                     </FormItem>
                   )}
                 />
-                {/* Updated City, State, Zip layout */}
                 <div className="grid grid-cols-[2fr_auto_1.5fr] gap-x-2 sm:gap-x-4 items-start">
                   <FormField
                     control={form.control}
@@ -113,7 +111,7 @@ export default function HomeDetailsPage() {
                     control={form.control}
                     name="state"
                     render={({ field }) => (
-                      <FormItem>
+                      <FormItem className="w-12">
                         <FormLabel>State</FormLabel>
                         <FormControl>
                           {/* State field is disabled and pre-filled */}
