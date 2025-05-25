@@ -67,7 +67,7 @@ function ConfirmationPageContent() {
               4 Flex Payments of ${purchasedPlan.priceMonthly.toFixed(2)}
             </p>
             <p className="text-sm font-normal text-muted-foreground">
-              Total: ${purchasedPlan.priceAnnually.toFixed(2)} (One-time charge)
+              Total: ${purchasedPlan.priceAnnually.toFixed(2)}
             </p>
           </div>
         )}
