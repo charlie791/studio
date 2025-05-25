@@ -62,7 +62,7 @@ export default function ProcessingPage() {
       <Card className="w-full max-w-md text-center bg-white/95 backdrop-blur-sm border-0 shadow-2xl rounded-xl">
         <CardHeader className="pt-8 pb-4 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
-          <CardTitle className="text-2xl font-bold text-white z-10 relative">Finalizing Your Account</CardTitle>
+          <CardTitle className="text-3xl font-bold text-white z-10 relative">Finalizing Your Account</CardTitle>
           <CardDescription className="text-white/90 mt-2 px-4 z-10 relative">
             Please wait while we prepare your personalized warranty options. This may take a moment.
           </CardDescription>
