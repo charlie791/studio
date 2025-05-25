@@ -18,7 +18,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, CreditCard, ShieldCheck, ArrowLeft } from 'lucide-react';
+import { Loader2, CreditCard, ArrowLeft } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import type { WarrantyPlan, CheckoutData } from '@/lib/types';
 import Link from 'next/link';
@@ -108,8 +108,8 @@ function CheckoutPageContent() {
       </CardHeader>
       <CardContent className="space-y-6 px-6 pt-6 pb-4">
         <div className="border p-4 rounded-md bg-muted/50 text-center">
-          <h3 className="text-lg font-semibold flex items-center justify-center gap-2 text-gray-800 mb-2">
-            <ShieldCheck className="text-primary h-5 w-5"/> {selectedPlan.name}
+          <h3 className="text-lg font-semibold text-gray-800 mb-1">
+            {selectedPlan.name}
           </h3>
           <p className="text-base text-gray-700">
             4 Flex Payments of
