@@ -59,7 +59,7 @@ export default function CreateAccountPage() {
         duration: Infinity, 
       });
     }
-  }, []);
+  }, [toast]);
 
 
   async function onSubmit(data: CreateAccountData) {
@@ -124,7 +124,7 @@ export default function CreateAccountPage() {
         data-ai-hint="kitchen cabinets"
         priority={false}
       />
-      <Card className="w-full max-w-md shadow-2xl rounded-xl p-2 sm:p-4 md:p-6 border-[6px] border-primary">
+      <Card className="w-full max-w-md shadow-2xl rounded-xl p-2 sm:p-4 md:p-6 border-[6px] border-primary bg-card">
         <CardHeader className="text-center items-center pt-6 px-6 pb-4">
           <CardTitle className="text-3xl font-bold text-card-foreground">Let’s Get You Covered</CardTitle>
           <CardDescription className="text-card-foreground mt-2 text-sm">
@@ -183,7 +183,11 @@ export default function CreateAccountPage() {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="w-full py-3 text-base" disabled={form.formState.isSubmitting || !!authInitializationError}>
+                <Button 
+                  type="submit" 
+                  className="w-full py-3 text-base bg-primary text-primary-foreground hover:bg-primary/90" 
+                  disabled={form.formState.isSubmitting || !!authInitializationError}
+                >
                   {form.formState.isSubmitting ? (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   ) : null}
