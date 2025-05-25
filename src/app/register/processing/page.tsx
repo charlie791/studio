@@ -53,7 +53,7 @@ export default function ProcessingPage() {
   }, [router]);
 
   return (
-    <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden p-4 min-h-screen">
+    <div className="relative flex flex-1 flex-col items-center justify-start overflow-hidden p-4 py-12 min-h-screen">
       <Image
         src="https://igscountertops.b-cdn.net/kitchencabinets.now%20assets/Cabiets%20assets/ELITECRAFT%20Imperial%20Blue/imperial-blue-main-gallery-image-1.jpg"
         alt="Modern kitchen background"
