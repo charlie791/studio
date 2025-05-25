@@ -14,9 +14,9 @@ import { cn } from '@/lib/utils';
 // Icon map to resolve string names to actual Lucide components
 const iconMap: Record<string, LucideIconType | undefined> = {
   Shield: Shield,
-  Gem: Diamond,
-  Zap: Zap,
-  CheckCircle: Check,
+  Gem: Gem, 
+  Zap: Zap, 
+  CheckCircle: Check, 
   Diamond: Diamond,
   Crown: Crown,
   Flame: Flame,
@@ -90,15 +90,13 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
               {step.summary}
             </p>
 
-            {step.priceMonthly !== undefined && step.priceAnnually !== undefined && !step.isDeclineStep && (
+            {step.priceMonthly !== undefined && !step.isDeclineStep && (
               <div className="z-10 relative">
                 <div className="text-3xl font-extrabold text-white mb-0.5">
                   ${step.priceMonthly.toFixed(2)}
                   <span className="text-xl font-semibold"> × 4 Flex Payments</span>
                 </div>
-                <div className="text-white/80 text-sm md:text-base">
-                  Total: ${step.priceAnnually.toFixed(2)} (One-time charge)
-                </div>
+                {/* Total one-time charge text removed from here */}
               </div>
             )}
           </CardHeader>
