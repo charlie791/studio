@@ -66,7 +66,7 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
         <Card className="overflow-hidden border-0 shadow-2xl bg-white/95 backdrop-blur-sm rounded-xl">
 
           <CardHeader className={cn(
-            "relative p-6 md:p-8 text-center overflow-hidden", // Adjusted padding
+            "relative p-6 md:p-8 text-center overflow-hidden",
             step.isDeclineStep ? "bg-gradient-to-br from-gray-600 to-gray-700" : "bg-gradient-to-br from-[#002455] to-[#003875]"
           )}>
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
@@ -92,8 +92,8 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
             {step.priceMonthly !== undefined && step.priceAnnually !== undefined && !step.isDeclineStep && (
               <div className="z-10 relative">
                 <div className="text-3xl font-extrabold text-white mb-0.5">
-                  ${step.priceMonthly.toFixed(2)}{' '}
-                  <span className="text-xl font-semibold">× 4 Flex Payments</span>
+                  ${step.priceMonthly.toFixed(2)}
+                  <span className="text-xl font-semibold"> × 4 Flex Payments</span>
                 </div>
                 <div className="text-white/80 text-sm md:text-base">
                   Total: ${step.priceAnnually.toFixed(2)} (One-time charge)
