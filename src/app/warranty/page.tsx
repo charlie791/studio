@@ -144,20 +144,20 @@ export default function WarrantyPage() {
           <Card className="w-full bg-white/95 backdrop-blur-sm border-0 shadow-2xl rounded-xl">
             <CardHeader className="items-center text-center pt-8 pb-6 px-6 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
-              <CardTitle className="text-3xl md:text-4xl font-bold tracking-tight text-white z-10 relative">
+              <CardTitle className="text-3xl md:text-4xl font-bold tracking-tight text-white z-10 relative leading-snug">
                 You’re Eligible for Extended Protection
                 <br />
                 Peace of mind starts with your free 30-day warranty.
               </CardTitle>
             </CardHeader>
-            <CardContent className="flex flex-col items-center p-6">
-              <CardDescription className="text-lg text-gray-700 max-w-xl mx-auto text-center">
+            <CardContent className="flex flex-col items-center p-6 pt-4">
+              <CardDescription className="text-lg text-white/90 max-w-xl mx-auto text-center mb-6">
                 You’ve activated your 30-day SurfaceGuard365 warranty. Now explore extended coverage options — including 5- and 10-year plans to keep your countertops and cabinets protected for years to come.
               </CardDescription>
               <Button 
                 onClick={handleSeeCoverageOptions} 
                 size="lg" 
-                className="py-3 px-6 text-lg mt-6 bg-gradient-to-r from-[#002455] to-[#003875] text-primary-foreground hover:shadow-lg hover:shadow-[#002455]/40 hover:-translate-y-0.5 transition-all duration-300 rounded-2xl relative overflow-hidden group h-auto"
+                className="w-full bg-gradient-to-r from-[#002455] to-[#003875] text-primary-foreground hover:shadow-lg hover:shadow-[#002455]/40 hover:-translate-y-0.5 transition-all duration-300 py-3 text-base rounded-2xl relative overflow-hidden group h-auto"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
                 View Extended Coverage Plans
