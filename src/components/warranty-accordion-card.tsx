@@ -29,35 +29,39 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
   return (
     <TooltipProvider>
       <Card className={cn(
-        "w-full shadow-xl flex flex-col bg-card text-card-foreground border-[6px] border-primary relative overflow-visible", // overflow-visible for badge
+        "w-full shadow-xl flex flex-col bg-card text-card-foreground border-[6px] border-primary relative",
         className
       )}>
-        {step.bestValue && (
-          <div className="absolute -top-4 -left-4 z-10 bg-primary text-primary-foreground text-sm font-semibold p-3 rounded-full w-24 h-24 flex flex-col items-center justify-center shadow-lg transform -rotate-12">
-            <Star className="w-6 h-6 fill-current mb-1" />
-            Most Popular
-          </div>
-        )}
         
-        <div className={cn("pt-6 px-6 pb-4", step.bestValue ? "pl-28" : "")}> {/* Adjust padding if badge is present */}
-          <h2 className="text-2xl font-semibold text-card-foreground">{step.title}</h2>
-          <p className="text-sm text-card-foreground mt-1">{step.summary}</p>
-          
-          {step.priceMonthly !== undefined && (
-            <div className="mt-3">
-              <p className="text-3xl font-bold text-card-foreground">${step.priceMonthly.toFixed(2)}
-                <span className="text-base font-normal"> x 4 Flex Payments</span>
-              </p>
-              {step.priceAnnually !== undefined && (
-                 <p className="text-xs text-card-foreground">Total: ${step.priceAnnually.toFixed(2)} (One-time charge)</p>
-              )}
+        <CardHeader className={cn("pt-6 px-6 pb-4 flex flex-row items-start gap-4")}>
+          {step.bestValue && (
+            <div className="flex-shrink-0 bg-primary text-primary-foreground text-xs font-semibold p-2 rounded-full w-20 h-20 flex flex-col items-center justify-center text-center shadow-md mt-1">
+              <Star className="w-5 h-5 fill-current mb-0.5" />
+              <span className="block leading-tight">MOST</span>
+              <span className="block leading-tight">POPULAR</span>
             </div>
           )}
-        </div>
+          <div className={cn("flex-grow", step.bestValue ? "pt-1" : "")}> {/* Add padding top if badge shifts content */}
+            <h2 className="text-2xl font-semibold text-card-foreground">{step.title}</h2>
+            <p className="text-sm text-card-foreground mt-1">{step.summary}</p>
+            
+            {step.priceMonthly !== undefined && (
+              <div className="mt-3">
+                <p className="text-4xl font-bold text-card-foreground">${step.priceMonthly.toFixed(2)}</p>
+                <div className="text-xs text-card-foreground mt-1">
+                  <span>x 4 Flex Payments</span>
+                  {step.priceAnnually !== undefined && (
+                    <span className="block">Total: ${step.priceAnnually.toFixed(2)} (One-time charge)</span>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        </CardHeader>
 
         <Accordion type="single" collapsible className="w-full px-6" defaultValue={defaultOpen ? step.id : undefined}>
-          <AccordionItem value={step.id} className="border-b-0"> {/* Remove default border if not needed */}
-            <AccordionTrigger className="text-sm text-accent hover:no-underline justify-start py-2">
+          <AccordionItem value={step.id} className="border-b-0">
+            <AccordionTrigger className="text-sm text-accent hover:no-underline justify-start py-2 focus:text-accent focus-visible:ring-0 focus-visible:ring-offset-0">
               {step.isDeclineStep ? "View Details" : "What's Included?"}
             </AccordionTrigger>
             <AccordionContent className="pt-2 pb-4 text-sm">
@@ -82,7 +86,7 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
           </AccordionItem>
         </Accordion>
         
-        <CardFooter className="flex flex-col sm:flex-row gap-2 pt-2 pb-6 px-6 mt-auto">
+        <CardFooter className="flex flex-col sm:flex-row gap-2 pt-4 pb-6 px-6 mt-auto">
           {!step.isDeclineStep && step.planId && (
             <Button asChild className="w-full">
               <Link href={`/checkout?planId=${step.planId}`}>
