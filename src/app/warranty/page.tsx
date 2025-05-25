@@ -145,14 +145,12 @@ export default function WarrantyPage() {
             <CardHeader className="items-center text-center pt-8 pb-6 px-6 bg-gradient-to-br from-[#002455] to-[#003875] relative">
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
               <CardTitle className="text-3xl md:text-4xl font-bold tracking-tight text-white leading-snug z-10 relative">
-                You’re Eligible for Extended Protection
-                <br />
-                Peace of mind starts with your free 30-day warranty.
+                You’ve Been Matched with Custom Protection Plans
               </CardTitle>
             </CardHeader>
             <CardContent className="p-6 pt-6 text-center">
               <CardDescription className="text-lg text-gray-700 max-w-xl mx-auto text-center mt-2 mb-6 z-10 relative">
-                You’re about to activate your 30-day SurfaceGuard365 warranty. Before we finalize it, take a quick look at our extended protection plans — including 5- and 10-year options for full coverage and peace of mind.
+                Your 30-day SurfaceGuard365 warranty is ready — let’s review your best-fit coverage options.
               </CardDescription>
               <Button 
                 onClick={handleSeeCoverageOptions} 
