@@ -18,7 +18,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, MapPin, Phone, ArrowRight, HomeIcon } from 'lucide-react'; // Home icon import kept for footer, but removed from header
+import { Loader2, MapPin, Phone, ArrowRight, HomeIcon } from 'lucide-react'; 
 import type { HomeWarrantyInfoData } from '@/lib/types';
 import ClientOnly from '@/components/client-only';
 
@@ -66,9 +66,8 @@ export default function HomeDetailsPage() {
         data-ai-hint="kitchen cabinets"
         priority={false}
       />
-      <Card className="w-full max-w-lg bg-card/90 backdrop-blur-sm shadow-2xl rounded-xl p-2 sm:p-4 md:p-6 border-[6px] border-primary">
+      <Card className="w-full max-w-lg shadow-2xl rounded-xl p-2 sm:p-4 md:p-6 border-[6px] border-primary">
         <CardHeader className="text-center items-center pt-6 px-6 pb-4">
-          {/* Home icon removed from here */}
           <CardTitle className="text-3xl font-bold text-card-foreground">You’re Almost Protected</CardTitle>
           <CardDescription className="text-card-foreground mt-2 text-sm">
             Add your address to lock in your coverage eligibility — only available for a limited time after move-in.

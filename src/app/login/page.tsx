@@ -23,7 +23,7 @@ import { useToast } from '@/hooks/use-toast';
 import type { LoginData } from '@/lib/types';
 import { authInitializationError, getFirebaseAuthInstance } from '@/lib/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { useEffect, Suspense } from 'react'; // Added Suspense
+import { useEffect, Suspense } from 'react'; 
 import ClientOnly from '@/components/client-only';
 
 const loginFormSchema = z.object({
@@ -114,7 +114,7 @@ function LoginPageContent() {
   );
 
   return (
-    <Card className="w-full max-w-md bg-card/90 backdrop-blur-sm shadow-2xl rounded-xl p-2 sm:p-4 md:p-6 border-[6px] border-primary">
+    <Card className="w-full max-w-md shadow-2xl rounded-xl p-2 sm:p-4 md:p-6 border-[6px] border-primary">
       <CardHeader className="text-center items-center pt-6 px-6 pb-4">
         <CardTitle className="text-3xl font-bold text-card-foreground">Welcome Back!</CardTitle>
         <CardDescription className="text-card-foreground mt-2 text-sm">

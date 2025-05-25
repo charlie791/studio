@@ -77,7 +77,7 @@ export default function TradeInPage() {
         data-ai-hint="kitchen cabinets"
         priority={false}
       />
-      <Card className="w-full max-w-lg shadow-xl bg-card/90 backdrop-blur-sm text-card-foreground border-[6px] border-primary rounded-xl p-2 sm:p-4 md:p-6">
+      <Card className="w-full max-w-lg shadow-xl text-card-foreground border-[6px] border-primary rounded-xl p-2 sm:p-4 md:p-6">
         <CardHeader className="text-center">
           <Tag className="mx-auto h-12 w-12 text-accent mb-4" />
           <CardTitle className="text-3xl font-bold text-accent">Exclusive Trade-In Offer!</CardTitle>

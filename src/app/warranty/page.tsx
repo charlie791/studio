@@ -125,7 +125,7 @@ export default function WarrantyPage() {
       />
       <div className="relative z-10 w-full max-w-3xl mx-auto space-y-8 flex flex-col items-center">
         {!stepViewActive && (
-          <Card className="w-full bg-card/90 backdrop-blur-sm shadow-lg text-center border-[6px] border-primary">
+          <Card className="w-full shadow-lg text-center border-[6px] border-primary">
             <CardHeader>
               <CardTitle className="text-3xl md:text-4xl font-bold tracking-tight text-card-foreground">
                 You’re Eligible for Protection — Pick What Works Best for You
