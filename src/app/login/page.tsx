@@ -134,7 +134,7 @@ function LoginPageContent() {
                      <div className="relative flex items-center">
                       <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
                       <FormControl>
-                        <Input type="email" placeholder="e.g. jane.doe@example.com" {...field} className="pl-10" />
+                        <Input type="email" placeholder="jane.doe@example.com" {...field} className="pl-10" />
                       </FormControl>
                     </div>
                     <FormMessage />

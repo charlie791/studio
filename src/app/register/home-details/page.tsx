@@ -86,7 +86,7 @@ export default function HomeDetailsPage() {
                       <div className="relative flex items-center">
                         <MapPin className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
                         <FormControl>
-                          <Input placeholder="e.g., 123 Main St" {...field} className="pl-10" />
+                          <Input placeholder="123 Main St" {...field} className="pl-10" />
                         </FormControl>
                       </div>
                       <FormMessage />
@@ -101,7 +101,7 @@ export default function HomeDetailsPage() {
                       <FormItem>
                         <FormLabel>City</FormLabel>
                         <FormControl>
-                          <Input placeholder="e.g., Anytown" {...field} />
+                          <Input placeholder="Anytown" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -128,7 +128,7 @@ export default function HomeDetailsPage() {
                       <FormItem>
                         <FormLabel>ZIP Code</FormLabel>
                         <FormControl>
-                          <Input placeholder="e.g., 90210" {...field} />
+                          <Input placeholder="90210" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -144,7 +144,7 @@ export default function HomeDetailsPage() {
                       <div className="relative flex items-center">
                         <Phone className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
                         <FormControl>
-                          <Input type="tel" placeholder="e.g., (555) 123-4567" {...field} className="pl-10" />
+                          <Input type="tel" placeholder="(555) 123-4567" {...field} className="pl-10" />
                         </FormControl>
                       </div>
                       <FormMessage />
