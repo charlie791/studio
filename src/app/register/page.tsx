@@ -188,7 +188,7 @@ export default function CreateAccountPage() {
                   {form.formState.isSubmitting ? (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   ) : null}
-                  Sign Up
+                  Create Account
                 </Button>
               </form>
             </Form>
@@ -212,4 +212,3 @@ export default function CreateAccountPage() {
     </div>
   );
 }
-
