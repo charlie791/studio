@@ -1,12 +1,9 @@
 
 import Link from 'next/link';
-import Image from 'next/image'; // Import next/image
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-
-// The SurfaceGuardLogoSVG component definition that was here has been removed.
-// The logo will now be loaded from /public/SG365_Final.svg
 
 export default function LandingPage() {
   return (
@@ -19,42 +16,40 @@ export default function LandingPage() {
         data-ai-hint="kitchen cabinets"
         priority
       />
-      <Card className="w-full max-w-lg p-6 sm:p-8 md:p-10 bg-card text-card-foreground border-[6px] border-primary shadow-2xl rounded-xl">
+      <Card className="w-full max-w-lg p-6 sm:p-8 md:p-10 bg-white/95 backdrop-blur-sm border-0 shadow-2xl rounded-xl">
         <div className="flex flex-col items-center text-center">
           <div className="mb-6 lg:mb-8 h-auto flex justify-center items-center">
-            {/* Use next/image to load the SVG from the public folder */}
             <Image
-              src="/SG365_Final.svg" // Updated src to use the new SVG file name
+              src="/SG365_Final.svg"
               alt="Surface Guard 365 Logo"
-              width={296} // Intrinsic width from SVG viewBox
-              height={78} // Intrinsic height from SVG viewBox
-              className="w-[200px] sm:w-[240px] md:w-[280px] h-auto" // Responsive sizing
-              priority // Good for LCP elements
+              width={296}
+              height={78}
+              className="w-[200px] sm:w-[240px] md:w-[280px] h-auto"
+              priority
             />
           </div>
 
-          {/* Updated Text */}
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight text-card-foreground">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight text-gray-800">
             Protect Your
             <br />
             Countertops & Cabinets
           </h1>
-          <p className="mt-3 sm:mt-4 text-sm sm:text-base md:text-lg text-card-foreground">
+          <p className="mt-3 sm:mt-4 text-sm sm:text-base md:text-lg text-gray-700">
             Warranty your new surfaces in seconds
           </p>
 
-          {/* Updated Button - Simplified to use theme defaults for primary button */}
           <Button
             asChild
             size="lg"
-            className="w-full mt-8 py-3 text-base sm:text-lg font-semibold" // Relies on theme for colors
+            className="w-full mt-8 bg-gradient-to-r from-[#002455] to-[#003875] hover:shadow-lg hover:shadow-[#002455]/40 hover:-translate-y-0.5 transition-all duration-300 text-base font-semibold py-4 rounded-2xl relative overflow-hidden group text-primary-foreground h-auto"
           >
             <Link href="/register">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
               ACTIVATE WARRANTY
             </Link>
           </Button>
 
-          <p className="mt-6 text-sm text-card-foreground">
+          <p className="mt-6 text-sm text-gray-700">
             Already activated?{' '}
             <Link href="/login" className="font-semibold text-accent hover:underline">
               Sign In

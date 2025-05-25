@@ -10,7 +10,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { CheckCircle2, MailCheck, Home, Loader2 } from 'lucide-react';
 import type { WarrantyPlan } from '@/lib/types';
 
-// Mock data for warranty plans - aligned with warranty/page.tsx
 const mockPlans: Record<string, WarrantyPlan> = {
   core: { 
     id: 'core', 
@@ -50,18 +49,19 @@ function ConfirmationPageContent() {
   const userEmail = "your.email@example.com"; 
 
   return (
-    <Card className="w-full max-w-lg shadow-xl p-6 md:p-8 bg-card text-card-foreground">
-      <CardHeader className="items-center">
-        <CheckCircle2 className="h-20 w-20 text-green-500 mb-6" />
-        <CardTitle className="text-3xl md:text-4xl font-bold">Order Confirmed!</CardTitle>
-        <CardDescription className="text-lg text-card-foreground mt-2">
+    <Card className="w-full max-w-lg p-6 md:p-8 bg-white/95 backdrop-blur-sm border-0 shadow-2xl rounded-xl">
+      <CardHeader className="items-center text-center pt-6 px-6 pb-4 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
+        <CheckCircle2 className="h-20 w-20 text-green-400 mb-6 z-10 relative" />
+        <CardTitle className="text-3xl md:text-4xl font-bold text-white z-10 relative">Order Confirmed!</CardTitle>
+        <CardDescription className="text-white/90 mt-2 z-10 relative">
           Thank you for choosing Surface Guard 365. Your countertop protection is now active.
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-6 mt-6">
+      <CardContent className="space-y-6 mt-6 px-6 pt-6 pb-4">
         {purchasedPlan && (
           <div className="border p-4 rounded-md bg-muted/50 text-left">
-            <h3 className="text-xl font-semibold mb-1">{purchasedPlan.name}</h3>
+            <h3 className="text-xl font-semibold mb-1 text-gray-800">{purchasedPlan.name}</h3>
             <p className="text-muted-foreground">Duration: {purchasedPlan.duration}</p>
             <p className="text-2xl font-bold text-primary mt-2">
               4 Flex Payments of ${purchasedPlan.priceMonthly.toFixed(2)}
@@ -71,7 +71,7 @@ function ConfirmationPageContent() {
             </p>
           </div>
         )}
-        <div className="flex items-center justify-center p-4 border border-dashed rounded-md">
+        <div className="flex items-center justify-center p-4 border border-dashed rounded-md text-gray-700">
           <MailCheck className="h-8 w-8 text-primary mr-3" />
           <div>
             <p className="font-medium">A confirmation email has been sent to:</p>
@@ -83,9 +83,14 @@ function ConfirmationPageContent() {
           Your warranty details and policy documents are included in the email. You can manage your warranty from your account dashboard (coming soon).
         </p>
       </CardContent>
-      <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-        <Button asChild size="lg">
+      <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center px-6 pb-6">
+        <Button 
+          asChild 
+          size="lg" 
+          className="w-full bg-gradient-to-r from-[#002455] to-[#003875] text-primary-foreground hover:shadow-lg hover:shadow-[#002455]/40 hover:-translate-y-0.5 transition-all duration-300 py-3 text-base rounded-2xl relative overflow-hidden group h-auto"
+        >
           <Link href="/">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
             <Home className="mr-2 h-5 w-5" />
             Back to Home
           </Link>

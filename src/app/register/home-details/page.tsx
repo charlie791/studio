@@ -25,8 +25,8 @@ import ClientOnly from '@/components/client-only';
 const homeWarrantyInfoFormSchema = z.object({
   streetAddress: z.string().min(5, { message: 'Street address must be at least 5 characters.' }),
   city: z.string().min(2, { message: 'City must be at least 2 characters.' }),
-  state: z.string().min(2, { message: 'State must be at least 2 characters (e.g., FL).' }).default('FL'), // Ensure default if somehow not set
-  zipCode: z.string().regex(/^\d{5}(-\d{4})?$/, { message: 'Please enter a valid ZIP code (e.g., 12345 or 12345-6789).' }),
+  state: z.string().min(2, { message: 'State must be at least 2 characters (e.g., FL).' }).default('FL'),
+  zipCode: z.string().regex(/^\d{5}(-\d{4})?$/, { message: 'Please enter a valid ZIP code (12345 or 12345-6789).' }),
   phoneNumber: z.string().regex(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/, { message: 'Please enter a valid 10-digit phone number.' }),
 });
 
@@ -37,7 +37,7 @@ export default function HomeDetailsPage() {
     defaultValues: {
       streetAddress: '',
       city: '',
-      state: 'FL', // Default state to Florida
+      state: 'FL', 
       zipCode: '',
       phoneNumber: '',
     },
@@ -65,15 +65,16 @@ export default function HomeDetailsPage() {
         data-ai-hint="kitchen cabinets"
         priority={false}
       />
-      <Card className="w-full max-w-lg shadow-2xl rounded-xl p-2 sm:p-4 md:p-6 border-[6px] border-primary bg-card text-card-foreground">
-        <CardHeader className="text-center items-center pt-6 px-6 pb-4">
-          <CardTitle className="text-3xl font-bold text-card-foreground">You’re Almost Protected</CardTitle>
-          <CardDescription className="text-card-foreground mt-2 text-sm">
+      <Card className="w-full max-w-lg bg-white/95 backdrop-blur-sm border-0 shadow-2xl rounded-xl">
+        <CardHeader className="text-center items-center pt-6 px-6 pb-4 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
+          <CardTitle className="text-3xl font-bold text-white z-10 relative">You’re Almost Protected</CardTitle>
+          <CardDescription className="text-white/90 mt-2 text-sm z-10 relative">
             Add your address to lock in your coverage eligibility — only available for a limited time after move-in.
           </CardDescription>
         </CardHeader>
         <ClientOnly fallback={ClientFallback}>
-          <CardContent className="px-6 pb-6 pt-4">
+          <CardContent className="px-6 pb-6 pt-6">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                 <FormField
@@ -81,7 +82,7 @@ export default function HomeDetailsPage() {
                   name="streetAddress"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Street Address</FormLabel>
+                      <FormLabel className="text-gray-700">Street Address</FormLabel>
                       <div className="relative flex items-center">
                         <MapPin className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
                         <FormControl>
@@ -98,7 +99,7 @@ export default function HomeDetailsPage() {
                     name="city"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>City</FormLabel>
+                        <FormLabel className="text-gray-700">City</FormLabel>
                         <FormControl>
                           <Input placeholder="Anytown" {...field} />
                         </FormControl>
@@ -111,12 +112,11 @@ export default function HomeDetailsPage() {
                     name="state"
                     render={({ field }) => (
                       <FormItem className="w-12">
-                        <FormLabel>State</FormLabel>
+                        <FormLabel className="text-gray-700">State</FormLabel>
                         <FormControl>
-                          {/* State field is disabled and pre-filled */}
                           <Input {...field} disabled />
                         </FormControl>
-                        <FormMessage /> {/* Should not show error if always 'FL' and valid */}
+                        <FormMessage /> 
                       </FormItem>
                     )}
                   />
@@ -125,7 +125,7 @@ export default function HomeDetailsPage() {
                     name="zipCode"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>ZIP Code</FormLabel>
+                        <FormLabel className="text-gray-700">ZIP Code</FormLabel>
                         <FormControl>
                           <Input placeholder="90210" {...field} />
                         </FormControl>
@@ -139,7 +139,7 @@ export default function HomeDetailsPage() {
                   name="phoneNumber"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Phone Number</FormLabel>
+                      <FormLabel className="text-gray-700">Phone Number</FormLabel>
                       <div className="relative flex items-center">
                         <Phone className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
                         <FormControl>
@@ -150,7 +150,12 @@ export default function HomeDetailsPage() {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="w-full py-3 text-base" disabled={form.formState.isSubmitting}>
+                <Button 
+                  type="submit" 
+                  className="w-full py-3 text-base bg-gradient-to-r from-[#002455] to-[#003875] text-primary-foreground hover:shadow-lg hover:shadow-[#002455]/40 hover:-translate-y-0.5 transition-all duration-300 rounded-2xl relative overflow-hidden group h-auto" 
+                  disabled={form.formState.isSubmitting}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
                   {form.formState.isSubmitting ? (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   ) : (

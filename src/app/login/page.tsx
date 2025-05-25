@@ -56,7 +56,7 @@ function LoginPageContent() {
         title: 'Firebase Initialization Failed',
         description: errorMessage,
         variant: 'destructive',
-        duration: 300000, // 5 minutes, or choose a very long duration
+        duration: 300000, 
       });
     }
   }, [toast]);
@@ -115,15 +115,16 @@ function LoginPageContent() {
   );
 
   return (
-    <Card className="w-full max-w-md shadow-2xl rounded-xl p-2 sm:p-4 md:p-6 border-[6px] border-primary bg-card">
-      <CardHeader className="text-center items-center pt-6 px-6 pb-4">
-        <CardTitle className="text-3xl font-bold text-card-foreground">Welcome Back!</CardTitle>
-        <CardDescription className="text-card-foreground mt-2 text-sm">
+    <Card className="w-full max-w-md bg-white/95 backdrop-blur-sm border-0 shadow-2xl rounded-xl">
+      <CardHeader className="text-center items-center pt-6 px-6 pb-4 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
+        <CardTitle className="text-3xl font-bold text-white z-10 relative">Welcome Back!</CardTitle>
+        <CardDescription className="text-white/90 mt-2 text-sm z-10 relative">
           Sign in to access your account and manage your warranties.
         </CardDescription>
       </CardHeader>
       <ClientOnly fallback={ClientFallback}>
-        <CardContent className="px-6 pb-6 pt-4">
+        <CardContent className="px-6 pb-6 pt-6">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
@@ -131,7 +132,7 @@ function LoginPageContent() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email Address</FormLabel>
+                    <FormLabel className="text-gray-700">Email Address</FormLabel>
                      <div className="relative flex items-center">
                       <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
                       <FormControl>
@@ -147,7 +148,7 @@ function LoginPageContent() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel className="text-gray-700">Password</FormLabel>
                      <div className="relative flex items-center">
                       <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
                       <FormControl>
@@ -158,7 +159,12 @@ function LoginPageContent() {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3 text-base" disabled={form.formState.isSubmitting || !!authInitializationError}>
+              <Button 
+                type="submit" 
+                className="w-full bg-gradient-to-r from-[#002455] to-[#003875] text-primary-foreground hover:shadow-lg hover:shadow-[#002455]/40 hover:-translate-y-0.5 transition-all duration-300 py-3 text-base rounded-2xl relative overflow-hidden group h-auto" 
+                disabled={form.formState.isSubmitting || !!authInitializationError}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
                 {form.formState.isSubmitting ? (
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 ) : (
@@ -170,7 +176,7 @@ function LoginPageContent() {
           </Form>
         </CardContent>
         <CardFooter className="flex flex-col items-center justify-center px-6 pb-6 pt-2 space-y-3">
-            <p className="text-sm text-card-foreground text-center">
+            <p className="text-sm text-gray-700 text-center">
                 Need to activate?{' '}
                 <Link href="/register" className="font-semibold text-accent hover:underline">
                   Create an account

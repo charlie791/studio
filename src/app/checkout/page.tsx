@@ -23,7 +23,6 @@ import { useToast } from '@/hooks/use-toast';
 import type { WarrantyPlan, CheckoutData } from '@/lib/types';
 import Link from 'next/link';
 
-// Mock data for warranty plans - aligned with warranty/page.tsx
 const mockPlans: Record<string, WarrantyPlan> = {
   core: { 
     id: 'core', 
@@ -92,7 +91,7 @@ function CheckoutPageContent() {
     return (
       <div className="text-center py-10">
         <p className="text-xl text-destructive">Invalid warranty plan selected.</p>
-        <Button asChild variant="link" className="mt-4">
+        <Button asChild variant="link" className="mt-4 text-accent hover:underline">
           <Link href="/warranty">Choose a Plan</Link>
         </Button>
       </div>
@@ -100,15 +99,16 @@ function CheckoutPageContent() {
   }
 
   return (
-    <Card className="w-full max-w-md shadow-xl bg-card text-card-foreground">
-      <CardHeader className="text-center">
-        <CreditCard className="mx-auto h-12 w-12 text-primary mb-4" />
-        <CardTitle className="text-3xl font-bold">Complete Your Purchase</CardTitle>
-        <CardDescription>You're one step away from securing your {selectedPlan.name} plan.</CardDescription>
+    <Card className="w-full max-w-md bg-white/95 backdrop-blur-sm border-0 shadow-2xl rounded-xl">
+      <CardHeader className="text-center items-center pt-6 px-6 pb-4 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
+        <CreditCard className="mx-auto h-12 w-12 text-white mb-4 z-10 relative" />
+        <CardTitle className="text-3xl font-bold text-white z-10 relative">Complete Your Purchase</CardTitle>
+        <CardDescription className="text-white/90 mt-2 z-10 relative">You're one step away from securing your {selectedPlan.name} plan.</CardDescription>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-6 px-6 pt-6 pb-4">
         <div className="border p-4 rounded-md bg-muted/50">
-          <h3 className="text-lg font-semibold flex items-center gap-2"><ShieldCheck className="text-primary h-5 w-5"/> {selectedPlan.name}</h3>
+          <h3 className="text-lg font-semibold flex items-center gap-2 text-gray-800"><ShieldCheck className="text-primary h-5 w-5"/> {selectedPlan.name}</h3>
           <p className="text-2xl font-bold text-primary">
             4 Flex Payments of ${selectedPlan.priceMonthly.toFixed(2)}
           </p>
@@ -123,7 +123,7 @@ function CheckoutPageContent() {
               name="cardHolderName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Cardholder Name</FormLabel>
+                  <FormLabel className="text-gray-700">Cardholder Name</FormLabel>
                   <FormControl>
                     <Input placeholder="Full Name as on Card" {...field} />
                   </FormControl>
@@ -136,7 +136,7 @@ function CheckoutPageContent() {
               name="cardNumber"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Card Number</FormLabel>
+                  <FormLabel className="text-gray-700">Card Number</FormLabel>
                   <FormControl>
                     <Input placeholder="•••• •••• •••• ••••" {...field} maxLength={16} />
                   </FormControl>
@@ -150,7 +150,7 @@ function CheckoutPageContent() {
                 name="expiryDate"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Expiry Date</FormLabel>
+                    <FormLabel className="text-gray-700">Expiry Date</FormLabel>
                     <FormControl>
                       <Input placeholder="MM/YY" {...field} />
                     </FormControl>
@@ -163,7 +163,7 @@ function CheckoutPageContent() {
                 name="cvc"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>CVC</FormLabel>
+                    <FormLabel className="text-gray-700">CVC</FormLabel>
                     <FormControl>
                       <Input placeholder="123" {...field} maxLength={4} />
                     </FormControl>
@@ -172,7 +172,12 @@ function CheckoutPageContent() {
                 )}
               />
             </div>
-            <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+            <Button 
+              type="submit" 
+              className="w-full bg-gradient-to-r from-[#002455] to-[#003875] text-primary-foreground hover:shadow-lg hover:shadow-[#002455]/40 hover:-translate-y-0.5 transition-all duration-300 py-3 text-base rounded-2xl relative overflow-hidden group h-auto" 
+              disabled={form.formState.isSubmitting}
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
               {form.formState.isSubmitting ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               ) : (
@@ -183,9 +188,9 @@ function CheckoutPageContent() {
           </form>
         </Form>
       </CardContent>
-        <CardFooter className="flex justify-center">
-        <Button variant="link" asChild>
-          <Link href="/warranty" className="text-sm">
+        <CardFooter className="flex justify-center px-6 pb-6 pt-2">
+        <Button variant="link" asChild className="text-sm text-muted-foreground hover:text-accent">
+          <Link href="/warranty">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Change Plan
           </Link>

@@ -17,8 +17,8 @@ const processingSteps = [
   "Finalizing Offer Eligibility…",
 ];
 
-const stepDuration = 1500; // ms per step
-const finalDelay = 1000; // ms after last step before redirect
+const stepDuration = 1500; 
+const finalDelay = 1000; 
 
 export default function ProcessingPage() {
   const router = useRouter();
@@ -31,13 +31,11 @@ export default function ProcessingPage() {
         if (prevIndex < processingSteps.length - 1) {
           return prevIndex + 1;
         }
-        // Last step reached
         clearInterval(stepInterval);
-        // Wait a bit more then redirect
         setTimeout(() => {
           router.push('/warranty');
         }, finalDelay);
-        return prevIndex; // Keep on last message
+        return prevIndex; 
       });
     }, stepDuration);
 
@@ -45,7 +43,6 @@ export default function ProcessingPage() {
       setDots(prev => (prev.length >= 3 ? '' : prev + '.'));
     }, 500);
 
-    // Cleanup intervals on component unmount
     return () => {
       clearInterval(stepInterval);
       clearInterval(dotInterval);
@@ -62,16 +59,17 @@ export default function ProcessingPage() {
         data-ai-hint="kitchen cabinets"
         priority={false}
       />
-      <Card className="w-full max-w-md text-center shadow-xl bg-card text-card-foreground border-[6px] border-primary">
-        <CardHeader className="pt-8 pb-4">
-          <CardTitle className="text-2xl font-bold text-card-foreground">Finalizing Your Account</CardTitle>
-          <CardDescription className="text-card-foreground mt-2 px-4">
+      <Card className="w-full max-w-md text-center bg-white/95 backdrop-blur-sm border-0 shadow-2xl rounded-xl">
+        <CardHeader className="pt-8 pb-4 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
+          <CardTitle className="text-2xl font-bold text-white z-10 relative">Finalizing Your Account</CardTitle>
+          <CardDescription className="text-white/90 mt-2 px-4 z-10 relative">
             Please wait while we prepare your personalized warranty options. This may take a moment.
           </CardDescription>
         </CardHeader>
         <CardContent className="py-8">
           <Loader2 className="mx-auto h-10 w-10 animate-spin text-primary mb-6" />
-          <p className="text-lg font-medium text-card-foreground h-6">
+          <p className="text-lg font-medium text-gray-700 h-6">
             {processingSteps[currentStepIndex]}{dots}
           </p>
         </CardContent>
