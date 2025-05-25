@@ -54,7 +54,7 @@ function ConfirmationPageContent() {
       <CardHeader className="items-center">
         <CheckCircle2 className="h-20 w-20 text-green-500 mb-6" />
         <CardTitle className="text-3xl md:text-4xl font-bold">Order Confirmed!</CardTitle>
-        <CardDescription className="text-lg text-muted-foreground mt-2">
+        <CardDescription className="text-lg text-card-foreground mt-2">
           Thank you for choosing Surface Guard 365. Your countertop protection is now active.
         </CardDescription>
       </CardHeader>

@@ -76,7 +76,7 @@ export default function TradeInPage() {
         data-ai-hint="kitchen cabinets"
         priority={false}
       />
-      <Card className="w-full max-w-lg shadow-xl text-card-foreground border-[6px] border-primary rounded-xl p-2 sm:p-4 md:p-6">
+      <Card className="w-full max-w-lg shadow-xl bg-card text-card-foreground border-[6px] border-primary rounded-xl p-2 sm:p-4 md:p-6">
         <CardHeader className="text-center">
           <Tag className="mx-auto h-12 w-12 text-accent mb-4" />
           <CardTitle className="text-3xl font-bold text-accent">Exclusive Trade-In Offer!</CardTitle>
@@ -164,7 +164,7 @@ export default function TradeInPage() {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" disabled={form.formState.isSubmitting}>
+                <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
                   {form.formState.isSubmitting ? (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   ) : (
@@ -177,8 +177,8 @@ export default function TradeInPage() {
           </CardContent>
         </ClientOnly>
         <CardFooter className="flex justify-center">
-          <Button variant="link" asChild>
-            <Link href="/warranty" className="text-sm text-muted-foreground hover:text-accent">
+          <Button variant="link" asChild className="text-sm text-muted-foreground hover:text-accent">
+            <Link href="/warranty">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Warranty Plans
             </Link>

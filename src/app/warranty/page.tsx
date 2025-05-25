@@ -123,7 +123,7 @@ export default function WarrantyPage() {
       />
       <div className="relative z-10 w-full max-w-3xl mx-auto space-y-8 flex flex-col items-center">
         {!stepViewActive && (
-          <Card className="w-full shadow-lg text-center border-[6px] border-primary">
+          <Card className="w-full shadow-lg text-center bg-card text-card-foreground border-[6px] border-primary">
             <CardHeader>
               <CardTitle className="text-3xl md:text-4xl font-bold tracking-tight text-card-foreground">
                 You’re Eligible for Extended Protection
@@ -138,7 +138,7 @@ export default function WarrantyPage() {
               <Button 
                 onClick={handleSeeCoverageOptions} 
                 size="lg" 
-                className="bg-accent hover:bg-accent/90 text-accent-foreground py-3 px-6 text-lg mt-6"
+                className="py-3 px-6 text-lg mt-6"
               >
                 View Extended Coverage Plans
                 <ArrowRight className="ml-2 h-5 w-5" />
