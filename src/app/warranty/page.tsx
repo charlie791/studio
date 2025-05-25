@@ -128,7 +128,9 @@ export default function WarrantyPage() {
           <Card className="w-full shadow-lg text-center border-[6px] border-primary">
             <CardHeader>
               <CardTitle className="text-3xl md:text-4xl font-bold tracking-tight text-card-foreground">
-                You’re Eligible for Protection — Pick What Works Best for You
+                You’re Eligible for Protection
+                <br />
+                Pick What Works Best for You
               </CardTitle>
             </CardHeader>
             <CardContent>
