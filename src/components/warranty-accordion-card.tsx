@@ -13,10 +13,10 @@ import { cn } from '@/lib/utils';
 
 // Icon map to resolve string names to actual Lucide components
 const iconMap: Record<string, LucideIconType | undefined> = {
-  Shield: Shield, 
-  Gem: Gem, 
-  Zap: Zap, 
-  CheckCircle: Check, 
+  Shield: Shield,
+  Gem: Gem,
+  Zap: Zap,
+  CheckCircle: Check,
   Diamond: Diamond,
   Crown: Crown,
   Flame: Flame,
@@ -55,74 +55,76 @@ interface WarrantyAccordionCardProps {
 
 export default function WarrantyAccordionCard({ step, onDecline, className, defaultOpen = false }: WarrantyAccordionCardProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
-  // Use step.iconName if provided for header, or XCircle for decline, Diamond for others
-  const HeaderSpecificIcon = step.iconName && iconMap[step.iconName] 
-    ? iconMap[step.iconName] 
+  const HeaderSpecificIcon = step.iconName && iconMap[step.iconName]
+    ? iconMap[step.iconName]
     : step.isDeclineStep ? XCircle : Diamond;
 
 
   return (
     <TooltipProvider>
-      <div className={cn("w-full max-w-sm mx-auto", className)}>
+      <div className={cn("w-full", className)}>
         <Card className="overflow-hidden border-0 shadow-2xl bg-white/95 backdrop-blur-sm rounded-xl">
-         
+
           <CardHeader className={cn(
-            "relative p-8 text-center overflow-hidden",
+            "relative p-6 md:p-8 text-center overflow-hidden", // Adjusted padding
             step.isDeclineStep ? "bg-gradient-to-br from-gray-600 to-gray-700" : "bg-gradient-to-br from-[#002455] to-[#003875]"
           )}>
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
-            
+
             {step.bestValue && !step.isDeclineStep && (
-              <div className="absolute top-4 left-6 bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/30 flex items-center gap-1.5 text-xs font-semibold text-white z-10">
+              <div className="absolute top-3 left-3 md:top-4 md:left-4 bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/30 flex items-center gap-1.5 text-xs font-semibold text-white z-10">
                 <Crown className="w-4 h-4 fill-accent" />
                 Most Popular
               </div>
             )}
 
-            {HeaderSpecificIcon && <HeaderSpecificIcon className="w-6 h-6 fill-white/80 stroke-white/80 mx-auto mb-4 z-10 relative" />}
-            
-            <h2 className="text-2xl font-bold text-white mb-2 z-10 relative tracking-tight">
+            {!step.isDeclineStep && HeaderSpecificIcon && <HeaderSpecificIcon className="w-6 h-6 fill-white/80 stroke-white/80 mx-auto mb-3 z-10 relative" />}
+            {step.isDeclineStep && HeaderSpecificIcon && <HeaderSpecificIcon className="w-8 h-8 text-white/80 mx-auto mb-3 z-10 relative" />}
+
+
+            <h2 className="text-xl md:text-2xl font-bold text-white mb-1 z-10 relative tracking-tight">
               {step.title}
             </h2>
-            <p className="text-white/90 text-base font-medium mb-6 z-10 relative">
+            <p className="text-white/90 text-sm md:text-base font-medium mb-4 z-10 relative">
               {step.summary}
             </p>
-            
+
             {step.priceMonthly !== undefined && step.priceAnnually !== undefined && !step.isDeclineStep && (
               <div className="z-10 relative">
-                <div className="text-3xl font-extrabold text-white mb-2">
-                  ${step.priceMonthly.toFixed(2)} &times; 4 Flex Payments
+                <div className="text-3xl font-extrabold text-white mb-0.5">
+                  ${step.priceMonthly.toFixed(2)}{' '}
+                  <span className="text-xl font-semibold">× 4 Flex Payments</span>
                 </div>
-                <div className="text-white/80 text-base">
+                <div className="text-white/80 text-sm md:text-base">
                   Total: ${step.priceAnnually.toFixed(2)} (One-time charge)
                 </div>
               </div>
             )}
           </CardHeader>
 
-          <CardContent className="p-7">
+          <CardContent className="p-5 md:p-7">
             <Collapsible open={isOpen} onOpenChange={setIsOpen}>
               <CollapsibleTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="w-full justify-between p-4 h-auto text-left font-semibold text-base text-gray-800 hover:bg-primary/5 rounded-lg transition-all duration-300"
+                  className="w-full justify-between items-center p-3 md:p-4 h-auto text-left font-semibold text-base text-gray-800 hover:bg-primary/5 rounded-lg transition-all duration-300"
                 >
                   {step.isDeclineStep ? "View Details" : "What's included in this plan?"}
-                  <ChevronDown className={`w-5 h-5 fill-accent transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown className={`w-5 h-5 text-accent transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
                 </Button>
               </CollapsibleTrigger>
-              
+
               <CollapsibleContent className="overflow-hidden data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up">
-                <div className="pt-2 pb-5">
+                <div className="pt-2 pb-5 px-1 md:px-2">
                   <FeaturesList features={step.features} />
                 </div>
               </CollapsibleContent>
             </Collapsible>
 
             {step.specialOfferText && !step.isDeclineStep && (
-              <div className="bg-gradient-to-r from-accent to-[#cc8001] text-white px-5 py-3 rounded-xl font-semibold text-sm text-center mt-5 flex items-center justify-center gap-2">
+              <div className="bg-gradient-to-r from-accent to-[#cc8001] text-white px-4 py-2.5 rounded-xl font-semibold text-sm text-center mt-5 flex items-center justify-center gap-2">
                 <Flame className="w-4 h-4 fill-white" />
-                {step.specialOfferText.replace('🔥 ','')}
+                {step.specialOfferText.replace('🔥 ', '')}
               </div>
             )}
 
@@ -139,10 +141,10 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
             {step.isDeclineStep && step.ctaDeclineText && (
               <Tooltip delayDuration={100}>
                 <TooltipTrigger asChild>
-                  <Button 
-                    onClick={onDecline} 
-                    variant="outline" 
-                    className="w-full border-destructive text-destructive hover:bg-destructive/10 hover:text-destructive-foreground hover:-translate-y-0.5 transition-all duration-300 text-base font-semibold py-3 rounded-2xl mt-6"
+                  <Button
+                    onClick={onDecline}
+                    variant="outline"
+                    className="w-full border-destructive text-destructive hover:bg-destructive/10 hover:text-destructive hover:-translate-y-0.5 transition-all duration-300 text-base font-semibold py-3 rounded-2xl mt-6"
                   >
                     <XCircle className="mr-2 h-4 w-4" />
                     {step.ctaDeclineText}
