@@ -25,7 +25,7 @@ import ClientOnly from '@/components/client-only';
 const homeWarrantyInfoFormSchema = z.object({
   streetAddress: z.string().min(5, { message: 'Street address must be at least 5 characters.' }),
   city: z.string().min(2, { message: 'City must be at least 2 characters.' }),
-  state: z.string().min(2, { message: 'State must be at least 2 characters (e.g., CA).' }),
+  state: z.string().min(2, { message: 'State must be at least 2 characters (e.g., FL).' }).default('FL'), // Ensure default if somehow not set
   zipCode: z.string().regex(/^\d{5}(-\d{4})?$/, { message: 'Please enter a valid ZIP code (e.g., 12345 or 12345-6789).' }),
   phoneNumber: z.string().regex(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/, { message: 'Please enter a valid 10-digit phone number.' }),
 });
@@ -37,7 +37,7 @@ export default function HomeDetailsPage() {
     defaultValues: {
       streetAddress: '',
       city: '',
-      state: '',
+      state: 'FL', // Default state to Florida
       zipCode: '',
       phoneNumber: '',
     },
@@ -68,6 +68,7 @@ export default function HomeDetailsPage() {
       />
       <Card className="w-full max-w-lg shadow-2xl rounded-xl p-2 sm:p-4 md:p-6 border-[6px] border-primary">
         <CardHeader className="text-center items-center pt-6 px-6 pb-4">
+          {/* Icon removed as per previous request */}
           <CardTitle className="text-3xl font-bold text-card-foreground">You’re Almost Protected</CardTitle>
           <CardDescription className="text-card-foreground mt-2 text-sm">
             Add your address to lock in your coverage eligibility — only available for a limited time after move-in.
@@ -93,12 +94,13 @@ export default function HomeDetailsPage() {
                     </FormItem>
                   )}
                 />
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {/* Updated City, State, Zip layout */}
+                <div className="grid grid-cols-[2fr_auto_1.5fr] gap-x-2 sm:gap-x-4 items-start">
                   <FormField
                     control={form.control}
                     name="city"
                     render={({ field }) => (
-                      <FormItem className="sm:col-span-1">
+                      <FormItem>
                         <FormLabel>City</FormLabel>
                         <FormControl>
                           <Input placeholder="e.g., Anytown" {...field} />
@@ -114,9 +116,10 @@ export default function HomeDetailsPage() {
                       <FormItem>
                         <FormLabel>State</FormLabel>
                         <FormControl>
-                          <Input placeholder="e.g., CA" {...field} maxLength={2} />
+                          {/* State field is disabled and pre-filled */}
+                          <Input {...field} disabled />
                         </FormControl>
-                        <FormMessage />
+                        <FormMessage /> {/* Should not show error if always 'FL' and valid */}
                       </FormItem>
                     )}
                   />
