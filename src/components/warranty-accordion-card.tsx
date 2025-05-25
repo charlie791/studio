@@ -14,7 +14,7 @@ import { cn } from '@/lib/utils';
 // Icon map to resolve string names to actual Lucide components
 const iconMap: Record<string, LucideIconType | undefined> = {
   Shield: Shield,
-  Gem: Diamond, // Mapped Gem to Diamond for design consistency if 'Gem' is used in data
+  Gem: Diamond,
   Zap: Zap,
   CheckCircle: Check,
   Diamond: Diamond,
@@ -56,7 +56,6 @@ interface WarrantyAccordionCardProps {
 export default function WarrantyAccordionCard({ step, onDecline, className, defaultOpen = false }: WarrantyAccordionCardProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
   
-  // Determine header icon: Diamond for plans, XCircle for decline, or specific icon from step.iconName
   const HeaderSpecificIcon = step.iconName && iconMap[step.iconName] 
     ? iconMap[step.iconName] 
     : step.isDeclineStep ? XCircle : Diamond;
@@ -64,7 +63,7 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
 
   return (
     <TooltipProvider>
-      <div className={cn("w-full", className)}>
+      <div className={cn("w-full max-w-[380px] mx-auto", className)}>
         <Card className="overflow-hidden border-0 shadow-2xl bg-white/95 backdrop-blur-sm rounded-xl">
 
           <CardHeader className={cn(
@@ -80,7 +79,6 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
               </div>
             )}
             
-            {/* Render the determined icon */}
             {HeaderSpecificIcon && !step.isDeclineStep && <HeaderSpecificIcon className="w-6 h-6 fill-white/80 stroke-white/80 mx-auto mb-3 z-10 relative" />}
             {HeaderSpecificIcon && step.isDeclineStep && <HeaderSpecificIcon className="w-8 h-8 text-white/80 mx-auto mb-3 z-10 relative" />}
 
