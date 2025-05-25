@@ -150,7 +150,7 @@ export default function WarrantyPage() {
             </CardHeader>
             <CardContent className="p-6 pt-6 text-center">
               <CardDescription className="text-lg text-gray-700 max-w-xl mx-auto text-center mt-2 mb-6 z-10 relative">
-                Your 30-day SurfaceGuard365 warranty is ready — let’s review your best-fit coverage options.
+                You’re about to activate your free 30-day SurfaceGuard365 warranty. Before we finalize it, take a look at your extended protection options — including personalized 5- and 10-year plans built to cover your exact surfaces.
               </CardDescription>
               <Button 
                 onClick={handleSeeCoverageOptions} 
