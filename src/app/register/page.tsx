@@ -1,7 +1,7 @@
 
 'use client';
 
-import Image from 'next/image'; // Added import
+import Image from 'next/image';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -21,7 +21,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Loader2, User, Mail, Lock, HomeIcon } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import type { CreateAccountData } from '@/lib/types';
-import { authInitializationError, getFirebaseAuthInstance } from '@/lib/firebase'; // Firebase auth instance
+import { authInitializationError, getFirebaseAuthInstance } from '@/lib/firebase';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useEffect } from 'react';
 import ClientOnly from '@/components/client-only';
@@ -46,17 +46,18 @@ export default function CreateAccountPage() {
 
   useEffect(() => {
     if (authInitializationError) {
-      let errorMessage = "Firebase services could not be initialized. Please contact support.";
-      if (authInitializationError.message.includes("auth/invalid-api-key") || 
+      let errorMessage = `Firebase services could not be initialized. Please contact support. Raw error: ${authInitializationError.message}`;
+      if (authInitializationError.message.includes("auth/invalid-api-key") ||
           authInitializationError.message.includes("Firebase: Error (auth/invalid-api-key)") ||
-          authInitializationError.message.includes("API Key is not set")) {
-        errorMessage = "Firebase configuration is missing or invalid (e.g., API key). Please ensure environment variables are correctly set and contact support if the issue persists.";
+          authInitializationError.message.includes("API Key is not set") ||
+          authInitializationError.message.includes("Firebase configuration is missing or invalid")) {
+        errorMessage = "**ACTION REQUIRED:** Firebase Initialization Failed.\n1. Verify all `NEXT_PUBLIC_FIREBASE_...` variables are correctly set in your `.env.local` file.\n2. **IMPORTANT: You MUST restart your Next.js development server after changing .env.local.**\n3. If issues persist, check your Firebase project console settings. Contact support if needed.";
       }
       toast({
         title: 'Firebase Initialization Failed',
         description: errorMessage,
         variant: 'destructive',
-        duration: Infinity, 
+        duration: 300000, // 5 minutes, or choose a very long duration
       });
     }
   }, [toast]);
@@ -66,7 +67,7 @@ export default function CreateAccountPage() {
     if (authInitializationError) {
       toast({
           title: 'Cannot Create Account',
-          description: 'Firebase is not initialized. Please check configuration or contact support.',
+          description: 'Firebase is not initialized. Please check configuration or contact support. Ensure .env.local is correct and you have restarted your dev server.',
           variant: 'destructive',
       });
       return;
@@ -82,7 +83,7 @@ export default function CreateAccountPage() {
         title: 'Account Created!',
         description: `Welcome, ${data.fullName}! Please provide your home details next.`,
       });
-      router.push('/register/home-details'); 
+      router.push('/register/home-details');
     } catch (error: any) {
       console.error("Firebase Auth Error on submit:", error);
       let errorMessage = 'Failed to create account. Please try again.';
@@ -92,13 +93,13 @@ export default function CreateAccountPage() {
         errorMessage = 'The password is too weak. Please choose a stronger password.';
       } else if (error.code === 'auth/invalid-email') {
         errorMessage = 'The email address is not valid.';
-      } 
-      else if (error === authInitializationError || 
-               error.message.includes("auth/invalid-api-key") || 
-               error.message.includes("API Key is not set") || 
+      }
+      else if (error === authInitializationError ||
+               error.message.includes("auth/invalid-api-key") ||
+               error.message.includes("API Key is not set") ||
                error.message.includes("Firebase: Error (auth/invalid-api-key)") ||
                error.message.includes("Failed to initialize Firebase")) {
-         errorMessage = "Firebase configuration is missing or invalid. Please contact support.";
+         errorMessage = "Firebase configuration is missing or invalid. Please contact support. Ensure .env.local is correct and you have restarted your dev server.";
       }
       toast({
         title: 'Account Creation Failed',
@@ -183,9 +184,9 @@ export default function CreateAccountPage() {
                     </FormItem>
                   )}
                 />
-                <Button 
-                  type="submit" 
-                  className="w-full py-3 text-base bg-primary text-primary-foreground hover:bg-primary/90" 
+                <Button
+                  type="submit"
+                  className="w-full py-3 text-base bg-primary text-primary-foreground hover:bg-primary/90"
                   disabled={form.formState.isSubmitting || !!authInitializationError}
                 >
                   {form.formState.isSubmitting ? (

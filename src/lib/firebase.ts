@@ -1,7 +1,7 @@
 
 import { initializeApp, getApp, getApps, type FirebaseApp } from 'firebase/app';
 import { getAuth, type Auth } from 'firebase/auth';
-import { getAnalytics, type Analytics } from "firebase/analytics";
+// import { getAnalytics, type Analytics } from "firebase/analytics"; // Temporarily commented out
 
 // Firebase configuration using environment variables
 const firebaseConfig = {
@@ -11,12 +11,12 @@ const firebaseConfig = {
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID, // For Analytics
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
 let app: FirebaseApp | undefined;
 let authInstance: Auth | undefined;
-let analyticsInstance: Analytics | undefined;
+// let analyticsInstance: Analytics | undefined; // Temporarily commented out
 let authInitializationError: Error | null = null;
 
 // Check if all necessary Firebase config values are provided
@@ -34,7 +34,6 @@ if (
   authInitializationError = new Error(
     `Firebase configuration is missing or invalid. Please ensure environment variables are correctly set (${missingKeys}). Firebase cannot be initialized.`
   );
-  // Removed console.error(authInitializationError.message);
 } else {
   try {
     if (!getApps().length) {
@@ -43,10 +42,10 @@ if (
       app = getApp();
     }
     authInstance = getAuth(app);
-    // Initialize Firebase Analytics if the app was successfully initialized and config is present
-    if (firebaseConfig.measurementId && typeof window !== 'undefined') { // Ensure analytics is initialized only on the client
-      analyticsInstance = getAnalytics(app);
-    }
+    // Temporarily comment out Analytics initialization to simplify
+    // if (firebaseConfig.measurementId && typeof window !== 'undefined') {
+    //   analyticsInstance = getAnalytics(app);
+    // }
   } catch (error) {
     console.error('Firebase initialization failed:', error);
     authInitializationError = error instanceof Error ? error : new Error(String(error));
@@ -59,9 +58,15 @@ export function getFirebaseAuthInstance(): Auth {
     throw authInitializationError;
   }
   if (!authInstance) {
+    // This case should ideally be covered by authInitializationError,
+    // but as a fallback:
     throw new Error('Firebase Auth is not available. Initialization may have failed or config is missing.');
   }
   return authInstance;
 }
 
-export { app, analyticsInstance as analytics, authInitializationError };
+// Temporarily export null for analytics
+// export { app, analyticsInstance as analytics, authInitializationError };
+export { app, authInitializationError };
+// Re-add analyticsInstance when re-enabling:
+// export { app, analyticsInstance as analytics, authInitializationError };

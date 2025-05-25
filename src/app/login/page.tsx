@@ -23,7 +23,7 @@ import { useToast } from '@/hooks/use-toast';
 import type { LoginData } from '@/lib/types';
 import { authInitializationError, getFirebaseAuthInstance } from '@/lib/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { useEffect, Suspense } from 'react'; 
+import { useEffect, Suspense } from 'react';
 import ClientOnly from '@/components/client-only';
 
 const loginFormSchema = z.object({
@@ -45,17 +45,18 @@ function LoginPageContent() {
 
   useEffect(() => {
     if (authInitializationError) {
-      let errorMessage = "Firebase services could not be initialized. Please contact support.";
+      let errorMessage = `Firebase services could not be initialized. Please contact support. Raw error: ${authInitializationError.message}`;
       if (authInitializationError.message.includes("auth/invalid-api-key") ||
           authInitializationError.message.includes("Firebase: Error (auth/invalid-api-key)") ||
-          authInitializationError.message.includes("API Key is not set")) {
-        errorMessage = "Firebase configuration is missing or invalid. Please ensure environment variables are correctly set and contact support if the issue persists.";
+          authInitializationError.message.includes("API Key is not set") ||
+          authInitializationError.message.includes("Firebase configuration is missing or invalid") ) {
+        errorMessage = "**ACTION REQUIRED:** Firebase Initialization Failed.\n1. Verify all `NEXT_PUBLIC_FIREBASE_...` variables are correctly set in your `.env.local` file.\n2. **IMPORTANT: You MUST restart your Next.js development server after changing .env.local.**\n3. If issues persist, check your Firebase project console settings. Contact support if needed.";
       }
       toast({
         title: 'Firebase Initialization Failed',
         description: errorMessage,
         variant: 'destructive',
-        duration: Infinity,
+        duration: 300000, // 5 minutes, or choose a very long duration
       });
     }
   }, [toast]);
@@ -64,7 +65,7 @@ function LoginPageContent() {
     if (authInitializationError) {
       toast({
         title: 'Cannot Log In',
-        description: 'Firebase is not initialized. Please check configuration or contact support.',
+        description: 'Firebase is not initialized. Please check configuration or contact support. Ensure .env.local is correct and you have restarted your dev server.',
         variant: 'destructive',
       });
       return;
@@ -73,7 +74,7 @@ function LoginPageContent() {
     try {
       const auth = getFirebaseAuthInstance();
       await signInWithEmailAndPassword(auth, data.email, data.password);
-      
+
       toast({
         title: 'Login Successful!',
         description: "You've been successfully logged in.",
@@ -83,7 +84,7 @@ function LoginPageContent() {
       if (redirectUrl) {
         router.push(redirectUrl);
       } else {
-        router.push('/warranty'); // Default redirect to warranty page
+        router.push('/warranty');
       }
     } catch (error: any) {
       console.error("Firebase Auth Error on login:", error);
@@ -92,12 +93,12 @@ function LoginPageContent() {
         errorMessage = 'Invalid email or password. Please try again.';
       } else if (error.code === 'auth/invalid-email') {
         errorMessage = 'The email address is not valid.';
-      } else if (error === authInitializationError || 
-               error.message.includes("auth/invalid-api-key") || 
+      } else if (error === authInitializationError ||
+               error.message.includes("auth/invalid-api-key") ||
                error.message.includes("API Key is not set") ||
                error.message.includes("Firebase: Error (auth/invalid-api-key)") ||
                error.message.includes("Failed to initialize Firebase")) {
-         errorMessage = "Firebase configuration is missing or invalid. Please contact support.";
+         errorMessage = "Firebase configuration is missing or invalid. Please contact support. Ensure .env.local is correct and you have restarted your dev server.";
       }
       toast({
         title: 'Login Failed',
@@ -114,7 +115,7 @@ function LoginPageContent() {
   );
 
   return (
-    <Card className="w-full max-w-md shadow-2xl rounded-xl p-2 sm:p-4 md:p-6 border-[6px] border-primary">
+    <Card className="w-full max-w-md shadow-2xl rounded-xl p-2 sm:p-4 md:p-6 border-[6px] border-primary bg-card">
       <CardHeader className="text-center items-center pt-6 px-6 pb-4">
         <CardTitle className="text-3xl font-bold text-card-foreground">Welcome Back!</CardTitle>
         <CardDescription className="text-card-foreground mt-2 text-sm">
