@@ -152,7 +152,7 @@ export default function WarrantyPage() {
             </CardHeader>
             <CardContent className="p-6 pt-6 text-center">
               <CardDescription className="text-lg text-gray-700 max-w-xl mx-auto text-center mt-2 mb-6 z-10 relative">
-                You’ve activated your 30-day SurfaceGuard365 warranty. Now explore extended coverage options — including 5- and 10-year plans to keep your countertops and cabinets protected for years to come.
+                You are about to activate your 30-day SurfaceGuard365 warranty. Now explore extended coverage options — including 5- and 10-year plans to keep your countertops and cabinets protected for years to come.
               </CardDescription>
               <Button 
                 onClick={handleSeeCoverageOptions} 
