@@ -1,16 +1,11 @@
 
 'use client'
 
-import { useEffect, useState } from 'react';
+// Removed useEffect and useState for particleKey as it's not needed with new Tailwind config
 
 export function AnimatedBackground() {
-  const [particleKey, setParticleKey] = useState(0);
-
-  // This effect is to force a remount of particles if their animation classes change,
-  // ensuring Tailwind JIT picks up dynamically generated animation names if that strategy is used.
-  useEffect(() => {
-    setParticleKey(prev => prev + 1); 
-  }, []);
+  const particleSizes = ['w-3 h-3', 'w-4 h-4', 'w-5 h-5', 'w-6 h-6', 'w-[7px] h-[7px]', 'w-[8px] h-[8px]']; // Covers 3px to 8px
+  const particleOpacities = ['opacity-[.5]', 'opacity-[.6]', 'opacity-[.7]', 'opacity-[.8]'];
 
   return (
     <div className="fixed inset-0 z-[-1] overflow-hidden">
@@ -29,17 +24,17 @@ export function AnimatedBackground() {
       </div>
       
       {/* Dancing Particles */}
-      <div key={particleKey} className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {Array.from({ length: 20 }, (_, i) => (
           <div
             key={i}
-            className={`absolute rounded-full bg-[#FDA001] animate-particle-dance-${i + 1}`}
+            className={`absolute rounded-full bg-[#FDA001] animate-particle-dance-${i + 1} ${
+              particleSizes[i % particleSizes.length]
+            } ${particleOpacities[i % particleOpacities.length]}`}
             style={{
-              width: `${3 + (i % 6)}px`,
-              height: `${3 + (i % 6)}px`,
-              opacity: `${(50 + (i % 4) * 10) / 100}`,
               left: `${5 + (i * 4.5)}%`,
-              animationDelay: `${i * 0.5}s`
+              filter: 'blur(0.5px)'
+              // animationDelay is now handled by the Tailwind config
             }}
           />
         ))}
@@ -47,5 +42,3 @@ export function AnimatedBackground() {
     </div>
   )
 }
-
-    

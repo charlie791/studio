@@ -63,11 +63,11 @@ export default {
   			}
   		},
   		borderRadius: {
-  			lg: 'var(--radius)', // Typically 0.5rem or 8px
+  			lg: 'var(--radius)', 
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)',
-        xl: 'calc(var(--radius) + 4px)', // Typically 12px if --radius is 0.5rem
-        '2xl': 'calc(var(--radius) + 8px)', // Typically 16px if --radius is 0.5rem
+        xl: 'calc(var(--radius) + 4px)', 
+        '2xl': 'calc(var(--radius) + 8px)', 
   		},
   		keyframes: {
         // Background keyframes
@@ -95,7 +95,7 @@ export default {
           '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
           '50%': { transform: 'translateY(-18px) rotate(12deg)' }
         },
-        particleDance: { // Corrected definition from user prompt
+        particleDance: {
           '0%': { 
             transform: 'translateY(100vh) translateX(0px) scale(0) rotate(0deg)', 
             opacity: '0' 
@@ -136,12 +136,12 @@ export default {
           '0%': { transform: 'translateX(-100%)' },
           '100%': { transform: 'translateX(100%)' }
         },
-        // Warning animations
-        warningStripe: { // From user's Warning Confirmation Popup guide
-          '0%': { transform: 'translateX(-100%)' }, // Simpler for repeating-linear-gradient
-          '100%': { transform: 'translateX(100%)' },
+        // Warning animations (from confirmation page guide)
+        warningStripe: {
+          '0%': { backgroundPosition: '-24px 0' }, // for repeating-linear-gradient
+          '100%': { backgroundPosition: '0 0' },
         },
-        intensePulsateWarning: { // From user's Warning Confirmation Popup guide
+        intensePulsateWarning: { 
           '0%, 100%': { 
             transform: 'scale(1)', 
             boxShadow: '0 8px 24px rgba(220, 38, 38, 0.4)' 
@@ -151,12 +151,12 @@ export default {
             boxShadow: '0 12px 40px rgba(220, 38, 38, 0.7)' 
           }
         },
-        intenseWarningRing: { // From user's Warning Confirmation Popup guide
+        intenseWarningRing: { 
           '0%': { transform: 'scale(1)', opacity: '0.8' },
           '50%': { transform: 'scale(1.2)', opacity: '0.4' },
           '100%': { transform: 'scale(1.4)', opacity: '0' }
         },
-        pulseRing: { // From user's previous guide
+        pulseRing: { // From previous guide, still used in globals.css
           '0%': { transform: 'scale(1)', opacity: '0.8' },
           '50%': { transform: 'scale(1.2)', opacity: '0.4' },
           '100%': { transform: 'scale(1.4)', opacity: '0' }
@@ -186,9 +186,9 @@ export default {
           'from': { opacity: '0', transform: 'translateY(30px)' },
           'to': { opacity: '1', transform: 'translateY(0)' }
         },
-        slideIn: { // From user's guides
-          'from': { opacity: '0', transform: 'translateY(10px)' }, // or translateX(-10px)
-          'to': { opacity: '1', transform: 'translateY(0)' }, // or translateX(0)
+        slideIn: { 
+          'from': { opacity: '0', transform: 'translateY(10px)' },
+          'to': { opacity: '1', transform: 'translateY(0)' },
         },
         shimmer: { // Reverted to linear glistening effect
           '0%': { transform: 'translateX(-100%)' },
@@ -210,7 +210,7 @@ export default {
   					height: '0'
   				}
   			},
-        pulseWarning: { // From user's Warning Confirmation Popup guide
+        pulseWarning: { 
           '0%, 100%': { transform: 'scale(1)' },
           '50%': { transform: 'scale(1.05)' },
         },
@@ -223,19 +223,22 @@ export default {
         'float-2': 'float2 6s ease-in-out infinite 2s',
         'float-3': 'float3 6s ease-in-out infinite 4s',
         'float-4': 'float4 6s ease-in-out infinite 3s',
-        // Particle animations (generated dynamically for name, keyframe is 'particleDance')
+        
+        // Particle animations (delay now part of the definition)
         ...Array.from({ length: 20 }, (_, i) => ({
-          [`particle-dance-${i + 1}`]: `particleDance 12s linear infinite` // Delay handled by inline style in component
+          [`particle-dance-${i + 1}`]: `particleDance 12s linear infinite ${i * 0.5}s`
         })).reduce((acc, curr) => ({ ...acc, ...curr }), {}),
+        
         // Card animations
         'card-entrance': 'cardEntrance 1s ease-out',
         'glow-pulse': 'glowPulse 2s ease-in-out infinite',
         // Button animations
         'button-shine': 'buttonShine 0.6s ease',
         // Warning animations
-        'warning-stripe': 'warningStripe 2s linear infinite', // For the repeating gradient stripe
+        'warning-stripe': 'warningStripe 2s linear infinite', 
         'intense-pulsate-warning': 'intensePulsateWarning 1.8s ease-in-out infinite',
-        'pulse-ring': 'pulseRing 2s ease-in-out infinite', // Generic pulse ring
+        'intense-warning-ring': 'intenseWarningRing 1.8s ease-in-out infinite', // from globals.css, ensures ::before uses it
+        'pulse-ring': 'pulseRing 2s ease-in-out infinite', 
         // Success animations
         'success-pulse': 'successPulse 2s ease-in-out infinite',
         'check-draw': 'checkDraw 1s ease-out 0.3s both',
@@ -244,10 +247,10 @@ export default {
         // General utility animations
         'slide-up': 'slideUp 0.6s ease-out',
         'slide-in': 'slideIn 0.3s ease-out forwards',
-        'shimmer': 'shimmer 8s ease-in-out infinite',
+        'shimmer': 'shimmer 8s ease-in-out infinite', // Kept at 8s for subtle card header shimmer
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out',
-        'pulse-warning': 'pulseWarning 2s ease-in-out infinite', // For the badge on warning dialog
+        'pulse-warning': 'pulseWarning 2s ease-in-out infinite', 
   		},
       // Custom utilities
       backgroundImage: {
@@ -255,8 +258,8 @@ export default {
       },
       backgroundSize: {
         'grid': '50px 50px',
-        '200%': '200% 200%', // For gradientShift
-        '24px': '24px 100%', // For warning-stripe
+        '200%': '200% 200%', 
+        '24px': '24px 100%', 
       },
       textShadow: {
         'default': '0 2px 4px rgba(0, 36, 85, 0.1)'
@@ -284,5 +287,3 @@ export default {
     }
   ],
 } satisfies Config;
-
-    
