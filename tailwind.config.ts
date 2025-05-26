@@ -63,11 +63,11 @@ export default {
   			}
   		},
   		borderRadius: {
-  			lg: 'var(--radius)', 
+  			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)',
-        xl: 'calc(var(--radius) + 4px)', 
-        '2xl': 'calc(var(--radius) + 8px)', 
+        xl: 'calc(var(--radius) + 4px)',
+        '2xl': 'calc(var(--radius) + 8px)',
   		},
   		keyframes: {
         // Background keyframes
@@ -95,68 +95,48 @@ export default {
           '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
           '50%': { transform: 'translateY(-18px) rotate(12deg)' }
         },
-        
-        // Particle animation
         particleDance: {
-          '0%': { 
-            transform: 'translateY(100vh) translateX(0px) scale(0) rotate(0deg)', 
-            opacity: '0' 
-          },
+          '0%': { transform: 'translateY(100vh) translateX(0px) scale(0) rotate(0deg)', opacity: '0' },
           '5%': { opacity: '1' },
-          '25%': { 
-            transform: 'translateY(75vh) translateX(30px) scale(1) rotate(90deg)' 
-          },
-          '50%': { 
-            transform: 'translateY(50vh) translateX(-20px) scale(1.2) rotate(180deg)' 
-          },
-          '75%': { 
-            transform: 'translateY(25vh) translateX(40px) scale(0.8) rotate(270deg)' 
-          },
+          '25%': { transform: 'translateY(75vh) translateX(30px) scale(1) rotate(90deg)' },
+          '50%': { transform: 'translateY(50vh) translateX(-20px) scale(1.2) rotate(180deg)' },
+          '75%': { transform: 'translateY(25vh) translateX(40px) scale(0.8) rotate(270deg)' },
           '95%': { opacity: '1' },
-          '100%': { 
-            transform: 'translateY(-50px) translateX(-10px) scale(0) rotate(360deg)', 
-            opacity: '0' 
-          }
+          '100%': { transform: 'translateY(-50px) translateX(-10px) scale(0) rotate(360deg)', opacity: '0' }
         },
-        
-        // Card animations
         cardEntrance: {
-          'from': { 
-            opacity: '0', 
-            transform: 'perspective(1000px) translateY(50px) rotateX(10deg)' 
+          'from': {
+            opacity: '0',
+            transform: 'perspective(1000px) translateY(50px) rotateX(10deg)'
           },
-          'to': { 
-            opacity: '1', 
-            transform: 'perspective(1000px) translateZ(0) rotateX(0deg)' 
+          'to': {
+            opacity: '1',
+            transform: 'perspective(1000px) translateZ(0) rotateX(0deg)'
           }
         },
         glowPulse: {
           '0%, 100%': { opacity: '0.2' },
           '50%': { opacity: '0.4' }
         },
-        
-        // Button animations
         buttonShine: {
           '0%': { transform: 'translateX(-100%)' },
           '100%': { transform: 'translateX(100%)' }
         },
-        
-        // Warning animations
-        warningStripe: { // This is for the repeating linear gradient background
-          '0%': { backgroundPosition: '-24px 0' },
-          '100%': { backgroundPosition: '0 0' },
+        warningStripe: { // For the repeating linear gradient background
+          '0%': { backgroundPosition: '-24px 0' }, // Guide had '0%': { transform: 'translateX(-100%)' }, this is for bg position
+          '100%': { backgroundPosition: '0 0' }, // Guide had '100%': { transform: 'translateX(100%)' }
         },
         intensePulsateWarning: {
-          '0%, 100%': { 
-            transform: 'scale(1)', 
-            boxShadow: '0 8px 24px rgba(220, 38, 38, 0.4)' 
+          '0%, 100%': {
+            transform: 'scale(1)',
+            boxShadow: '0 8px 24px rgba(220, 38, 38, 0.4)'
           },
-          '50%': { 
-            transform: 'scale(1.12)', 
-            boxShadow: '0 12px 40px rgba(220, 38, 38, 0.7)' 
+          '50%': {
+            transform: 'scale(1.12)',
+            boxShadow: '0 12px 40px rgba(220, 38, 38, 0.7)'
           }
         },
-        pulseRing: { 
+        pulseRing: {
           '0%': { transform: 'scale(1)', opacity: '0.8' },
           '50%': { transform: 'scale(1.2)', opacity: '0.4' },
           '100%': { transform: 'scale(1.4)', opacity: '0' }
@@ -170,8 +150,6 @@ export default {
           '0%, 100%': { transform: 'scale(1)' },
           '50%': { transform: 'scale(1.05)' },
         },
-        
-        // Success animations
         successPulse: {
           '0%, 100%': { transform: 'scale(1)' },
           '50%': { transform: 'scale(1.05)' }
@@ -180,30 +158,26 @@ export default {
           '0%': { strokeDasharray: '50', strokeDashoffset: '50' },
           '100%': { strokeDasharray: '50', strokeDashoffset: '0' }
         },
-        
-        // Trade-in animations
         pulsateAttention: {
-          '0%, 100%': { 
-            transform: 'scale(1)', 
-            boxShadow: '0 8px 24px rgba(253, 160, 1, 0.4)' 
+          '0%, 100%': {
+            transform: 'scale(1)',
+            boxShadow: '0 8px 24px rgba(253, 160, 1, 0.4)'
           },
-          '50%': { 
-            transform: 'scale(1.08)', 
-            boxShadow: '0 12px 36px rgba(253, 160, 1, 0.6)' 
+          '50%': {
+            transform: 'scale(1.08)',
+            boxShadow: '0 12px 36px rgba(253, 160, 1, 0.6)'
           }
         },
-        
-        // Utility animations
         slideUp: {
           'from': { opacity: '0', transform: 'translateY(30px)' },
           'to': { opacity: '1', transform: 'translateY(0)' }
         },
-        slideIn: { 
-          'from': { opacity: '0', transform: 'translateY(10px)' }, // Changed from translateX to translateY
+        slideIn: {
+          'from': { opacity: '0', transform: 'translateY(10px)' }, // Changed from translateX to translateY to match guide
           'to': { opacity: '1', transform: 'translateY(0)' },
         },
         shimmer: { // Linear glistening effect
-          '0%': { transform: 'translateX(-100%)' },
+          '0%': { transform: 'translateX(-100%)' }, // Corrected from rotational shimmer
           '100%': { transform: 'translateX(100%)' },
         },
   			'accordion-down': {
@@ -231,12 +205,12 @@ export default {
         'float-2': 'float2 6s ease-in-out infinite 2s',
         'float-3': 'float3 6s ease-in-out infinite 4s',
         'float-4': 'float4 6s ease-in-out infinite 3s',
-        
-        // Particle animations (delay now part of the definition)
+
+        // Particle animations with individual delays
         ...Array.from({ length: 20 }, (_, i) => ({
           [`particle-dance-${i + 1}`]: `particleDance 12s linear infinite ${i * 0.5}s`
         })).reduce((acc, curr) => ({ ...acc, ...curr }), {}),
-        
+
         // Card animations
         'card-entrance': 'cardEntrance 1s ease-out',
         'glow-pulse': 'glowPulse 2s ease-in-out infinite',
@@ -245,8 +219,8 @@ export default {
         // Warning animations
         'warning-stripe': 'warningStripe 2s linear infinite', // For the repeating gradient stripe background
         'intense-pulsate-warning': 'intensePulsateWarning 1.8s ease-in-out infinite',
-        'intense-warning-ring': 'intenseWarningRing 1.8s ease-in-out infinite', 
-        'pulse-ring': 'pulseRing 2s ease-in-out infinite', 
+        'intense-warning-ring': 'intenseWarningRing 1.8s ease-in-out infinite',
+        'pulse-ring': 'pulseRing 2s ease-in-out infinite',
         'pulse-warning': 'pulseWarning 2s ease-in-out infinite',
         // Success animations
         'success-pulse': 'successPulse 2s ease-in-out infinite',
@@ -256,7 +230,7 @@ export default {
         // General utility animations
         'slide-up': 'slideUp 0.6s ease-out',
         'slide-in': 'slideIn 0.3s ease-out forwards', // translateY
-        'shimmer': 'shimmer 8s ease-in-out infinite', 
+        'shimmer': 'shimmer 8s ease-in-out infinite', // Kept user preferred 8s
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out'
   		},
@@ -266,8 +240,8 @@ export default {
       },
       backgroundSize: {
         'grid': '50px 50px',
-        '200%': '200% 200%', 
-        '24px': '24px 100%', 
+        '200%': '200% 200%',
+        '24px': '24px 100%',
       },
       textShadow: {
         'default': '0 2px 4px rgba(0, 36, 85, 0.1)'
@@ -275,7 +249,7 @@ export default {
       transitionTimingFunction: {
         'cubic-bezier': 'cubic-bezier(0.25, 0.8, 0.25, 1)'
       },
-      saturate: { 
+      saturate: {
         '75': '.75',
       }
   	}
