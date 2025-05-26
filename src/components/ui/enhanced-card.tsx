@@ -27,7 +27,7 @@ export function EnhancedCard({
       ref={cardRef}
       className={cn(
       // Base 3D card styling
-      "relative overflow-visible border-white/20 bg-white/95 backdrop-blur-sm rounded-xl",
+      "relative overflow-visible border-white/20 border-border bg-white/95 backdrop-blur-sm rounded-xl", // Added border-border
       "shadow-[0_40px_80px_rgba(0,0,0,0.15),0_20px_40px_rgba(0,36,85,0.1)] border",
       "transition-all duration-400 ease-cubic-bezier", // Kept for any non-hover transitions if added later
 

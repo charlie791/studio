@@ -46,94 +46,9 @@ export function AnimatedBackground() {
       <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20" />
       <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/20" />
       
-      {/* CSS Animations */}
-      <style jsx>{`
-        @keyframes gradient-shift {
-          0%, 100% {
-            transform: translate(0, 0) scale(1);
-            opacity: 0.3;
-          }
-          33% {
-            transform: translate(30px, -30px) scale(1.1);
-            opacity: 0.5;
-          }
-          66% {
-            transform: translate(-20px, 20px) scale(0.9);
-            opacity: 0.2;
-          }
-        }
-        
-        @keyframes gradient-shift-reverse {
-          0%, 100% {
-            transform: translate(0, 0) scale(1);
-            opacity: 0.3;
-          }
-          33% {
-            transform: translate(-30px, 30px) scale(1.1);
-            opacity: 0.2;
-          }
-          66% {
-            transform: translate(20px, -20px) scale(0.9);
-            opacity: 0.5;
-          }
-        }
-        
-        @keyframes float-slow {
-          0%, 100% {
-            transform: translate(0, 0) scale(1);
-          }
-          33% {
-            transform: translate(50px, -30px) scale(1.1);
-          }
-          66% {
-            transform: translate(-30px, 40px) scale(0.95);
-          }
-        }
-        
-        @keyframes float-medium {
-          0%, 100% {
-            transform: translate(0, 0) scale(1);
-          }
-          50% {
-            transform: translate(-40px, -50px) scale(1.15);
-          }
-        }
-        
-        @keyframes float-fast {
-          0%, 100% {
-            transform: translate(0, 0) scale(1);
-          }
-          25% {
-            transform: translate(30px, -20px) scale(1.05);
-          }
-          50% {
-            transform: translate(-20px, -40px) scale(1.1);
-          }
-          75% {
-            transform: translate(40px, 20px) scale(0.95);
-          }
-        }
-        
-        .animate-gradient-shift {
-          animation: gradient-shift 20s ease-in-out infinite;
-        }
-        
-        .animate-gradient-shift-reverse {
-          animation: gradient-shift-reverse 25s ease-in-out infinite;
-        }
-        
-        .animate-float-slow {
-          animation: float-slow 30s ease-in-out infinite;
-        }
-        
-        .animate-float-medium {
-          animation: float-medium 20s ease-in-out infinite;
-        }
-        
-        .animate-float-fast {
-          animation: float-fast 15s ease-in-out infinite;
-        }
-      `}</style>
+      {/* Subtle vignette effect */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/20" />
     </div>
   );
 }
