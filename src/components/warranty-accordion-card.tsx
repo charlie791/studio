@@ -198,7 +198,12 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
           </AlertDialogDescription>
           <AlertDialogFooter className="sm:justify-center gap-2 pt-4">
             <AlertDialogCancel asChild>
-              <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
+              <Button 
+                className="bg-primary text-primary-foreground hover:bg-primary/90"
+                onClick={() => {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+              >
                 Wait, Show Me Better Options
               </Button>
             </AlertDialogCancel>
