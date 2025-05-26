@@ -33,6 +33,11 @@ export default function LandingPage() {
             <Link href="/register">ACTIVATE WARRANTY</Link>
           </EnhancedButton>
 
+          {/* TEST TEXT ADDED HERE */}
+          <p className="mt-4 text-lg font-bold text-[#FDA001]">
+            TEST WORKS - GitHub connection confirmed!
+          </p>
+
           <SmallText className="mt-6 !text-sm text-[#9ca3af]">
             Already activated?{' '}
             <Link href="/login" className="font-semibold text-[#FDA001] hover:underline">
