@@ -3,13 +3,13 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Suspense, useState } from 'react'; // Added useState
+import { Suspense, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card'; // Added CardFooter
-import { Badge } from '@/components/ui/badge'; // Added Badge
-import { CheckCircle2, MailCheck, Home, Loader2, Send, ExternalLink, Tag, ShoppingCart, Check, AlertTriangle } from 'lucide-react'; // Added Check, Tag, ShoppingCart, AlertTriangle
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { CheckCircle2, MailCheck, Home, Loader2, Send, ShoppingCart, Check, AlertTriangle } from 'lucide-react';
 import type { WarrantyPlan } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
 
@@ -65,7 +65,7 @@ function OrderDetailsSection({ userEmail, plan }: { userEmail: string; plan: War
       </p>
       
       <div className="bg-white border-2 border-dashed border-gray-300 rounded-xl p-5 text-center">
-        <MailCheck className="w-8 h-8 text-primary mx-auto mb-3" /> {/* Updated Mail to MailCheck */}
+        <MailCheck className="w-8 h-8 text-primary mx-auto mb-3" />
         <p className="text-gray-700 font-semibold mb-1">
           A confirmation email has been sent to:
         </p>
@@ -84,13 +84,11 @@ function TradeInOfferSection({
   projectNotes, 
   onNotesChange, 
   onSubmit, 
-  onBrowse,
   isSubmitting 
 }: {
   projectNotes: string;
   onNotesChange: (value: string) => void;
   onSubmit: () => void;
-  onBrowse?: () => void;
   isSubmitting: boolean;
 }) {
   return (
@@ -129,7 +127,7 @@ function TradeInOfferSection({
         <Button 
           onClick={onSubmit}
           disabled={isSubmitting}
-          className="w-full bg-gradient-to-r from-[#002455] to-[#003875] text-primary-foreground hover:shadow-lg hover:shadow-[#002455]/40 hover:-translate-y-1 transition-all duration-300 text-lg font-bold py-4 h-auto relative overflow-hidden group"
+          className="w-full bg-gradient-to-r from-[#002455] to-[#003875] text-primary-foreground hover:shadow-lg hover:shadow-[#002455]/40 hover:-translate-y-0.5 transition-all duration-300 py-3 text-base font-semibold rounded-2xl relative overflow-hidden group h-auto"
         >
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
           <Send className="w-5 h-5 mr-3" />
@@ -138,11 +136,11 @@ function TradeInOfferSection({
         
         <Button 
           variant="outline"
-          asChild // To make it an anchor tag
-          className="w-full border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground hover:-translate-y-1 transition-all duration-300 font-semibold py-3 h-auto text-lg" // Adjusted size to text-lg
+          asChild
+          className="w-full border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground hover:-translate-y-0.5 transition-all duration-300 font-semibold py-3 h-auto text-base"
         >
           <a href="https://contractorsource.com/product-selection/" target="_blank" rel="noopener noreferrer">
-            <ShoppingCart className="w-5 h-5 mr-2" /> {/* Adjusted icon size */}
+            <ShoppingCart className="w-5 h-5 mr-2" />
             Browse All Countertops
           </a>
         </Button>
@@ -197,8 +195,8 @@ function ConfirmationPageContent() {
   if (isFreePlan) {
     return (
         <div className="w-full max-w-lg animate-slide-up">
-          <Card className="overflow-hidden bg-white/98 backdrop-blur-sm shadow-2xl border-0 border-white/20 rounded-xl">
-            <CardHeader className="relative bg-gradient-to-br from-[#002455] to-[#003875] p-8 md:p-10 text-center overflow-hidden">
+          <Card className="overflow-hidden bg-white/95 backdrop-blur-sm shadow-2xl border-0 rounded-xl">
+            <CardHeader className="relative bg-gradient-to-br from-[#002455] to-[#003875] p-8 md:p-10 text-center overflow-hidden rounded-t-xl">
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
               
               <div className="relative z-10 w-20 h-20 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-full mx-auto mb-6 flex items-center justify-center animate-success-pulse shadow-lg shadow-emerald-500/40">
@@ -222,7 +220,6 @@ function ConfirmationPageContent() {
                 projectNotes={projectNotes}
                 onNotesChange={setProjectNotes}
                 onSubmit={handleTradeInSubmit}
-                // onBrowse is handled by the button's direct link
                 isSubmitting={isSubmittingTradeIn}
               />
               
@@ -245,7 +242,7 @@ function ConfirmationPageContent() {
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
         <CheckCircle2 className="h-20 w-20 text-green-400 mb-6 z-10 relative" />
         <CardTitle className="text-3xl md:text-4xl font-bold tracking-tight text-white z-10 relative">Order Confirmed!</CardTitle>
-        <CardDescription className="text-base text-white/90 mt-2 z-10 relative">
+        <CardDescription className="text-white/90 text-base mt-2 z-10 relative">
             Thank you for choosing Surface Guard 365. Your countertop protection is now active.
         </CardDescription>
       </CardHeader>
@@ -293,7 +290,7 @@ function ConfirmationPageContent() {
 
 export default function ConfirmationPage() {
   return (
-    <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden p-4 py-12 bg-white/95 backdrop-blur-sm"> {/* Updated background to match guide */}
+    <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden p-4 py-12 bg-white/95 backdrop-blur-sm">
       <Image
         src="https://igscountertops.b-cdn.net/kitchencabinets.now%20assets/Cabiets%20assets/ELITECRAFT%20Imperial%20Blue/imperial-blue-main-gallery-image-1.jpg"
         alt="Modern kitchen background"
@@ -308,4 +305,3 @@ export default function ConfirmationPage() {
     </div>
   )
 }
-
