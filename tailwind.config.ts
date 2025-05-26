@@ -86,17 +86,17 @@ export default {
   					height: '0'
   				}
   			},
-        shimmer: { /* Reverted to linear glistening effect */
+        shimmer: {
           '0%': { transform: 'translateX(-100%)' },
           '100%': { transform: 'translateX(100%)' },
         },
         slideIn: {
-          'from': { opacity: '0', transform: 'translateX(-10px)' },
-          'to': { opacity: '1', transform: 'translateX(0)' },
+          'from': { opacity: '0', transform: 'translateY(10px)' }, // Updated from translateX to translateY
+          'to': { opacity: '1', transform: 'translateY(0)' },
         },
-        warningStripe: { 
-          '0%': { transform: 'translateX(-100%)' },
-          '100%': { transform: 'translateX(100%)' },
+        warningStripeKeyframe: { // Renamed to avoid conflict if 'warningStripe' is used for something else
+          '0%': { backgroundPosition: '-24px 0' }, // Adjusted as per guide for repeating-linear-gradient
+          '100%': { backgroundPosition: '0 0' },
         },
         pulseWarning: { 
           '0%, 100%': { transform: 'scale(1)', opacity: '1' },
@@ -117,11 +117,11 @@ export default {
         pulsateAttention: {
           '0%, 100%': { 
             transform: 'scale(1)',
-            boxShadow: '0 8px 24px rgba(253, 160, 1, 0.4)' /* Lumen Gold-ish shadow */
+            boxShadow: '0 8px 24px hsl(var(--accent) / 0.4)'
           },
           '50%': { 
             transform: 'scale(1.08)',
-            boxShadow: '0 12px 36px rgba(253, 160, 1, 0.6)'
+            boxShadow: '0 12px 36px hsl(var(--accent) / 0.6)'
           },
         },
         pulseRing: {
@@ -129,19 +129,36 @@ export default {
           '50%': { transform: 'scale(1.15)', opacity: '0.3' },
           '100%': { transform: 'scale(1.3)', opacity: '0' },
         },
+        intensePulsateWarning: {
+          '0%, 100%': { 
+            transform: 'scale(1)',
+            boxShadow: '0 8px 24px rgba(220, 38, 38, 0.4)'
+          },
+          '50%': { 
+            transform: 'scale(1.12)',
+            boxShadow: '0 12px 40px rgba(220, 38, 38, 0.7)'
+          },
+        },
+        intenseWarningRing: {
+          '0%': { transform: 'scale(1)', opacity: '0.8' },
+          '50%': { transform: 'scale(1.2)', opacity: '0.4' },
+          '100%': { transform: 'scale(1.4)', opacity: '0' },
+        },
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out',
-        'shimmer': 'shimmer 8s ease-in-out infinite', /* Slowed down duration */
+        'shimmer': 'shimmer 8s ease-in-out infinite',
         'slide-in': 'slideIn 0.3s ease-out forwards',
-        'warning-stripe': 'warningStripe 2s linear infinite', 
+        'warning-stripe': 'warningStripeKeyframe 2s linear infinite', 
         'pulse-warning': 'pulseWarning 2s ease-in-out infinite',
         'slide-up': 'slideUp 0.6s ease-out', 
         'success-pulse': 'successPulse 2s ease-in-out infinite', 
         'check-draw': 'checkDraw 1s ease-out 0.3s both', 
         'pulsate-attention': 'pulsateAttention 2s ease-in-out infinite',
         'pulse-ring': 'pulseRing 2s ease-in-out infinite',
+        'intense-pulsate-warning': 'intensePulsateWarning 1.8s ease-in-out infinite',
+        'intense-warning-ring': 'intenseWarningRing 1.8s ease-in-out infinite',
   		},
       saturate: { 
         '75': '.75',

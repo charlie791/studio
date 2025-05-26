@@ -29,7 +29,7 @@ body {
     --accent: 39 100% 50%; /* Lumen Gold #FDA001 */
     --accent-foreground: 0 0% 3.9%; /* Dark text on Lumen Gold */
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84.2% 60.2%; /* default: #ef4444, guide uses #dc2626 */
     --destructive-foreground: 0 0% 98%;
 
     --border: 215 100% 16%; /* Dark Blue #002455 for general borders */
@@ -148,3 +148,37 @@ body {
   stroke-dashoffset: 50;
   animation: checkDraw 1s ease-out 0.3s both;
 }
+
+/* Intense pulsating badge with expanding ring */
+.animate-intense-pulsate-warning {
+  position: relative;
+}
+
+.animate-intense-pulsate-warning::before {
+  content: '';
+  position: absolute;
+  top: -6px; /* Increased from -4px */
+  left: -6px; /* Increased from -4px */
+  right: -6px; /* Increased from -4px */
+  bottom: -6px; /* Increased from -4px */
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); /* Using warning red colors from guide */
+  border-radius: 9999px;
+  z-index: -1;
+  animation: intenseWarningRing 1.8s ease-in-out infinite;
+  opacity: 0;
+}
+
+/* The warningStripeKeyframe in tailwind.config.ts will handle the gradient movement.
+   This CSS class applies the repeating linear gradient background. */
+.animate-warning-stripe {
+  background-image: repeating-linear-gradient(
+    90deg,
+    #dc2626 0px,
+    #dc2626 12px,
+    #fbbf24 12px,
+    #fbbf24 24px
+  );
+  background-size: 24px 100%;
+  /* animation: warningStripeKeyframe 2s linear infinite; /* Tailwind class 'animate-warning-stripe' will apply this */
+}
+

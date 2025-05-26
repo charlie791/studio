@@ -8,17 +8,13 @@ import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Alert, AlertDescription as ShadcnAlertDescription } from '@/components/ui/alert';
-import { 
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Badge } from '@/components/ui/badge';
 import { 
   Crown, Diamond, Check, Flame, ChevronDown, ShoppingCart, XCircle, Shield, Zap, Gem, AlertTriangle, AlertCircle, X,
   type LucideIcon as LucideIconType 
@@ -44,6 +40,7 @@ const iconMap: Record<string, LucideIconType | undefined> = {
 };
 
 function FeaturesList({ features, isDeclineStep }: { features: WarrantyStep['features'], isDeclineStep?: boolean }) {
+  if (!features) return null; // Add a guard for undefined features
   return (
     <ul className="space-y-2.5">
       {features.map((feature, index) => {
@@ -72,6 +69,31 @@ function FeaturesList({ features, isDeclineStep }: { features: WarrantyStep['fea
   );
 }
 
+function WarningList() {
+  const warnings = [
+    "No long-term warranty protection.",
+    "No professional care kit included.", 
+    "No VIP customer support or priority service.",
+    "Your coverage will expire in 30 days."
+  ];
+
+  return (
+    <div className="text-left mb-6 space-y-3">
+      {warnings.map((warning, index) => (
+        <div 
+          key={index}
+          className="flex items-start gap-3 opacity-0 animate-slide-in"
+          style={{ animationDelay: `${index * 100}ms` }}
+        >
+          <X className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+          <span className="text-gray-600 leading-relaxed">{warning}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+
 interface WarrantyAccordionCardProps {
   step: WarrantyStep;
   onDecline: () => void;
@@ -87,10 +109,20 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
     ? iconMap[step.iconName] 
     : step.isDeclineStep ? Shield : Diamond;
 
+  const handleConfirmLimited = () => {
+    setShowDeclineConfirmation(false);
+    onDecline();
+  };
+
+  const handleShowBetterOptions = () => {
+    setShowDeclineConfirmation(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
 
   if (step.isDeclineStep) {
     return (
-      <AlertDialog open={showDeclineConfirmation} onOpenChange={setShowDeclineConfirmation}>
+      <>
         <TooltipProvider>
           <div className={cn("w-full max-w-[380px] mx-auto", className)}>
             <Card className="overflow-hidden border-2 border-red-600 shadow-2xl bg-white/95 backdrop-blur-sm opacity-85 filter saturate-[.75] relative rounded-xl">
@@ -148,15 +180,14 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
 
                 <Tooltip delayDuration={100}>
                   <TooltipTrigger asChild>
-                    <AlertDialogTrigger asChild>
                       <Button 
+                        onClick={() => setShowDeclineConfirmation(true)}
                         className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 hover:shadow-lg hover:shadow-red-600/40 hover:-translate-y-0.5 transition-all duration-300 text-base font-bold py-3 text-white rounded-2xl mt-6 relative overflow-hidden group border-2 border-red-600 h-auto"
                       >
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
                         <X className="w-4 h-4 mr-2" />
                         {step.ctaDeclineText || 'Keep Free 30-Day Plan'}
                       </Button>
-                    </AlertDialogTrigger>
                   </TooltipTrigger>
                   {step.tooltipText && (
                     <TooltipContent side="bottom" className="bg-popover text-popover-foreground">
@@ -175,61 +206,75 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
           </div>
         </TooltipProvider>
 
-        <AlertDialogContent className="sm:max-w-md border-red-500 bg-background">
-          <AlertDialogHeader className="items-center text-center">
-            <div className="mx-auto mb-4">
-              <div className="bg-red-600/90 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/30 flex items-center gap-1.5 text-xs font-semibold text-white z-10 animate-pulse">
-                <AlertTriangle className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+        <Dialog open={showDeclineConfirmation} onOpenChange={setShowDeclineConfirmation}>
+          <DialogContent className="max-w-lg border-4 border-red-600 bg-white/98 backdrop-blur-sm p-0 overflow-hidden relative">
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-red-600 via-yellow-400 to-red-600 animate-warning-stripe" />
+            
+            <button
+              onClick={() => setShowDeclineConfirmation(false)}
+              className="absolute top-4 right-4 w-10 h-10 rounded-full bg-red-600/10 hover:bg-red-600/20 flex items-center justify-center transition-all duration-300 hover:scale-110 z-10"
+              aria-label="Close dialog"
+            >
+              <X className="w-6 h-6 text-red-600" />
+            </button>
+
+            <div className="pt-16 pb-10 px-10 text-center">
+              <Badge 
+                variant="destructive"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 text-base font-bold rounded-full mb-8 animate-intense-pulsate-warning shadow-lg shadow-red-600/40 relative"
+              >
+                <AlertTriangle className="w-5 h-5 fill-yellow-400" />
                 Limited Coverage
+              </Badge>
+
+              <DialogHeader className="mb-6">
+                <DialogTitle className="text-3xl font-extrabold text-red-600 leading-tight">
+                  Final Warning - Are You Sure?
+                </DialogTitle>
+              </DialogHeader>
+
+              <p className="text-lg font-semibold text-gray-700 mb-6 leading-relaxed">
+                You are about to proceed with minimal coverage. This means:
+              </p>
+
+              <WarningList />
+
+              <p className="text-lg font-bold text-red-600 mb-8 leading-relaxed">
+                Are you sure you want to miss out on comprehensive protection and savings?
+              </p>
+
+              <div className="space-y-4">
+                <Button
+                  onClick={handleConfirmLimited}
+                  className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-bold py-4 text-lg rounded-2xl border-2 border-red-600 hover:shadow-lg hover:shadow-red-600/40 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group h-auto"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
+                  Yes, Keep Limited Coverage
+                </Button>
+                
+                <Button
+                  onClick={handleShowBetterOptions}
+                  className="w-full bg-gradient-to-r from-[#002455] to-[#003875] hover:shadow-lg hover:shadow-[#002455]/60 text-[#FDA001] hover:text-white font-bold py-4 text-lg rounded-2xl border-2 border-[#002455] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group h-auto"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#FDA001]/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
+                  Wait, Show Me Better Options
+                </Button>
               </div>
             </div>
-            <AlertDialogTitle className="text-2xl font-bold text-destructive">Final Warning - Are You Sure?</AlertDialogTitle>
-          </AlertDialogHeader>
-          
-          <div className="text-center text-sm text-muted-foreground space-y-3 py-2 px-6">
-            <div className="font-semibold text-foreground">You are about to proceed with minimal coverage. This means:</div>
-            <ul className="list-disc list-inside text-left space-y-1 pl-4">
-              <li>No long-term warranty protection.</li>
-              <li>No professional care kit included.</li>
-              <li>No VIP customer support or priority service.</li>
-              <li>Your coverage will expire in 30 days.</li>
-            </ul>
-            <div className="font-bold text-destructive">Are you sure you want to miss out on comprehensive protection and savings?</div>
-          </div>
-
-          <AlertDialogFooter className="sm:justify-center gap-2 pt-4">
-            <AlertDialogCancel asChild>
-              <Button 
-                className="bg-primary text-primary-foreground hover:bg-primary/90"
-                onClick={() => {
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-              >
-                Wait, Show Me Better Options
-              </Button>
-            </AlertDialogCancel>
-            <AlertDialogAction asChild>
-              <Button variant="destructive" className="bg-red-600 hover:bg-red-700 text-destructive-foreground" onClick={() => {
-                onDecline();
-                setShowDeclineConfirmation(false);
-              }}>
-                Yes, Keep Limited Coverage
-              </Button>
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+          </DialogContent>
+        </Dialog>
+      </>
     );
   }
 
   // Regular Plan Card (Non-Decline Step)
   return (
     <TooltipProvider>
-      <div className={cn("w-full max-w-[380px] mx-auto", className)}>
+      <div className={cn("w-full max-w-[380px] mx-auto", className)}> {/* Added max-w and mx-auto */}
         <Card className="overflow-hidden border-0 shadow-2xl bg-white/95 backdrop-blur-sm rounded-xl">
           <CardHeader className={cn(
             "relative p-6 md:p-8 text-center overflow-hidden",
-            "bg-gradient-to-br from-[#002455] to-[#003875]"
+            "bg-gradient-to-br from-[#002455] to-[#003875]" 
           )}>
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
 
@@ -240,7 +285,9 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
               </div>
             )}
             
-            {HeaderSpecificIcon && <HeaderSpecificIcon className="w-6 h-6 fill-white/80 stroke-white/80 text-white/80 mx-auto mb-3 z-10 relative" />}
+            {HeaderSpecificIcon && !step.bestValue && <HeaderSpecificIcon className="w-6 h-6 fill-white/80 stroke-white/80 text-white/80 mx-auto mb-3 z-10 relative" />}
+            {step.bestValue && <Diamond className="w-6 h-6 fill-white/80 stroke-white/80 text-white/80 mx-auto mb-3 z-10 relative" />}
+
 
             <h2 className="text-xl md:text-2xl font-bold text-white mb-1 z-10 relative tracking-tight">
               {step.title}
@@ -298,3 +345,4 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
     </TooltipProvider>
   );
 }
+
