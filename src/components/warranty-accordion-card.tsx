@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { Alert, AlertDescription as ShadcnAlertDescription } from '@/components/ui/alert'; // Renamed to avoid conflict
+import { Alert, AlertDescription as ShadcnAlertDescription } from '@/components/ui/alert';
 import { 
   AlertDialog,
   AlertDialogAction,
@@ -20,8 +20,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { 
-  Crown, Diamond, Check, Flame, ChevronDown, ShoppingCart, XCircle, 
-  Shield, Zap, Gem, AlertTriangle, AlertCircle, X,
+  Crown, Diamond, Check, Flame, ChevronDown, ShoppingCart, XCircle, Shield, Zap, Gem, AlertTriangle, AlertCircle, X,
   type LucideIcon as LucideIconType 
 } from 'lucide-react';
 import type { WarrantyStep } from '@/lib/types';
@@ -30,7 +29,7 @@ import { cn } from '@/lib/utils';
 // Icon map to resolve string names to actual Lucide components
 const iconMap: Record<string, LucideIconType | undefined> = {
   Shield: Shield,
-  Gem: Diamond, 
+  Gem: Gem, 
   Zap: Zap, 
   CheckCircle: Check,
   Diamond: Diamond,
@@ -81,7 +80,7 @@ interface WarrantyAccordionCardProps {
 }
 
 export default function WarrantyAccordionCard({ step, onDecline, className, defaultOpen = false }: WarrantyAccordionCardProps) {
-  const [isOpen, setIsOpen] = useState(step.isDeclineStep ? true : defaultOpen); // Decline card starts open
+  const [isOpen, setIsOpen] = useState(step.isDeclineStep ? true : defaultOpen);
   const [showDeclineConfirmation, setShowDeclineConfirmation] = useState(false);
   
   const HeaderSpecificIcon = step.iconName && iconMap[step.iconName] 
@@ -142,7 +141,7 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
 
                 <Alert variant="default" className="mt-5 border-2 border-yellow-400 bg-gradient-to-r from-yellow-50 to-yellow-100 text-yellow-800">
                   <AlertCircle className="h-4 w-4 text-red-600" />
-                  <ShadcnAlertDescription className="font-semibold"> {/* Renamed ShadcnAlertDescription */}
+                  <ShadcnAlertDescription className="font-semibold">
                     Coverage expires after 30 days with no renewal option
                   </ShadcnAlertDescription>
                 </Alert>
@@ -187,11 +186,8 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
             <AlertDialogTitle className="text-2xl font-bold text-destructive">Final Warning - Are You Sure?</AlertDialogTitle>
           </AlertDialogHeader>
           
-          <AlertDialogDescription className="text-center text-sm text-muted-foreground py-2">
+          <div className="text-center text-sm text-muted-foreground space-y-3 py-2 px-6">
             <div className="font-semibold text-foreground">You are about to proceed with minimal coverage. This means:</div>
-          </AlertDialogDescription>
-          
-          <div className="text-center text-sm text-muted-foreground space-y-3 pt-1 pb-2 px-6"> {/* Adjusted padding */}
             <ul className="list-disc list-inside text-left space-y-1 pl-4">
               <li>No long-term warranty protection.</li>
               <li>No professional care kit included.</li>
@@ -302,4 +298,3 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
     </TooltipProvider>
   );
 }
-
