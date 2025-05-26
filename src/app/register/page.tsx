@@ -34,7 +34,7 @@ const createAccountFormSchema = z.object({
   password: z.string().min(6, { message: 'Password must be at least 6 characters.' }),
 });
 
-export default function CreateAccountPage() {
+function CreateAccountPageContent() {
   const router = useRouter();
   const { toast } = useToast();
   const form = useForm<CreateAccountData>({
@@ -87,7 +87,6 @@ export default function CreateAccountPage() {
       });
       router.push('/register/home-details');
     } catch (error: any) {
-      // console.error("Firebase Auth Error on submit:", error); // Kept for server-side debugging if needed
       let errorMessage = 'Failed to create account. Please try again.';
       if (error.code === 'auth/email-already-in-use') {
         errorMessage = 'This email address is already in use. Please try a different email or log in.';
@@ -110,7 +109,7 @@ export default function CreateAccountPage() {
       });
     }
   }
-
+  
   const ClientFallback = (
     <div className="flex justify-center items-center py-10">
       <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -118,7 +117,6 @@ export default function CreateAccountPage() {
   );
 
   return (
-    <PageLayout className="flex flex-1 flex-col items-center justify-center py-8">
       <EnhancedCard className="w-full max-w-md animate-card-entrance enhanced-card-mobile-margins">
         <CardHeader className="text-center items-center p-6 sm:p-8 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
@@ -194,13 +192,10 @@ export default function CreateAccountPage() {
               </form>
             </Form>
           </CardContent>
-          <CardFooter className="flex flex-col items-center justify-center p-6 sm:p-8 pt-2 space-y-3">
-              <SmallText className="text-center text-card-foreground">
-                  Already activated?{' '}
-                  <Link href="/login" className="font-semibold text-accent hover:underline">
-                    Log in
-                  </Link>
-              </SmallText>
+          <CardFooter className="flex flex-col items-center justify-center p-6 sm:p-8 pt-2 space-y-3 sm:space-y-4">
+              <Link href="/login" className="font-semibold text-accent hover:underline text-sm sm:text-base">
+                Log in
+              </Link>
               <EnhancedButton variant="secondary" size="sm" asChild>
                   <Link href="/">
                       <HomeIcon className="mr-1 h-4 w-4" />
@@ -210,6 +205,16 @@ export default function CreateAccountPage() {
           </CardFooter>
         </ClientOnly>
       </EnhancedCard>
+  );
+}
+
+
+export default function CreateAccountPage() {
+  return (
+    <PageLayout className="flex flex-1 flex-col items-center justify-center py-8 sm:py-12">
+       <Suspense fallback={<div className="flex flex-1 flex-col items-center justify-center p-4 h-screen"><Loader2 className="h-12 w-12 animate-spin text-primary" /></div>}>
+        <CreateAccountPageContent />
+      </Suspense>
     </PageLayout>
   );
 }
