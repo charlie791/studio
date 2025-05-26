@@ -101,10 +101,8 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
               </p>
               
               <div className="z-10 relative">
-                <div className="text-3xl font-extrabold text-white mb-2">
-                  FREE
-                </div>
-                <div className="text-white/80 text-base">
+                {/* Removed the explicit "FREE" text block */}
+                <div className="text-white/80 text-base mt-2"> {/* Added mt-2 for spacing if needed */}
                   30 days only • Limited benefits
                 </div>
               </div>
@@ -199,6 +197,9 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
                   ${step.priceMonthly.toFixed(2)}
                   <span className="text-xl font-semibold"> × 4 Flex Payments</span>
                 </div>
+                {/* <div className="text-white/80 text-base">
+                  Total: ${step.priceAnnually?.toFixed(2)} (One-time charge)
+                </div> */}
               </div>
             )}
           </CardHeader>
@@ -242,3 +243,4 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
     </TooltipProvider>
   );
 }
+
