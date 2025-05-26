@@ -1,33 +1,32 @@
 
 'use client';
 
-import { Button } from '@/components/ui/button'; // Keep for potential internal use by other components
-import { Loader2, ArrowRight } from 'lucide-react';
-import type { WarrantyStep } from '@/lib/types';
 import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
-import WarrantyAccordionCard from '@/components/warranty-accordion-card';
+import type { WarrantyStep } from '@/lib/types'; // Corrected type import
 import { PageLayout } from '@/components/layout/page-layout';
 import { EnhancedCard } from '@/components/ui/enhanced-card';
 import { EnhancedButton } from '@/components/ui/enhanced-button';
-import { PageTitle, BodyText } from '@/components/ui/typography';
-import { CardHeader, CardContent } from '@/components/ui/card';
+import { PageTitle, BodyText } from '@/components/ui/typography'; // Using new Typography components
+import { CardHeader, CardContent } from '@/components/ui/card'; // Standard Card parts
+import WarrantyAccordionCard from '@/components/warranty-accordion-card';
+import { Loader2, ArrowRight } from 'lucide-react';
 
 
 const warrantyFlowStepsData: WarrantyStep[] = [
   {
     id: 'total-combo-step',
-    iconName: 'Gem',
+    iconName: 'Gem', // Using Diamond as per new design guide's iconography for premium
     title: 'SurfaceGuard365 – Total Combo Plan',
-    summary: '10-Year Countertop + Cabinet Warranty',
+    summary: 'Premium 10-Year Cabinet + Countertop Protection', // Example from guide
     priceMonthly: 149.75,
     priceAnnually: 599,
     planId: 'total-combo',
     bestValue: true,
     isDeclineStep: false,
-    ctaSelectText: 'Select Total Combo Plan',
-    features: [
+    ctaSelectText: 'Select Total Combo Plan', // Adapted from guide's "Get Started Today"
+    features: [ // Populated from guide's FeaturesList example
       { text: 'Complete Cabinet warranty protection', icon: 'CheckCircle' },
       { text: 'Full kitchen surface coverage — countertops, cabinets', icon: 'CheckCircle' },
       { text: 'Accidental damage protection (chips, cracks, stains)', icon: 'CheckCircle' },
@@ -38,7 +37,7 @@ const warrantyFlowStepsData: WarrantyStep[] = [
       { text: 'Upgrade incentives first day of coverage', icon: 'CheckCircle' },
       { text: 'Everything included in the Extended Plan', icon: 'CheckCircle' },
     ],
-    specialOfferText: 'Best Value – Save 30% vs purchasing separately',
+    specialOfferText: 'Best Value – Save 30% vs purchasing separately', // From guide
   },
   {
     id: 'extended-step',
@@ -77,14 +76,14 @@ const warrantyFlowStepsData: WarrantyStep[] = [
   },
   {
     id: 'decline-step',
-    iconName: 'XCircle',
+    iconName: 'Shield', // Icon for the "warning" fallback card header as per guide
     title: 'Continue with Complimentary 30-Day Protection',
-    summary: "Basic coverage with significant limitations",
-    planId: 'free-30-day',
+    summary: "Basic coverage with significant limitations", // From guide
+    planId: 'free-30-day', // Will be used in confirmation page
     isDeclineStep: true,
-    ctaDeclineText: 'Keep Free 30-Day Plan',
-    tooltipText: 'You can upgrade anytime within the next 30 days.',
-    features: [
+    ctaDeclineText: 'Keep 30-Day Plan', // UPDATED TEXT
+    tooltipText: 'You can upgrade anytime within the next 30 days.', // From old flow, kept for context
+    features: [ // From guide's LimitedFeaturesList
         { text: "Basic 30-day coverage only", included: true, icon: 'CheckCircle' },
         { text: "No long-term warranty protection", included: false, icon: 'XCircle' },
         { text: "No professional care kit included", included: false, icon: 'XCircle' },
@@ -92,6 +91,7 @@ const warrantyFlowStepsData: WarrantyStep[] = [
         { text: "No priority service response", included: false, icon: 'XCircle' },
         { text: "No transferable benefits", included: false, icon: 'XCircle' }
     ],
+    // priceMonthly and priceAnnually are omitted as it's "FREE" / "Complimentary"
   },
 ];
 
@@ -103,7 +103,10 @@ export default function WarrantyPage() {
 
   useEffect(() => {
     setIsClient(true);
-  }, []);
+    // Preload checkout page when this page loads for faster navigation
+    router.prefetch('/checkout');
+    router.prefetch('/confirmation');
+  }, [router]);
 
   const handleSeeCoverageOptions = () => {
     setStepViewActive(true);
@@ -114,17 +117,18 @@ export default function WarrantyPage() {
     toast({
       title: 'Complimentary Protection Confirmed!',
       description: 'Your 30-day protection is active. You will be redirected to confirm.',
-      duration: 5000,
+      duration: 5000, // Duration of toast
     });
+    // Redirect to the new confirmation page flow
     setTimeout(() => {
       router.push('/confirmation?planId=free-30-day');
-    }, 2000);
+    }, 2000); // Delay to allow toast to be seen
   };
 
   if (!isClient) {
     return (
       <PageLayout className="flex flex-1 flex-col items-center justify-center p-4">
-        <Loader2 className="h-12 w-12 animate-spin text-[#002455]" />
+        <Loader2 className="h-12 w-12 animate-spin text-primary" />
       </PageLayout>
     );
   }
@@ -133,21 +137,22 @@ export default function WarrantyPage() {
     <PageLayout className="py-12 px-4">
       <div className="container mx-auto max-w-4xl space-y-8 flex flex-col items-center">
         {!stepViewActive && (
-          <EnhancedCard className="w-full max-w-2xl text-center p-8 md:p-10 animate-card-entrance">
-            <CardHeader className="items-center pb-6 px-0 pt-0">
-              <PageTitle as="h1" className="text-[#002455] !mb-4 !text-3xl md:!text-4xl leading-snug">
-                You’ve Been Matched with Custom Protection Plans
-              </PageTitle>
+          <EnhancedCard className="w-full max-w-2xl text-center animate-card-entrance">
+            <CardHeader className="items-center pt-8 px-6 pb-6 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
+                <PageTitle className="!text-white !mb-3 z-10 relative !text-3xl md:!text-4xl leading-snug">
+                    You’ve Been Matched with Custom Protection Plans
+                </PageTitle>
             </CardHeader>
-            <CardContent className="px-0 pb-0">
-              <BodyText className="!text-lg text-[#6b7280] max-w-xl mx-auto mb-8">
+            <CardContent className="p-6 md:p-8">
+              <BodyText className="text-gray-700 max-w-xl mx-auto mb-8">
                 You’re about to activate your free 30-day SurfaceGuard365 warranty. Before we finalize it, take a look at your extended protection options — including personalized 5- and 10-year plans built to cover your exact surfaces.
               </BodyText>
               <EnhancedButton
                 onClick={handleSeeCoverageOptions}
                 variant="primary"
                 size="lg"
-                className="w-full max-w-xs" 
+                className="w-full max-w-xs mx-auto" 
               >
                 <ArrowRight className="mr-2 h-5 w-5" />
                 Review My Coverage Options
@@ -163,7 +168,7 @@ export default function WarrantyPage() {
                 key={step.id}
                 step={step}
                 onDecline={handleDecline}
-                defaultOpen={index === 0 && !!step.bestValue} 
+                defaultOpen={index === 0 && !!step.bestValue} // Open the first "bestValue" card by default
               />
             ))}
           </div>
