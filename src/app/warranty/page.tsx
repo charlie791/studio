@@ -149,7 +149,7 @@ export default function WarrantyPage() {
                 onClick={handleSeeCoverageOptions}
                 variant="primary"
                 size="lg"
-                className="w-full max-w-[320px] sm:max-w-xs mx-auto" // Adjusted max-width for better control
+                className="w-full max-w-[320px] sm:max-w-xs mx-auto" 
               >
                 <ArrowRight className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                 Review My Coverage Options
@@ -162,10 +162,8 @@ export default function WarrantyPage() {
           <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {warrantyFlowStepsData.map((step, index) => (
               <div key={step.id} className={cn(
-                "flex justify-center", // Center card in its grid cell
-                // For the decline step, make it span more columns on larger screens if desired,
-                // or handle its width via max-w on the card itself.
-                // Example: step.isDeclineStep && "lg:col-span-3"
+                "flex justify-center", 
+                step.isDeclineStep && "md:col-span-2 lg:col-span-3" 
               )}>
                 <WarrantyAccordionCard
                   step={step}

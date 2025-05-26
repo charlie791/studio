@@ -20,13 +20,13 @@ import { CardHeader, CardContent } from '@/components/ui/card';
 
 
 const iconMap: Record<string, LucideIconType | undefined> = {
-  Shield: Shield, Gem: Gem, Zap: Zap, CheckCircle: Check, Diamond: Diamond, Crown: Crown, Flame: Flame, ChevronDown: ChevronDown, ShoppingCart: ShoppingCart, XCircle: XCircle, AlertTriangle: AlertTriangle, X: X, Mail: Mail, Tag: Tag, Send: Send,
+  Shield: Shield, Gem: Gem, Zap: Zap, CheckCircle: Check, Diamond: Diamond, Crown: Crown, Flame: Flame, ChevronDown: ChevronDown, ShoppingCart: ShoppingCart, XCircle: XCircle, AlertTriangle: AlertTriangle, X: X, Mail: Mail, Tag: Tag, Send: Send, AlertCircle: AlertTriangle, // Mapped AlertCircle to AlertTriangle for consistency if it was intended for warning icon
 };
 
 function FeaturesList({ features, isDeclineStep }: { features: WarrantyStep['features'], isDeclineStep?: boolean }) {
   if (!features) return null;
   return (
-    <ul className="space-y-2 sm:space-y-2.5"> {/* Responsive gap */}
+    <ul className="space-y-2 sm:space-y-2.5"> 
       {features.map((feature, index) => {
         const FeatureIcon =
           isDeclineStep ? (feature.included ? iconMap['CheckCircle'] : iconMap['X'])
@@ -67,15 +67,15 @@ function WarningList() {
   ];
 
   return (
-    <div className="text-left mb-4 sm:mb-6 space-y-2 sm:space-y-3">
+    <div className="text-left mb-6 space-y-3">
       {warnings.map((warning, index) => (
         <div 
           key={index}
-          className="flex items-start gap-2 sm:gap-3 opacity-0 animate-slide-in"
+          className="flex items-start gap-3 opacity-0 animate-slide-in"
           style={{ animationDelay: `${index * 100}ms` }}
         >
-          <X className="w-4 h-4 sm:w-5 sm:h-5 text-red-600 flex-shrink-0 mt-0.5" />
-          <BodyText className="text-gray-700 !text-sm sm:!text-base">{warning}</BodyText> 
+          <X className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+          <BodyText className="text-gray-600 leading-relaxed">{warning}</BodyText> 
         </div>
       ))}
     </div>
@@ -104,8 +104,8 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
   };
 
   const handleConfirmLimitedFromDialog = () => {
-    onDecline(); // This will handle toast and navigation
     setShowDeclineConfirmation(false);
+    onDecline(); 
   };
 
 
@@ -113,14 +113,15 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
     return (
       <>
         <EnhancedCard
-            warning // This prop enables warning styling in EnhancedCard
+            warning 
             className={cn("w-full max-w-[380px] mx-auto animate-card-entrance p-0 enhanced-card-mobile-margins", className)}
         >
-             <CardHeader className="relative bg-red-700 p-6 sm:p-8 text-center overflow-hidden rounded-t-xl">
+            <CardHeader className="relative bg-red-700 p-6 sm:p-8 text-center overflow-hidden rounded-t-xl">
+              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-red-600 via-yellow-400 to-red-600 animate-warning-stripe" />
               <div className="flex flex-col items-center mb-4"> 
                 <Badge 
                   variant="destructive"
-                  className="inline-flex items-center gap-1.5 sm:gap-2 bg-red-600/90 backdrop-blur-sm px-3 py-1.5 sm:px-4 sm:py-2 rounded-full border border-white/30 text-xs sm:text-sm font-semibold text-white z-10 animate-pulse-warning"
+                  className="inline-flex items-center gap-1.5 sm:gap-2 bg-red-600/90 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/30 text-xs sm:text-sm font-semibold text-white z-10 animate-intense-pulsate-warning"
                 >
                   {iconMap.AlertTriangle && <AlertTriangle className="w-3 h-3 sm:w-4 sm:h-4 fill-yellow-400 text-yellow-400" />}
                   Limited Coverage
@@ -145,7 +146,7 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
                   <EnhancedButton
                     variant="secondary" 
                     size="md"
-                    className="w-full justify-between !p-3 sm:!p-4 !h-auto !text-left font-semibold !text-base !text-gray-700 hover:!bg-red-600/10 !rounded-lg !shadow-none !border-0"
+                    className="w-full justify-between !p-3 sm:!p-4 !h-auto !text-left font-semibold !text-base text-gray-700 hover:!bg-red-600/10 !rounded-lg !shadow-none !border-0"
                   >
                     What's NOT included with free coverage
                     {iconMap.ChevronDown && <ChevronDown className={`w-5 h-5 text-red-600 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />}
@@ -160,7 +161,7 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
               </Collapsible>
 
               <Alert variant="default" className="mt-4 sm:mt-5 border-2 border-yellow-400 bg-gradient-to-r from-yellow-50 to-yellow-100 text-yellow-800 p-3 sm:p-4">
-                {iconMap.AlertCircle && <AlertCircle className="h-4 w-4 text-red-600" />}
+                {iconMap.AlertCircle && <AlertTriangle className="h-4 w-4 text-red-600" />}
                 <ShadcnAlertDescription className="font-semibold !text-xs sm:!text-sm">
                   Coverage expires after 30 days with no renewal option
                 </ShadcnAlertDescription>
@@ -185,14 +186,14 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
         </EnhancedCard>
 
         <Dialog open={showDeclineConfirmation} onOpenChange={setShowDeclineConfirmation}>
-          <DialogContent className="max-w-lg mx-4 p-0 sm:p-0 border-4 border-red-600 bg-background overflow-hidden">
+          <DialogContent className="max-w-lg mx-4 p-0 sm:p-0 border-4 border-red-600 bg-background overflow-hidden rounded-xl">
              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-red-600 via-yellow-400 to-red-600 animate-warning-stripe" />
 
             <EnhancedButton
               variant="secondary" 
               size="sm"
               onClick={() => setShowDeclineConfirmation(false)}
-              className="absolute top-2 right-2 sm:top-4 sm:right-4 w-8 h-8 sm:w-10 sm:h-10 !rounded-full !bg-red-600/10 hover:!bg-red-600/20 !shadow-none z-10 transition-all duration-300 hover:scale-110 !p-0"
+              className="absolute top-2 right-2 sm:top-4 sm:right-4 w-8 h-8 sm:w-10 sm:h-10 !rounded-full bg-red-600/10 hover:!bg-red-600/20 !shadow-none z-10 transition-all duration-300 hover:scale-110 !p-0"
               aria-label="Close dialog"
             >
               {iconMap.X && <X className="w-5 h-5 sm:w-6 sm:h-6 text-red-600" />}
@@ -201,7 +202,7 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
             <div className="pt-12 sm:pt-16 pb-8 sm:pb-10 px-6 sm:px-10 text-center">
               <Badge
                 variant="destructive"
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-red-600 to-red-700 text-white px-4 py-2 sm:px-6 sm:py-3 text-sm sm:text-base font-bold rounded-full mb-6 sm:mb-8 animate-intense-pulsate-warning shadow-lg shadow-red-600/40 relative"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-red-600 to-red-700 text-white px-4 py-2 sm:px-6 sm:py-3 text-base sm:text-lg font-bold rounded-full mb-6 sm:mb-8 animate-intense-pulsate-warning shadow-lg shadow-red-600/40 relative"
               >
                 {iconMap.AlertTriangle && <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5 fill-yellow-400" />}
                 Limited Coverage
@@ -212,14 +213,13 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
                   Final Warning - Are You Sure?
                 </DialogTitle>
               </DialogHeader>
-              <BodyText className="font-semibold text-gray-700 mb-4 sm:mb-6">
-                 You are about to proceed with minimal coverage. This means:
-              </BodyText>
-              <WarningList />
-              <BodyText className="font-bold text-red-600 mb-6 sm:mb-8">
-                Are you sure you want to miss out on comprehensive protection and savings?
-              </BodyText>
-              <div className="space-y-3 sm:space-y-4">
+               <div className="text-center text-sm sm:text-base text-gray-700 space-y-3 py-2">
+                <div className="font-semibold text-foreground">You are about to proceed with minimal coverage. This means:</div>
+                  <WarningList />
+                <div className="font-bold text-red-600">Are you sure you want to miss out on comprehensive protection and savings?</div>
+              </div>
+              
+              <div className="space-y-3 sm:space-y-4 mt-6 sm:mt-8">
                 <EnhancedButton
                   onClick={handleConfirmLimitedFromDialog}
                   variant="warning"
@@ -256,7 +256,7 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
 
           {step.bestValue && (
-             <Badge variant="default" className="absolute top-3 left-3 sm:top-4 sm:left-6 bg-white/20 backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-1.5 rounded-full border border-white/30 flex items-center gap-1.5 text-xs font-semibold text-white z-10">
+             <Badge variant="default" className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-white/20 backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-1.5 rounded-full border border-white/30 flex items-center gap-1.5 text-xs font-semibold text-white z-10">
               {iconMap.Crown && <Crown className="w-3 h-3 sm:w-4 sm:h-4 fill-[#FDA001] text-[#FDA001]" />}
               Most Popular
             </Badge>
@@ -273,9 +273,9 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
 
           {step.priceMonthly !== undefined && (
             <div className="z-10 relative">
-              <div className="text-2xl sm:text-3xl font-extrabold text-white">
-                ${step.priceMonthly.toFixed(2)}
-                <span className="text-lg sm:text-xl font-semibold align-baseline"> × 4 Flex Payments</span>
+              <div className="text-3xl font-extrabold text-white">
+                ${step.priceMonthly.toFixed(2)} 
+                <span className="text-xl font-semibold align-baseline"> × 4 Flex Payments</span>
               </div>
             </div>
           )}
@@ -287,7 +287,7 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
               <EnhancedButton
                 variant="secondary" 
                 size="md"
-                className="w-full justify-between !p-3 sm:!p-4 !h-auto !text-left font-semibold !text-base !text-gray-700 hover:!bg-[#002455]/10 !rounded-lg !shadow-none !border-0"
+                className="w-full justify-between !p-3 sm:!p-4 !h-auto !text-left font-semibold !text-base text-gray-700 hover:!bg-[#002455]/10 !rounded-lg !shadow-none !border-0"
               >
                 What's included in this plan?
                 {iconMap.ChevronDown && <ChevronDown className={`w-5 h-5 text-[#FDA001] transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />}

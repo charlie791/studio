@@ -20,7 +20,7 @@ import { useToast } from '@/hooks/use-toast';
 import type { CreateAccountData } from '@/lib/types';
 import { authInitializationError, getFirebaseAuthInstance } from '@/lib/firebase';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { useEffect, Suspense } from 'react'; // Added Suspense here
+import { useEffect, Suspense } from 'react'; 
 import ClientOnly from '@/components/client-only';
 import { PageLayout } from '@/components/layout/page-layout';
 import { EnhancedCard } from '@/components/ui/enhanced-card';
@@ -118,7 +118,7 @@ function CreateAccountPageContent() {
 
   return (
       <EnhancedCard className="w-full max-w-md p-0 animate-card-entrance enhanced-card-mobile-margins">
-        <CardHeader className="text-center items-center p-6 sm:p-8 bg-gradient-to-br from-[#002455] to-[#003875] relative overflow-hidden">
+        <CardHeader className="text-center items-center p-6 sm:p-8 bg-gradient-to-br from-[#002455] to-[#003875] relative overflow-hidden rounded-t-xl">
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
           <PageTitle as="h1" className="!text-white !mb-2 z-10 relative">Let’s Get You Covered</PageTitle>
           <BodyText className="text-center text-white/90 !text-base z-10 relative px-2 sm:px-0">

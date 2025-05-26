@@ -95,7 +95,7 @@ export default function ProcessingPage() {
               </div>
             </div>
 
-            <BodyText className={`text-center text-foreground mb-6 h-6 transition-opacity duration-300 text-sm sm:text-base md:text-lg ${ 
+            <BodyText className={`text-center text-gray-700 mb-6 h-6 transition-opacity duration-300 text-sm sm:text-base md:text-lg ${ 
               isTransitioning ? 'opacity-0' : 'opacity-100'
             }`}>
               {currentMessage}

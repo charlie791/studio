@@ -200,7 +200,7 @@ function ConfirmationPageContent() {
   if (isFreePlan) {
     return (
         <div className="w-full max-w-lg animate-slide-up">
-          <EnhancedCard className="animate-card-entrance enhanced-card-mobile-margins">
+          <EnhancedCard className="animate-card-entrance enhanced-card-mobile-margins p-0">
             <CardHeader className="relative bg-gradient-to-br from-[#002455] to-[#003875] p-6 sm:p-8 md:p-10 text-center overflow-hidden rounded-t-xl">
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
               
