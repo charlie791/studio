@@ -3,10 +3,11 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button'; // Using standard ShadCN Button for icon
-import { EnhancedButton } from '@/components/ui/enhanced-button'; // For the link buttons
+import { Button } from '@/components/ui/button';
+import { EnhancedButton } from '@/components/ui/enhanced-button';
 import { Menu, X, HomeIcon } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
+import { cn } from '@/lib/utils';
 
 export default function Footer() {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,9 +19,9 @@ export default function Footer() {
     { href: '/register/processing', label: 'Register (Processing)' },
     { href: '/login', label: 'Login' },
     { href: '/warranty', label: 'Warranty Plans' },
-    { href: '/checkout?planId=core', label: 'Checkout (Core Plan)' }, // Example planId
-    { href: '/confirmation?planId=core', label: 'Confirmation (Core Plan)' }, // Example planId
-    { href: '/trade-in', label: 'Trade-In Offer' },
+    { href: '/checkout?planId=core', label: 'Checkout (Core Plan)' },
+    { href: '/confirmation?planId=core', label: 'Confirmation (Paid Plan)' },
+    { href: '/confirmation?planId=free-30-day', label: 'Confirmation (Free Plan)' },
   ];
 
   return (
@@ -39,7 +40,10 @@ export default function Footer() {
         </div>
 
         {isOpen && (
-          <div className="animate-slide-up opacity-0 animation-delay-100" style={{animationFillMode: 'forwards'}}>
+          <div className={cn(
+            "transition-all duration-500 ease-in-out overflow-hidden",
+            isOpen ? "max-h-96 opacity-100 animate-slide-up" : "max-h-0 opacity-0"
+          )}>
             <Separator className="my-4 bg-border/50" />
             <div>
               <h4 className="text-sm font-semibold text-card-foreground mb-3">
@@ -62,7 +66,12 @@ export default function Footer() {
               </div>
             </div>
              <Separator className="my-4 bg-border/50" />
-             <EnhancedButton variant="secondary" size="sm" className="text-sm !font-medium !border-muted-foreground/40 !text-muted-foreground hover:!text-accent hover:!border-accent/60 !shadow-none !py-2 !px-4" asChild>
+             <EnhancedButton 
+                variant="secondary" 
+                size="sm" 
+                asChild
+                className="text-sm !font-medium !border-muted-foreground/40 !text-muted-foreground hover:!text-accent hover:!border-accent/60 !shadow-none !py-2 !px-4"
+              >
                   <Link href="/">
                       <HomeIcon className="mr-1 h-4 w-4" />
                       Return to Home
