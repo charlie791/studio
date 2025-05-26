@@ -1,15 +1,19 @@
 
 'use client';
 
-import Image from 'next/image';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight, Loader2 } from 'lucide-react';
+import { Button } from '@/components/ui/button'; // Keep for potential internal use by other components
+import { Loader2, ArrowRight } from 'lucide-react';
 import type { WarrantyStep } from '@/lib/types';
 import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
 import WarrantyAccordionCard from '@/components/warranty-accordion-card';
+import { PageLayout } from '@/components/layout/page-layout';
+import { EnhancedCard } from '@/components/ui/enhanced-card';
+import { EnhancedButton } from '@/components/ui/enhanced-button';
+import { PageTitle, BodyText } from '@/components/ui/typography';
+import { CardHeader, CardContent } from '@/components/ui/card';
+
 
 const warrantyFlowStepsData: WarrantyStep[] = [
   {
@@ -119,54 +123,37 @@ export default function WarrantyPage() {
 
   if (!isClient) {
     return (
-      <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden p-4">
-        <Image
-            src="https://igscountertops.b-cdn.net/kitchencabinets.now%20assets/Cabiets%20assets/ELITECRAFT%20Imperial%20Blue/imperial-blue-main-gallery-image-1.jpg"
-            alt="Modern kitchen background"
-            fill={true}
-            className="-z-10 filter brightness-75 object-cover"
-            data-ai-hint="kitchen cabinets"
-            priority={false}
-        />
-        <Loader2 className="h-12 w-12 animate-spin text-primary" />
-      </div>
+      <PageLayout className="flex flex-1 flex-col items-center justify-center p-4">
+        <Loader2 className="h-12 w-12 animate-spin text-[#002455]" />
+      </PageLayout>
     );
   }
 
   return (
-    <div className="relative flex flex-1 flex-col items-center justify-start overflow-hidden pt-12 pb-8 px-4 md:px-6 lg:px-8 min-h-screen">
-      <Image
-        src="https://igscountertops.b-cdn.net/kitchencabinets.now%20assets/Cabiets%20assets/ELITECRAFT%20Imperial%20Blue/imperial-blue-main-gallery-image-1.jpg"
-        alt="Modern kitchen background"
-        fill={true}
-        className="-z-10 filter brightness-75 object-cover"
-        data-ai-hint="kitchen cabinets"
-        priority={false}
-      />
-      <div className="relative z-10 w-full max-w-2xl mx-auto space-y-8 flex flex-col items-center">
+    <PageLayout className="py-12 px-4">
+      <div className="container mx-auto max-w-4xl space-y-8 flex flex-col items-center">
         {!stepViewActive && (
-          <Card className="w-full bg-white/95 backdrop-blur-sm border-0 shadow-2xl rounded-xl overflow-hidden">
-            <CardHeader className="items-center text-center pt-8 pb-6 px-6 bg-gradient-to-br from-[#002455] to-[#003875] relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
-              <CardTitle className="text-3xl md:text-4xl font-bold tracking-tight text-white leading-snug z-10 relative">
+          <EnhancedCard className="w-full max-w-2xl text-center p-8 md:p-10 animate-card-entrance">
+            <CardHeader className="items-center pb-6 px-0 pt-0">
+              <PageTitle as="h1" className="text-[#002455] !mb-4 !text-3xl md:!text-4xl leading-snug">
                 You’ve Been Matched with Custom Protection Plans
-              </CardTitle>
+              </PageTitle>
             </CardHeader>
-            <CardContent className="p-6 pt-6 text-center">
-              <CardDescription className="text-lg text-gray-700 max-w-xl mx-auto text-center mt-2 mb-6 z-10 relative">
+            <CardContent className="px-0 pb-0">
+              <BodyText className="!text-lg text-[#6b7280] max-w-xl mx-auto mb-8">
                 You’re about to activate your free 30-day SurfaceGuard365 warranty. Before we finalize it, take a look at your extended protection options — including personalized 5- and 10-year plans built to cover your exact surfaces.
-              </CardDescription>
-              <Button
+              </BodyText>
+              <EnhancedButton
                 onClick={handleSeeCoverageOptions}
+                variant="primary"
                 size="lg"
-                className="w-full max-w-xs mt-0 bg-gradient-to-r from-[#002455] to-[#003875] text-primary-foreground hover:shadow-lg hover:shadow-[#002455]/40 hover:-translate-y-0.5 transition-all duration-300 py-3 text-base font-semibold rounded-2xl relative overflow-hidden group h-auto"
+                className="w-full max-w-xs" 
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
                 <ArrowRight className="mr-2 h-5 w-5" />
                 Review My Coverage Options
-              </Button>
+              </EnhancedButton>
             </CardContent>
-          </Card>
+          </EnhancedCard>
         )}
 
         {stepViewActive && (
@@ -176,12 +163,12 @@ export default function WarrantyPage() {
                 key={step.id}
                 step={step}
                 onDecline={handleDecline}
-                defaultOpen={index === 0 && !!step.bestValue}
+                defaultOpen={index === 0 && !!step.bestValue} 
               />
             ))}
           </div>
         )}
       </div>
-    </div>
+    </PageLayout>
   );
 }

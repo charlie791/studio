@@ -1,13 +1,11 @@
 
 'use client';
 
-import Image from 'next/image';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -17,7 +15,6 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Loader2, Mail, Lock, LogIn, HomeIcon } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import type { LoginData } from '@/lib/types';
@@ -25,6 +22,11 @@ import { authInitializationError, getFirebaseAuthInstance } from '@/lib/firebase
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useEffect, Suspense } from 'react';
 import ClientOnly from '@/components/client-only';
+import { PageLayout } from '@/components/layout/page-layout';
+import { EnhancedCard } from '@/components/ui/enhanced-card';
+import { EnhancedButton } from '@/components/ui/enhanced-button';
+import { PageTitle, BodyText, SmallText } from '@/components/ui/typography';
+import { CardHeader, CardContent, CardFooter } from '@/components/ui/card';
 
 const loginFormSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email address.' }),
@@ -110,105 +112,96 @@ function LoginPageContent() {
 
   const ClientFallback = (
     <div className="flex justify-center items-center py-10">
-      <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      <Loader2 className="h-8 w-8 animate-spin text-[#002455]" />
     </div>
   );
 
   return (
-    <Card className="w-full max-w-md bg-white/95 backdrop-blur-sm border-0 shadow-2xl rounded-xl">
-      <CardHeader className="text-center items-center pt-6 px-6 pb-4 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
-        <CardTitle className="text-3xl font-bold tracking-tight text-white z-10 relative">Welcome Back!</CardTitle>
-        <CardDescription className="text-base text-white/90 mt-2 z-10 relative">
-          Sign in to access your account and manage your warranties.
-        </CardDescription>
-      </CardHeader>
-      <ClientOnly fallback={ClientFallback}>
-        <CardContent className="px-6 pb-6 pt-6">
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-gray-700">Email Address</FormLabel>
-                     <div className="relative flex items-center">
-                      <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
-                      <FormControl>
-                        <Input type="email" placeholder="jane.doe@example.com" {...field} className="pl-10 text-foreground" />
-                      </FormControl>
-                    </div>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-gray-700">Password</FormLabel>
-                     <div className="relative flex items-center">
-                      <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
-                      <FormControl>
-                        <Input type="password" placeholder="••••••••" {...field} className="pl-10 text-foreground" />
-                      </FormControl>
-                    </div>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button 
-                type="submit" 
-                className="w-full bg-gradient-to-r from-[#002455] to-[#003875] text-primary-foreground hover:shadow-lg hover:shadow-[#002455]/40 hover:-translate-y-0.5 transition-all duration-300 py-3 text-base font-semibold rounded-2xl relative overflow-hidden group h-auto" 
-                disabled={form.formState.isSubmitting || !!authInitializationError}
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
-                {form.formState.isSubmitting ? (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                ) : (
-                  <LogIn className="mr-2 h-4 w-4" />
-                )}
-                Sign In
-              </Button>
-            </form>
-          </Form>
-        </CardContent>
-        <CardFooter className="flex flex-col items-center justify-center px-6 pb-6 pt-2 space-y-3">
-            <p className="text-sm text-gray-700 text-center">
-                Need to activate?{' '}
-                <Link href="/register" className="font-semibold text-accent hover:underline">
-                  Create an account
-                </Link>
-            </p>
-            <Button variant="link" asChild className="text-sm text-muted-foreground hover:text-accent p-0 h-auto">
-                <Link href="/">
-                    <HomeIcon className="mr-1 h-4 w-4" />
-                    Return to Home
-                </Link>
-            </Button>
-        </CardFooter>
-      </ClientOnly>
-    </Card>
+    <PageLayout className="flex flex-1 flex-col items-center justify-center p-4">
+      <EnhancedCard className="w-full max-w-md animate-card-entrance">
+        <CardHeader className="text-center items-center pt-6 px-6 pb-4">
+          <PageTitle as="h1" className="!text-3xl !mb-2 text-center text-[#002455]">Welcome Back!</PageTitle>
+          <BodyText className="text-center !text-base text-[#6b7280]">
+            Sign in to access your account and manage your warranties.
+          </BodyText>
+        </CardHeader>
+        <ClientOnly fallback={ClientFallback}>
+          <CardContent className="px-6 pb-6 pt-6">
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-[#002455]">Email Address</FormLabel>
+                       <div className="relative flex items-center">
+                        <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+                        <FormControl>
+                          <Input type="email" placeholder="jane.doe@example.com" {...field} className="pl-10 text-foreground" />
+                        </FormControl>
+                      </div>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-[#002455]">Password</FormLabel>
+                       <div className="relative flex items-center">
+                        <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+                        <FormControl>
+                          <Input type="password" placeholder="••••••••" {...field} className="pl-10 text-foreground" />
+                        </FormControl>
+                      </div>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <EnhancedButton 
+                  type="submit" 
+                  variant="primary"
+                  size="lg"
+                  className="w-full" 
+                  disabled={form.formState.isSubmitting || !!authInitializationError}
+                >
+                  {form.formState.isSubmitting ? (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  ) : (
+                    <LogIn className="mr-2 h-4 w-4" />
+                  )}
+                  Sign In
+                </EnhancedButton>
+              </form>
+            </Form>
+          </CardContent>
+          <CardFooter className="flex flex-col items-center justify-center px-6 pb-6 pt-2 space-y-3">
+              <SmallText className="text-sm text-center text-[#9ca3af]">
+                  Need to activate?{' '}
+                  <Link href="/register" className="font-semibold text-[#FDA001] hover:underline">
+                    Create an account
+                  </Link>
+              </SmallText>
+              <EnhancedButton variant="link" size="sm" className="text-sm text-muted-foreground hover:text-accent p-0 h-auto !shadow-none" asChild>
+                  <Link href="/">
+                      <HomeIcon className="mr-1 h-4 w-4" />
+                      Return to Home
+                  </Link>
+              </EnhancedButton>
+          </CardFooter>
+        </ClientOnly>
+      </EnhancedCard>
+    </PageLayout>
   );
 }
 
-
 export default function LoginPage() {
   return (
-    <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden p-4">
-      <Image
-        src="https://igscountertops.b-cdn.net/kitchencabinets.now%20assets/Cabiets%20assets/ELITECRAFT%20Imperial%20Blue/imperial-blue-main-gallery-image-1.jpg"
-        alt="Modern kitchen background"
-        fill={true}
-        className="-z-10 filter brightness-75 object-cover"
-        data-ai-hint="kitchen cabinets"
-        priority={false}
-      />
-      <Suspense fallback={<div className="flex justify-center items-center h-64"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>}>
-        <LoginPageContent />
-      </Suspense>
-    </div>
+    <Suspense fallback={<div className="flex justify-center items-center h-screen"><Loader2 className="h-12 w-12 animate-spin text-[#002455]" /></div>}>
+      <LoginPageContent />
+    </Suspense>
   );
 }

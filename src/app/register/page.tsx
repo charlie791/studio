@@ -1,13 +1,11 @@
 
 'use client';
 
-import Image from 'next/image';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -17,7 +15,6 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Loader2, User, Mail, Lock, HomeIcon } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import type { CreateAccountData } from '@/lib/types';
@@ -25,6 +22,11 @@ import { authInitializationError, getFirebaseAuthInstance } from '@/lib/firebase
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useEffect } from 'react';
 import ClientOnly from '@/components/client-only';
+import { PageLayout } from '@/components/layout/page-layout';
+import { EnhancedCard } from '@/components/ui/enhanced-card';
+import { EnhancedButton } from '@/components/ui/enhanced-button';
+import { PageTitle, BodyText, SmallText } from '@/components/ui/typography';
+import { CardHeader, CardContent, CardFooter } from '@/components/ui/card'; // Standard Card parts for structure
 
 const createAccountFormSchema = z.object({
   fullName: z.string().min(2, { message: 'Full name must be at least 2 characters.' }),
@@ -111,27 +113,18 @@ export default function CreateAccountPage() {
 
   const ClientFallback = (
     <div className="flex justify-center items-center py-10">
-      <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      <Loader2 className="h-8 w-8 animate-spin text-[#002455]" />
     </div>
   );
 
   return (
-    <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden p-4">
-      <Image
-        src="https://igscountertops.b-cdn.net/kitchencabinets.now%20assets/Cabiets%20assets/ELITECRAFT%20Imperial%20Blue/imperial-blue-main-gallery-image-1.jpg"
-        alt="Modern kitchen background"
-        fill={true}
-        className="-z-10 filter brightness-75 object-cover"
-        data-ai-hint="kitchen cabinets"
-        priority={false}
-      />
-      <Card className="w-full max-w-md bg-white/95 backdrop-blur-sm border-0 shadow-2xl rounded-xl">
-        <CardHeader className="text-center items-center pt-6 px-6 pb-4 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
-          <CardTitle className="text-3xl font-bold tracking-tight text-white z-10 relative">Let’s Get You Covered</CardTitle>
-          <CardDescription className="text-base text-white/90 mt-2 z-10 relative">
+    <PageLayout className="flex flex-1 flex-col items-center justify-center p-4">
+      <EnhancedCard className="w-full max-w-md animate-card-entrance">
+        <CardHeader className="text-center items-center pt-6 px-6 pb-4">
+          <PageTitle as="h1" className="!text-3xl !mb-2 text-center text-[#002455]">Let’s Get You Covered</PageTitle>
+          <BodyText className="text-center text-[#6b7280] !text-base">
             Start by creating your account. It’s fast, easy, and just the first step toward protecting your new surfaces
-          </CardDescription>
+          </BodyText>
         </CardHeader>
         <ClientOnly fallback={ClientFallback}>
           <CardContent className="px-6 pb-6 pt-6">
@@ -142,7 +135,7 @@ export default function CreateAccountPage() {
                   name="fullName"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-gray-700">Full Name</FormLabel>
+                      <FormLabel className="text-[#002455]">Full Name</FormLabel>
                       <div className="relative flex items-center">
                         <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
                         <FormControl>
@@ -158,7 +151,7 @@ export default function CreateAccountPage() {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-gray-700">Email Address</FormLabel>
+                      <FormLabel className="text-[#002455]">Email Address</FormLabel>
                        <div className="relative flex items-center">
                         <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
                         <FormControl>
@@ -174,7 +167,7 @@ export default function CreateAccountPage() {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-gray-700">Password</FormLabel>
+                      <FormLabel className="text-[#002455]">Password</FormLabel>
                        <div className="relative flex items-center">
                         <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
                         <FormControl>
@@ -185,36 +178,37 @@ export default function CreateAccountPage() {
                     </FormItem>
                   )}
                 />
-                <Button
+                <EnhancedButton
                   type="submit"
-                  className="w-full bg-gradient-to-r from-[#002455] to-[#003875] text-primary-foreground hover:shadow-lg hover:shadow-[#002455]/40 hover:-translate-y-0.5 transition-all duration-300 py-3 text-base font-semibold rounded-2xl relative overflow-hidden group h-auto"
+                  variant="primary"
+                  size="lg"
+                  className="w-full"
                   disabled={form.formState.isSubmitting || !!authInitializationError}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
                   {form.formState.isSubmitting ? (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   ) : null}
                   Create Account
-                </Button>
+                </EnhancedButton>
               </form>
             </Form>
           </CardContent>
           <CardFooter className="flex flex-col items-center justify-center px-6 pb-6 pt-2 space-y-3">
-              <p className="text-sm text-gray-700 text-center">
+              <SmallText className="text-center text-[#9ca3af]">
                   Already activated?{' '}
-                  <Link href="/login" className="font-semibold text-accent hover:underline">
+                  <Link href="/login" className="font-semibold text-[#FDA001] hover:underline">
                     Log in
                   </Link>
-              </p>
-              <Button variant="link" asChild className="text-sm text-muted-foreground hover:text-accent p-0 h-auto">
+              </SmallText>
+              <EnhancedButton variant="link" size="sm" className="text-sm text-muted-foreground hover:text-accent p-0 h-auto !shadow-none" asChild>
                   <Link href="/">
                       <HomeIcon className="mr-1 h-4 w-4" />
                       Return to Home
                   </Link>
-              </Button>
+              </EnhancedButton>
           </CardFooter>
         </ClientOnly>
-      </Card>
-    </div>
+      </EnhancedCard>
+    </PageLayout>
   );
 }

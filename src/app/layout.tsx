@@ -1,16 +1,13 @@
+
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Geist } from 'next/font/google'; // Removed Geist_Mono as it's not explicitly used by new design system
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
-import Footer from '@/components/layout/footer'; // Added import for Footer
+import Footer from '@/components/layout/footer';
+// Removed PageLayout import from here, it will be used on individual pages
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
   subsets: ['latin'],
 });
 
@@ -26,11 +23,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen bg-background`}>
-        <main className="flex-grow flex flex-col">
-          {children}
-        </main>
-        <Footer /> {/* Added Footer component */}
+      <body className={`${geistSans.variable} antialiased flex flex-col min-h-screen bg-background`}>
+        {/* PageLayout will be applied within each page.tsx now */}
+        {children}
+        <Footer />
         <Toaster />
       </body>
     </html>

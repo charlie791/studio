@@ -1,13 +1,12 @@
 
 'use client';
 
-import Image from 'next/image';
+import Image from 'next/image'; // Keep for now, though background handled by PageLayout
 import { Suspense } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -17,11 +16,16 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Loader2, CreditCard, ArrowLeft } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import type { WarrantyPlan, CheckoutData } from '@/lib/types';
 import Link from 'next/link';
+import { PageLayout } from '@/components/layout/page-layout';
+import { EnhancedCard } from '@/components/ui/enhanced-card';
+import { EnhancedButton } from '@/components/ui/enhanced-button';
+import { PageTitle, SectionTitle, BodyText, SmallText } from '@/components/ui/typography';
+import { CardHeader, CardContent, CardFooter } from '@/components/ui/card'; // Standard Card parts for structure
+
 
 const mockPlans: Record<string, WarrantyPlan> = {
   core: {
@@ -89,32 +93,32 @@ function CheckoutPageContent() {
 
   if (!selectedPlan) {
     return (
-      <div className="text-center py-10">
-        <p className="text-xl text-destructive">Invalid warranty plan selected.</p>
-        <Button asChild variant="link" className="mt-4 text-accent hover:underline">
+      <EnhancedCard className="w-full max-w-md p-6 text-center animate-card-entrance">
+        <PageTitle as="h1" className="text-destructive !text-xl !mb-2">Invalid Plan</PageTitle>
+        <BodyText className="text-destructive">Invalid warranty plan selected.</BodyText>
+        <EnhancedButton variant="link" size="md" className="mt-4 text-[#FDA001] hover:underline !shadow-none" asChild>
           <Link href="/warranty">Choose a Plan</Link>
-        </Button>
-      </div>
+        </EnhancedButton>
+      </EnhancedCard>
     );
   }
 
   return (
-    <Card className="w-full max-w-md bg-white/95 backdrop-blur-sm border-0 shadow-2xl rounded-xl">
-      <CardHeader className="text-center items-center pt-6 px-6 pb-4 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
-        <CreditCard className="mx-auto h-12 w-12 text-white mb-4 z-10 relative" />
-        <CardTitle className="text-3xl font-bold tracking-tight text-white z-10 relative">Complete Your Purchase</CardTitle>
-        <CardDescription className="text-base text-white/90 mt-2 z-10 relative">You're one step away from securing your {selectedPlan.name} plan.</CardDescription>
+    <EnhancedCard className="w-full max-w-md animate-card-entrance">
+      <CardHeader className="text-center items-center pt-6 px-6 pb-4">
+        <CreditCard className="mx-auto h-12 w-12 text-[#002455] mb-4" />
+        <PageTitle as="h1" className="!text-3xl !mb-2 text-[#002455]">Complete Your Purchase</PageTitle>
+        <BodyText className="!text-base text-[#6b7280] mt-2">You're one step away from securing your {selectedPlan.name} plan.</BodyText>
       </CardHeader>
       <CardContent className="space-y-6 px-6 pt-6 pb-4">
-        <div className="border p-4 rounded-md bg-muted/50 text-center">
-          <h3 className="text-lg font-semibold text-gray-800 mb-1">
+        <div className="border p-4 rounded-md bg-muted/30 text-center"> {/* Lightened background */}
+          <SectionTitle as="h3" className="!text-lg text-[#002455] !mb-1">
             {selectedPlan.name}
-          </h3>
-          <p className="text-base text-gray-700">
+          </SectionTitle>
+          <BodyText className="!text-base text-[#6b7280]">
             4 Flex Payments of
-          </p>
-          <p className="text-3xl font-bold text-primary mt-1">
+          </BodyText>
+          <p className="text-3xl font-bold text-[#002455] mt-1">
             ${selectedPlan.priceMonthly.toFixed(2)}
           </p>
         </div>
@@ -125,9 +129,9 @@ function CheckoutPageContent() {
               name="cardHolderName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-gray-700">Cardholder Name</FormLabel>
+                  <FormLabel className="text-[#002455]">Cardholder Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Full Name as on Card" {...field} />
+                    <Input placeholder="Full Name as on Card" {...field} className="text-foreground"/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -138,9 +142,9 @@ function CheckoutPageContent() {
               name="cardNumber"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-gray-700">Card Number</FormLabel>
+                  <FormLabel className="text-[#002455]">Card Number</FormLabel>
                   <FormControl>
-                    <Input placeholder="•••• •••• •••• ••••" {...field} maxLength={16} />
+                    <Input placeholder="•••• •••• •••• ••••" {...field} maxLength={16} className="text-foreground"/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -152,9 +156,9 @@ function CheckoutPageContent() {
                 name="expiryDate"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-700">Expiry Date</FormLabel>
+                    <FormLabel className="text-[#002455]">Expiry Date</FormLabel>
                     <FormControl>
-                      <Input placeholder="MM/YY" {...field} />
+                      <Input placeholder="MM/YY" {...field} className="text-foreground"/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -165,57 +169,50 @@ function CheckoutPageContent() {
                 name="cvc"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-700">CVC</FormLabel>
+                    <FormLabel className="text-[#002455]">CVC</FormLabel>
                     <FormControl>
-                      <Input placeholder="123" {...field} maxLength={4} />
+                      <Input placeholder="123" {...field} maxLength={4} className="text-foreground"/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
-            <Button
+            <EnhancedButton
               type="submit"
-              className="w-full bg-gradient-to-r from-[#002455] to-[#003875] text-primary-foreground hover:shadow-lg hover:shadow-[#002455]/40 hover:-translate-y-0.5 transition-all duration-300 py-3 text-base font-semibold rounded-2xl relative overflow-hidden group h-auto"
+              variant="primary"
+              size="lg"
+              className="w-full"
               disabled={form.formState.isSubmitting}
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
               {form.formState.isSubmitting ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               ) : (
                 <CreditCard className="mr-2 h-4 w-4" />
               )}
               Activate First Payment - ${selectedPlan.priceMonthly.toFixed(2)}
-            </Button>
+            </EnhancedButton>
           </form>
         </Form>
       </CardContent>
         <CardFooter className="flex justify-center px-6 pb-6 pt-2">
-        <Button variant="link" asChild className="text-sm text-muted-foreground hover:text-accent">
+        <EnhancedButton variant="link" size="sm" className="text-sm text-muted-foreground hover:text-accent !shadow-none" asChild>
           <Link href="/warranty">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Change Plan
           </Link>
-        </Button>
+        </EnhancedButton>
       </CardFooter>
-    </Card>
+    </EnhancedCard>
   );
 }
 
 export default function CheckoutPage() {
   return (
-    <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden p-4 py-8">
-      <Image
-        src="https://igscountertops.b-cdn.net/kitchencabinets.now%20assets/Cabiets%20assets/ELITECRAFT%20Imperial%20Blue/imperial-blue-main-gallery-image-1.jpg"
-        alt="Modern kitchen background"
-        fill={true}
-        className="-z-10 filter brightness-75 object-cover"
-        data-ai-hint="kitchen cabinets"
-        priority={false}
-      />
-      <Suspense fallback={<div className="flex justify-center items-center h-64"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>}>
+    <PageLayout className="flex flex-1 flex-col items-center justify-center p-4 py-8">
+      <Suspense fallback={<div className="flex justify-center items-center h-64"><Loader2 className="h-8 w-8 animate-spin text-[#002455]" /></div>}>
         <CheckoutPageContent />
       </Suspense>
-    </div>
+    </PageLayout>
   )
 }

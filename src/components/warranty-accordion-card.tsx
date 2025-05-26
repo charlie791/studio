@@ -3,24 +3,27 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { Alert, AlertDescription as ShadcnAlertDescription } from '@/components/ui/alert';
-import {
+import { 
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
+} from '@/components/ui/dialog' // Changed from AlertDialog
 import { Badge } from '@/components/ui/badge';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Alert, AlertDescription as ShadcnAlertDescription } from '@/components/ui/alert';
 import { 
   Crown, Diamond, Check, Flame, ChevronDown, ShoppingCart, XCircle, Shield, Zap, Gem, AlertTriangle, AlertCircle, X, Mail, Tag, Send,
   type LucideIcon as LucideIconType 
 } from 'lucide-react';
 import type { WarrantyStep } from '@/lib/types';
 import { cn } from '@/lib/utils';
+import { EnhancedCard } from '@/components/ui/enhanced-card'; // Using new EnhancedCard
+import { EnhancedButton } from '@/components/ui/enhanced-button'; // Using new EnhancedButton
+import { CardTitleText, BodyText, SmallText } from '@/components/ui/typography'; // Using new Typography
+import { CardHeader, CardContent } from '@/components/ui/card'; // Standard Card parts for structure
+
 
 const iconMap: Record<string, LucideIconType | undefined> = {
   Shield: Shield,
@@ -62,7 +65,7 @@ function FeaturesList({ features, isDeclineStep }: { features: WarrantyStep['fea
           <li
             key={index}
             className={cn(
-              "flex items-start gap-3 text-sm opacity-0 -translate-x-2 animate-slide-in",
+              "flex items-start gap-3 text-sm opacity-0 animate-slide-in", // translateY(10px) from slideIn
               textColorClass
             )}
             style={{ animationDelay: `${index * 50}ms` }}
@@ -89,7 +92,7 @@ function WarningList() {
       {warnings.map((warning, index) => (
         <div 
           key={index}
-          className="flex items-start gap-3 opacity-0 animate-slide-in"
+          className="flex items-start gap-3 opacity-0 animate-slide-in" // translateY(10px) from slideIn
           style={{ animationDelay: `${index * 100}ms` }}
         >
           <X className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
@@ -116,25 +119,26 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
     ? iconMap[step.iconName] 
     : step.isDeclineStep ? Shield : Diamond;
 
-  const handleConfirmLimited = () => {
-    setShowDeclineConfirmation(false);
-    onDecline();
-  };
 
   const handleShowBetterOptions = () => {
     setShowDeclineConfirmation(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleConfirmLimited = () => {
+    setShowDeclineConfirmation(false);
+    onDecline();
+  };
+
 
   if (step.isDeclineStep) {
     return (
       <>
-        <div className={cn("w-full max-w-[380px] mx-auto", className)}>
-          <Card className="overflow-hidden border-2 border-red-600 shadow-2xl bg-white/95 backdrop-blur-sm opacity-85 filter saturate-[.75] relative rounded-xl">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-600 via-yellow-400 to-red-600 animate-pulse" />
-            
-            <CardHeader className="relative bg-gradient-to-br from-red-900 to-red-800 p-8 text-center overflow-hidden">
+        <EnhancedCard 
+            warning // This prop enables warning styling in EnhancedCard
+            className={cn("w-full max-w-sm mx-auto animate-card-entrance", className)} // max-w-sm from guide
+        >
+            <CardHeader className="relative bg-gradient-to-br from-red-900 to-red-800 p-8 text-center overflow-hidden rounded-t-xl">
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
               
               <div className="absolute top-4 left-6 bg-red-600/90 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/30 flex items-center gap-1.5 text-xs font-semibold text-white z-10 animate-pulse">
@@ -161,13 +165,14 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
             <CardContent className="p-7">
               <Collapsible open={isOpen} onOpenChange={setIsOpen}>
                 <CollapsibleTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-between p-4 h-auto text-left font-semibold text-base text-gray-800 hover:bg-red-600/5 rounded-lg transition-all duration-300"
+                  <EnhancedButton
+                    variant="ghost" // Needs mapping or specific styling in EnhancedButton
+                    size="md"
+                    className="w-full justify-between p-4 h-auto text-left font-semibold text-base text-gray-800 hover:bg-red-600/5 rounded-lg !shadow-none" // Override shadow for ghost
                   >
                     What's NOT included with free coverage
                     {iconMap.ChevronDown && <ChevronDown className={`w-5 h-5 fill-red-600 text-red-600 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />}
-                  </Button>
+                  </EnhancedButton>
                 </CollapsibleTrigger>
                 
                 <CollapsibleContent className="overflow-hidden data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up">
@@ -187,14 +192,15 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
               <TooltipProvider>
                 <Tooltip delayDuration={100}>
                   <TooltipTrigger asChild>
-                      <Button 
+                      <EnhancedButton 
                         onClick={() => setShowDeclineConfirmation(true)}
-                        className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 hover:shadow-lg hover:shadow-red-600/40 hover:-translate-y-0.5 transition-all duration-300 text-base font-bold py-4 text-white rounded-2xl mt-6 relative overflow-hidden group border-2 border-red-600 h-auto"
+                        variant="warning"
+                        size="lg" // Using new size system
+                        className="w-full mt-6"
                       >
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
                         {iconMap.X && <X className="w-4 h-4 mr-2" />}
                         {step.ctaDeclineText || 'Keep Free 30-Day Plan'}
-                      </Button>
+                      </EnhancedButton>
                   </TooltipTrigger>
                   {step.tooltipText && (
                     <TooltipContent side="bottom" className="bg-popover text-popover-foreground">
@@ -205,25 +211,26 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
               </TooltipProvider>
 
               <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg text-center">
-                <p className="text-xs text-red-800 italic">
+                <SmallText className="text-xs text-red-800 italic">
                   You'll miss out on comprehensive protection and savings available with our premium plans
-                </p>
+                </SmallText>
               </div>
             </CardContent>
-          </Card>
-        </div>
+        </EnhancedCard>
 
         <Dialog open={showDeclineConfirmation} onOpenChange={setShowDeclineConfirmation}>
           <DialogContent className="max-w-lg border-4 border-red-600 bg-background p-0 overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-red-600 via-yellow-400 to-red-600 animate-warning-stripe" />
+             <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-red-600 via-yellow-400 to-red-600 animate-warning-stripe" />
             
-            <button
+            <EnhancedButton
+              variant="ghost" // Or a very custom style
+              size="icon"
               onClick={() => setShowDeclineConfirmation(false)}
-              className="absolute top-4 right-4 w-10 h-10 rounded-full bg-red-600/10 hover:bg-red-600/20 flex items-center justify-center transition-all duration-300 hover:scale-110 z-10"
+              className="absolute top-4 right-4 w-10 h-10 rounded-full bg-red-600/10 hover:bg-red-600/20 !shadow-none z-10" 
               aria-label="Close dialog"
             >
               {iconMap.X && <X className="w-6 h-6 text-red-600" />}
-            </button>
+            </EnhancedButton>
 
             <div className="pt-16 pb-10 px-10 text-center">
               <Badge 
@@ -239,33 +246,31 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
                   Final Warning - Are You Sure?
                 </DialogTitle>
               </DialogHeader>
-
-              <div className="text-lg font-semibold text-gray-700 mb-6 leading-relaxed">
-                You are about to proceed with minimal coverage. This means:
-              </div>
-
-              <WarningList />
-
-              <div className="text-lg font-bold text-red-600 mb-8 leading-relaxed">
-                Are you sure you want to miss out on comprehensive protection and savings?
-              </div>
-
+                <BodyText className="text-lg font-semibold text-gray-700 mb-6 leading-relaxed">
+                  You are about to proceed with minimal coverage. This means:
+                </BodyText>
+                <WarningList />
+                <BodyText className="text-lg font-bold text-red-600 mb-8 leading-relaxed">
+                  Are you sure you want to miss out on comprehensive protection and savings?
+                </BodyText>
               <div className="space-y-4">
-                <Button
+                <EnhancedButton
                   onClick={handleConfirmLimited}
-                  className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-bold py-4 text-lg rounded-2xl border-2 border-red-600 hover:shadow-lg hover:shadow-red-600/40 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group h-auto"
+                  variant="warning"
+                  size="lg"
+                  className="w-full"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
                   Yes, Keep Limited Coverage
-                </Button>
+                </EnhancedButton>
                 
-                <Button
+                <EnhancedButton
                   onClick={handleShowBetterOptions}
-                  className="w-full bg-gradient-to-r from-[#002455] to-[#003875] hover:shadow-lg hover:shadow-[#002455]/60 text-[#FDA001] hover:text-white font-bold py-4 text-lg rounded-2xl border-2 border-[#002455] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group h-auto"
+                  variant="primary" // Premium button style
+                  size="lg"
+                  className="w-full"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#FDA001]/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
                   Wait, Show Me Better Options
-                </Button>
+                </EnhancedButton>
               </div>
             </div>
           </DialogContent>
@@ -277,27 +282,29 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
   // Regular Plan Card (Non-Decline Step)
   return (
     <TooltipProvider>
-      <div className={cn("w-full max-w-[380px] mx-auto", className)}> 
-        <Card className="overflow-hidden border-0 shadow-2xl bg-white/95 backdrop-blur-sm rounded-xl">
+        <EnhancedCard 
+            premium={step.bestValue} // Apply premium styling if bestValue
+            className={cn("w-full max-w-sm mx-auto animate-card-entrance", className)} // max-w-sm from guide
+        >
           <CardHeader className={cn(
-            "relative p-6 md:p-8 text-center overflow-hidden",
+            "relative p-8 text-center overflow-hidden rounded-t-xl", // p-8 from guide
             "bg-gradient-to-br from-[#002455] to-[#003875]" 
           )}>
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
 
             {step.bestValue && (
-               <div className="absolute top-3 left-3 md:top-4 md:left-4 bg-primary/80 backdrop-blur-sm px-3 py-1.5 rounded-full border border-primary-foreground/30 flex items-center gap-1.5 text-xs font-semibold text-primary-foreground z-10">
-                {iconMap.Crown && <Crown className="w-4 h-4 fill-primary-foreground text-primary-foreground" />}
+               <div className="absolute top-4 left-6 bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/30 flex items-center gap-1.5 text-xs font-semibold text-white z-10">
+                {iconMap.Crown && <Crown className="w-4 h-4 fill-[#FDA001] text-[#FDA001]" />} {/* fill lumen gold */}
                 Most Popular
               </div>
             )}
             
-            {HeaderSpecificIcon && <HeaderSpecificIcon className="w-6 h-6 fill-white/80 stroke-white/80 text-white/80 mx-auto mb-3 z-10 relative" />}
+            {HeaderSpecificIcon && <HeaderSpecificIcon className="w-6 h-6 fill-white/80 stroke-white/80 text-white/80 mx-auto mb-4 z-10 relative" />}
 
-            <h2 className="text-xl md:text-2xl font-bold text-white mb-1 z-10 relative tracking-tight">
+            <h2 className="text-2xl font-bold text-white mb-2 z-10 relative tracking-tight">
               {step.title}
             </h2>
-            <p className="text-white/90 text-sm md:text-base font-medium mb-4 z-10 relative">
+            <p className="text-white/90 text-base font-medium mb-6 z-10 relative">
               {step.summary}
             </p>
 
@@ -311,16 +318,17 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
             )}
           </CardHeader>
 
-          <CardContent className="p-5 md:p-7">
+          <CardContent className="p-7">
             <Collapsible open={isOpen} onOpenChange={setIsOpen}>
               <CollapsibleTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="w-full justify-between items-center p-3 md:p-4 h-auto text-left font-semibold text-base text-gray-800 hover:bg-primary/5 rounded-lg transition-all duration-300"
+                <EnhancedButton // Using EnhancedButton for trigger
+                  variant="ghost" // Needs appropriate styling in EnhancedButton or override
+                  size="md"
+                  className="w-full justify-between p-4 h-auto text-left font-semibold text-base text-gray-800 hover:bg-[#002455]/5 rounded-lg !shadow-none" // Override shadow for ghost
                 >
                   What's included in this plan?
-                  {iconMap.ChevronDown && <ChevronDown className={`w-5 h-5 text-accent transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />}
-                </Button>
+                  {iconMap.ChevronDown && <ChevronDown className={`w-5 h-5 fill-[#FDA001] text-[#FDA001] transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />}
+                </EnhancedButton>
               </CollapsibleTrigger>
 
               <CollapsibleContent className="overflow-hidden data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up">
@@ -331,22 +339,25 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
             </Collapsible>
 
             {step.specialOfferText && (
-              <div className="bg-gradient-to-r from-accent to-[#cc8001] text-white px-4 py-2.5 rounded-xl font-semibold text-sm text-center mt-5 flex items-center justify-center gap-2">
+              <div className="bg-gradient-to-r from-[#FDA001] to-[#cc8001] text-white px-5 py-3 rounded-xl font-semibold text-sm text-center mt-5 flex items-center justify-center gap-2">
                 {iconMap.Flame && <Flame className="w-4 h-4 fill-white" />}
                 {step.specialOfferText.replace('🔥 ', '')}
               </div>
             )}
 
-            <Button asChild className="w-full bg-gradient-to-r from-[#002455] to-[#003875] text-primary-foreground hover:shadow-lg hover:shadow-[#002455]/40 hover:-translate-y-0.5 transition-all duration-300 text-base font-semibold py-3 rounded-2xl mt-6 relative overflow-hidden group h-auto">
+            <EnhancedButton 
+                variant="primary" 
+                size="lg" // Using new size system
+                className="w-full mt-6" 
+                asChild
+            >
               <Link href={`/checkout?planId=${step.planId}`}>
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
                 {iconMap.ShoppingCart && <ShoppingCart className="w-4 h-4 mr-2" />}
                 {step.ctaSelectText || 'Select Plan'}
               </Link>
-            </Button>
+            </EnhancedButton>
           </CardContent>
-        </Card>
-      </div>
+        </EnhancedCard>
     </TooltipProvider>
   );
 }
