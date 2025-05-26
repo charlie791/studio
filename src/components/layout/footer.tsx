@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { EnhancedButton } from '@/components/ui/enhanced-button'; // Assuming EnhancedButton can be styled as an icon button
+import { EnhancedButton } from '@/components/ui/enhanced-button';
 import { Menu, X, HomeIcon } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 
@@ -31,7 +31,7 @@ export default function Footer() {
             variant="ghost"
             size="icon"
             onClick={() => setIsOpen(!isOpen)}
-            className="rounded-full text-muted-foreground hover:text-accent hover:bg-accent/10"
+            className="rounded-full text-accent hover:text-accent hover:bg-accent/10"
             aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
           >
             {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -39,7 +39,7 @@ export default function Footer() {
         </div>
 
         {isOpen && (
-          <div className="animate-slide-up opacity-0 animation-delay-100" style={{animationFillMode: 'forwards'}}> {/* Simple fade/slide-in */}
+          <div className="animate-slide-up opacity-0 animation-delay-100" style={{animationFillMode: 'forwards'}}>
             <Separator className="my-4 bg-border/50" />
             <div>
               <h4 className="text-sm font-semibold text-muted-foreground mb-3">
