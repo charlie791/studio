@@ -83,7 +83,7 @@ function CheckoutPageContent() {
 
   async function onSubmit(data: CheckoutData) {
     await new Promise(resolve => setTimeout(resolve, 2500));
-    console.log('Checkout Data (Mock Stripe):', data, 'Plan:', selectedPlan?.name);
+    // console.log('Checkout Data (Mock Stripe):', data, 'Plan:', selectedPlan?.name);
     toast({
       title: 'Payment Successful!',
       description: `Your purchase of ${selectedPlan?.name} warranty is complete.`,
@@ -94,31 +94,37 @@ function CheckoutPageContent() {
   if (!selectedPlan) {
     return (
       <EnhancedCard className="w-full max-w-md p-6 text-center animate-card-entrance">
-        <PageTitle as="h1" className="text-destructive !text-xl !mb-2">Invalid Plan</PageTitle>
-        <BodyText className="text-destructive">Invalid warranty plan selected.</BodyText>
-        <EnhancedButton variant="link" size="md" className="mt-4 text-[#FDA001] hover:underline !shadow-none" asChild>
-          <Link href="/warranty">Choose a Plan</Link>
-        </EnhancedButton>
+        <CardHeader className="items-center pt-6 px-6 pb-4 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
+           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
+          <PageTitle as="h1" className="text-destructive !text-xl !mb-2 text-white z-10 relative">Invalid Plan</PageTitle>
+        </CardHeader>
+        <CardContent className="pt-6">
+          <BodyText className="text-destructive text-center">Invalid warranty plan selected.</BodyText>
+          <EnhancedButton variant="primary" size="md" className="mt-6 w-full" asChild>
+            <Link href="/warranty">Choose a Plan</Link>
+          </EnhancedButton>
+        </CardContent>
       </EnhancedCard>
     );
   }
 
   return (
     <EnhancedCard className="w-full max-w-md animate-card-entrance">
-      <CardHeader className="text-center items-center pt-6 px-6 pb-4">
-        <CreditCard className="mx-auto h-12 w-12 text-[#002455] mb-4" />
-        <PageTitle as="h1" className="!text-3xl !mb-2 text-[#002455]">Complete Your Purchase</PageTitle>
-        <BodyText className="!text-base text-[#6b7280] mt-2">You're one step away from securing your {selectedPlan.name} plan.</BodyText>
+      <CardHeader className="text-center items-center pt-8 px-6 pb-6 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
+        <CreditCard className="mx-auto h-12 w-12 text-white/80 mb-4 z-10 relative" />
+        <PageTitle as="h1" className="!text-3xl !mb-2 text-white z-10 relative">Complete Your Purchase</PageTitle>
+        <BodyText className="!text-base text-white/90 mt-2 z-10 relative">You're one step away from securing your {selectedPlan.name} plan.</BodyText>
       </CardHeader>
-      <CardContent className="space-y-6 px-6 pt-6 pb-4">
-        <div className="border p-4 rounded-md bg-muted/30 text-center"> {/* Lightened background */}
-          <SectionTitle as="h3" className="!text-lg text-[#002455] !mb-1">
+      <CardContent className="space-y-6 px-6 pt-8 pb-6">
+        <div className="border p-4 rounded-md bg-muted/30 text-center">
+          <SectionTitle as="h3" className="!text-lg text-foreground !mb-1">
             {selectedPlan.name}
           </SectionTitle>
-          <BodyText className="!text-base text-[#6b7280]">
+          <BodyText className="!text-base text-muted-foreground">
             4 Flex Payments of
           </BodyText>
-          <p className="text-3xl font-bold text-[#002455] mt-1">
+          <p className="text-3xl font-bold text-primary mt-1">
             ${selectedPlan.priceMonthly.toFixed(2)}
           </p>
         </div>
@@ -129,7 +135,7 @@ function CheckoutPageContent() {
               name="cardHolderName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#002455]">Cardholder Name</FormLabel>
+                  <FormLabel className="text-gray-700">Cardholder Name</FormLabel>
                   <FormControl>
                     <Input placeholder="Full Name as on Card" {...field} className="text-foreground"/>
                   </FormControl>
@@ -142,7 +148,7 @@ function CheckoutPageContent() {
               name="cardNumber"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#002455]">Card Number</FormLabel>
+                  <FormLabel className="text-gray-700">Card Number</FormLabel>
                   <FormControl>
                     <Input placeholder="•••• •••• •••• ••••" {...field} maxLength={16} className="text-foreground"/>
                   </FormControl>
@@ -156,7 +162,7 @@ function CheckoutPageContent() {
                 name="expiryDate"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-[#002455]">Expiry Date</FormLabel>
+                    <FormLabel className="text-gray-700">Expiry Date</FormLabel>
                     <FormControl>
                       <Input placeholder="MM/YY" {...field} className="text-foreground"/>
                     </FormControl>
@@ -169,7 +175,7 @@ function CheckoutPageContent() {
                 name="cvc"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-[#002455]">CVC</FormLabel>
+                    <FormLabel className="text-gray-700">CVC</FormLabel>
                     <FormControl>
                       <Input placeholder="123" {...field} maxLength={4} className="text-foreground"/>
                     </FormControl>
@@ -195,8 +201,8 @@ function CheckoutPageContent() {
           </form>
         </Form>
       </CardContent>
-        <CardFooter className="flex justify-center px-6 pb-6 pt-2">
-        <EnhancedButton variant="link" size="sm" className="text-sm text-muted-foreground hover:text-accent !shadow-none" asChild>
+        <CardFooter className="flex justify-center px-6 pb-8 pt-2">
+        <EnhancedButton variant="secondary" size="sm" className="text-sm !font-medium !border-muted-foreground/40 !text-muted-foreground hover:!text-accent hover:!border-accent/60 !shadow-none !py-2 !px-4" asChild>
           <Link href="/warranty">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Change Plan
@@ -210,7 +216,7 @@ function CheckoutPageContent() {
 export default function CheckoutPage() {
   return (
     <PageLayout className="flex flex-1 flex-col items-center justify-center p-4 py-8">
-      <Suspense fallback={<div className="flex justify-center items-center h-64"><Loader2 className="h-8 w-8 animate-spin text-[#002455]" /></div>}>
+      <Suspense fallback={<div className="flex justify-center items-center h-64"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>}>
         <CheckoutPageContent />
       </Suspense>
     </PageLayout>

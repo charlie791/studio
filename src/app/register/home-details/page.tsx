@@ -47,27 +47,28 @@ export default function HomeDetailsPage() {
 
   async function onSubmit(data: HomeWarrantyInfoData) {
     await new Promise(resolve => setTimeout(resolve, 1000));
-    console.log('Home Warranty Info:', data);
+    // console.log('Home Warranty Info:', data);
     router.push('/register/processing');
   }
 
   const ClientFallback = (
     <div className="flex justify-center items-center py-10">
-      <Loader2 className="h-8 w-8 animate-spin text-[#002455]" />
+      <Loader2 className="h-8 w-8 animate-spin text-primary" />
     </div>
   );
 
   return (
-    <PageLayout className="flex flex-1 flex-col items-center justify-center p-4">
+    <PageLayout className="flex flex-1 flex-col items-center justify-center p-4 py-8">
       <EnhancedCard className="w-full max-w-lg animate-card-entrance">
-        <CardHeader className="text-center items-center pt-6 px-6 pb-4">
-          <PageTitle as="h1" className="!text-3xl !mb-2 text-center text-[#002455]">You’re Almost Protected</PageTitle>
-          <BodyText className="text-center text-[#6b7280] !text-base">
+        <CardHeader className="text-center items-center pt-8 px-6 pb-6 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
+          <PageTitle as="h1" className="!text-3xl !mb-2 text-center text-white z-10 relative">You’re Almost Protected</PageTitle>
+          <BodyText className="text-center text-white/90 !text-base z-10 relative">
             Add your address to lock in your coverage eligibility — only available for a limited time after move-in.
           </BodyText>
         </CardHeader>
         <ClientOnly fallback={ClientFallback}>
-          <CardContent className="px-6 pb-6 pt-6">
+          <CardContent className="px-6 pb-6 pt-8">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                 <FormField
@@ -75,7 +76,7 @@ export default function HomeDetailsPage() {
                   name="streetAddress"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-[#002455]">Street Address</FormLabel>
+                      <FormLabel className="text-gray-700">Street Address</FormLabel>
                       <div className="relative flex items-center">
                         <MapPin className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
                         <FormControl>
@@ -92,7 +93,7 @@ export default function HomeDetailsPage() {
                     name="city"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-[#002455]">City</FormLabel>
+                        <FormLabel className="text-gray-700">City</FormLabel>
                         <FormControl>
                           <Input placeholder="Anytown" {...field} className="text-foreground"/>
                         </FormControl>
@@ -104,8 +105,8 @@ export default function HomeDetailsPage() {
                     control={form.control}
                     name="state"
                     render={({ field }) => (
-                      <FormItem className="w-16"> {/* Adjusted width slightly */}
-                        <FormLabel className="text-[#002455]">State</FormLabel>
+                      <FormItem className="w-16"> 
+                        <FormLabel className="text-gray-700">State</FormLabel>
                         <FormControl>
                           <Input {...field} disabled className="text-foreground"/>
                         </FormControl>
@@ -118,7 +119,7 @@ export default function HomeDetailsPage() {
                     name="zipCode"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-[#002455]">ZIP Code</FormLabel>
+                        <FormLabel className="text-gray-700">ZIP Code</FormLabel>
                         <FormControl>
                           <Input placeholder="90210" {...field} className="text-foreground"/>
                         </FormControl>
@@ -132,7 +133,7 @@ export default function HomeDetailsPage() {
                   name="phoneNumber"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-[#002455]">Phone Number</FormLabel>
+                      <FormLabel className="text-gray-700">Phone Number</FormLabel>
                       <div className="relative flex items-center">
                         <Phone className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
                         <FormControl>
@@ -160,8 +161,8 @@ export default function HomeDetailsPage() {
               </form>
             </Form>
           </CardContent>
-          <CardFooter className="flex flex-col items-center justify-center px-6 pb-6 pt-2 space-y-3">
-            <EnhancedButton variant="link" size="sm" className="text-sm text-muted-foreground hover:text-accent p-0 h-auto !shadow-none" asChild>
+          <CardFooter className="flex flex-col items-center justify-center px-6 pb-8 pt-2 space-y-3">
+            <EnhancedButton variant="secondary" size="sm" className="text-sm !font-medium !border-muted-foreground/40 !text-muted-foreground hover:!text-accent hover:!border-accent/60 !shadow-none !py-2 !px-4" asChild>
                 <Link href="/">
                     <HomeIcon className="mr-1 h-4 w-4" />
                     Return to Home
