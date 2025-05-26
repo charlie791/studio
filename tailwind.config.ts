@@ -95,6 +95,68 @@ export default {
           '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
           '50%': { transform: 'translateY(-18px) rotate(12deg)' }
         },
+        // New animated background keyframes
+        'gradient-shift': {
+          '0%, 100%': {
+            transform: 'translate(0, 0) scale(1)',
+            opacity: '0.3'
+          },
+          '33%': {
+            transform: 'translate(30px, -30px) scale(1.1)',
+            opacity: '0.5'
+          },
+          '66%': {
+            transform: 'translate(-20px, 20px) scale(0.9)',
+            opacity: '0.2'
+          }
+        },
+        'gradient-shift-reverse': {
+          '0%, 100%': {
+            transform: 'translate(0, 0) scale(1)',
+            opacity: '0.3'
+          },
+          '33%': {
+            transform: 'translate(-30px, 30px) scale(1.1)',
+            opacity: '0.2'
+          },
+          '66%': {
+            transform: 'translate(20px, -20px) scale(0.9)',
+            opacity: '0.5'
+          }
+        },
+        'float-slow': {
+          '0%, 100%': {
+            transform: 'translate(0, 0) scale(1)'
+          },
+          '33%': {
+            transform: 'translate(50px, -30px) scale(1.1)'
+          },
+          '66%': {
+            transform: 'translate(-30px, 40px) scale(0.95)'
+          }
+        },
+        'float-medium': {
+          '0%, 100%': {
+            transform: 'translate(0, 0) scale(1)'
+          },
+          '50%': {
+            transform: 'translate(-40px, -50px) scale(1.15)'
+          }
+        },
+        'float-fast': {
+          '0%, 100%': {
+            transform: 'translate(0, 0) scale(1)'
+          },
+          '25%': {
+            transform: 'translate(30px, -20px) scale(1.05)'
+          },
+          '50%': {
+            transform: 'translate(-20px, -40px) scale(1.1)'
+          },
+          '75%': {
+            transform: 'translate(40px, 20px) scale(0.95)'
+          }
+        },
         particleDance: {
           '0%': { transform: 'translateY(100vh) translateX(0px) scale(0) rotate(0deg)', opacity: '0' },
           '5%': { opacity: '1' },
@@ -199,12 +261,16 @@ export default {
   		},
   		animation: {
         // Background animations
-        'gradient-shift': 'gradientShift 20s ease infinite',
+        'gradient-shift': 'gradient-shift 20s ease-in-out infinite',
+        'gradient-shift-reverse': 'gradient-shift-reverse 25s ease-in-out infinite',
         'grid-pulse': 'gridPulse 10s ease-in-out infinite',
         'float-1': 'float1 6s ease-in-out infinite',
         'float-2': 'float2 6s ease-in-out infinite 2s',
         'float-3': 'float3 6s ease-in-out infinite 4s',
         'float-4': 'float4 6s ease-in-out infinite 3s',
+        'float-slow': 'float-slow 30s ease-in-out infinite',
+        'float-medium': 'float-medium 20s ease-in-out infinite',
+        'float-fast': 'float-fast 15s ease-in-out infinite',
 
         // Particle animations with individual delays
         ...Array.from({ length: 20 }, (_, i) => ({
