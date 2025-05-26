@@ -1,7 +1,6 @@
 
 'use client';
 
-import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -17,11 +16,11 @@ const warrantyFlowStepsData: WarrantyStep[] = [
     id: 'total-combo-step',
     iconName: 'Gem',
     title: 'SurfaceGuard365 – Total Combo Plan',
-    summary: '10-Year Countertop + Cabinet Warranty', 
-    priceMonthly: 149.75, 
-    priceAnnually: 599, 
+    summary: '10-Year Countertop + Cabinet Warranty',
+    priceMonthly: 149.75,
+    priceAnnually: 599,
     planId: 'total-combo',
-    bestValue: true, 
+    bestValue: true,
     isDeclineStep: false,
     ctaSelectText: 'Select Total Combo Plan',
     features: [
@@ -41,9 +40,9 @@ const warrantyFlowStepsData: WarrantyStep[] = [
     id: 'extended-step',
     iconName: 'Zap',
     title: 'SurfaceGuard365 – Extended',
-    summary: '10-Year Countertop Warranty + VIP Support', 
-    priceMonthly: 124.75, 
-    priceAnnually: 499, 
+    summary: '10-Year Countertop Warranty + VIP Support',
+    priceMonthly: 124.75,
+    priceAnnually: 499,
     planId: 'extended',
     isDeclineStep: false,
     ctaSelectText: 'Select Extended Plan',
@@ -74,20 +73,21 @@ const warrantyFlowStepsData: WarrantyStep[] = [
   },
   {
     id: 'decline-step',
-    iconName: 'XCircle', // This icon is for the overall step type, the card itself will use Shield/AlertTriangle
+    iconName: 'XCircle',
     title: 'Continue with Complimentary 30-Day Protection',
     summary: "Basic coverage with significant limitations",
+    planId: 'free-30-day',
     isDeclineStep: true,
     ctaDeclineText: 'Keep Free 30-Day Plan',
     tooltipText: 'You can upgrade anytime within the next 30 days.',
-    features: [ 
-        { text: "Basic 30-day coverage only", included: true },
-        { text: "No long-term warranty protection", included: false },
-        { text: "No professional care kit included", included: false },
-        { text: "No VIP customer support", included: false },
-        { text: "No priority service response", included: false },
-        { text: "No transferable benefits", included: false }
-    ], 
+    features: [
+        { text: "Basic 30-day coverage only", included: true, icon: 'CheckCircle' },
+        { text: "No long-term warranty protection", included: false, icon: 'XCircle' },
+        { text: "No professional care kit included", included: false, icon: 'XCircle' },
+        { text: "No VIP customer support", included: false, icon: 'XCircle' },
+        { text: "No priority service response", included: false, icon: 'XCircle' },
+        { text: "No transferable benefits", included: false, icon: 'XCircle' }
+    ],
   },
 ];
 
@@ -109,14 +109,14 @@ export default function WarrantyPage() {
     console.log('User chose Free 30-Day Plan. Flagging lead for follow-up.');
     toast({
       title: 'Complimentary Protection Confirmed!',
-      description: 'Your 30-day protection is active. You can upgrade anytime.',
+      description: 'Your 30-day protection is active. You will be redirected to confirm.',
       duration: 5000,
     });
     setTimeout(() => {
-      router.push('/trade-in'); 
+      router.push('/confirmation?planId=free-30-day');
     }, 2000);
   };
-  
+
   if (!isClient) {
     return (
       <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden p-4">
@@ -146,7 +146,7 @@ export default function WarrantyPage() {
       <div className="relative z-10 w-full max-w-2xl mx-auto space-y-8 flex flex-col items-center">
         {!stepViewActive && (
           <Card className="w-full bg-white/95 backdrop-blur-sm border-0 shadow-2xl rounded-xl overflow-hidden">
-            <CardHeader className="items-center text-center pt-8 pb-6 px-6 bg-gradient-to-br from-[#002455] to-[#003875] relative">
+            <CardHeader className="items-center text-center pt-8 pb-6 px-6 bg-gradient-to-br from-[#002455] to-[#003875] relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
               <CardTitle className="text-3xl md:text-4xl font-bold tracking-tight text-white leading-snug z-10 relative">
                 You’ve Been Matched with Custom Protection Plans
@@ -156,9 +156,9 @@ export default function WarrantyPage() {
               <CardDescription className="text-lg text-gray-700 max-w-xl mx-auto text-center mt-2 mb-6 z-10 relative">
                 You’re about to activate your free 30-day SurfaceGuard365 warranty. Before we finalize it, take a look at your extended protection options — including personalized 5- and 10-year plans built to cover your exact surfaces.
               </CardDescription>
-              <Button 
-                onClick={handleSeeCoverageOptions} 
-                size="lg" 
+              <Button
+                onClick={handleSeeCoverageOptions}
+                size="lg"
                 className="w-full max-w-xs mt-0 bg-gradient-to-r from-[#002455] to-[#003875] text-primary-foreground hover:shadow-lg hover:shadow-[#002455]/40 hover:-translate-y-0.5 transition-all duration-300 py-3 text-base font-semibold rounded-2xl relative overflow-hidden group h-auto"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
@@ -172,11 +172,11 @@ export default function WarrantyPage() {
         {stepViewActive && (
           <div className="w-full space-y-6">
             {warrantyFlowStepsData.map((step, index) => (
-              <WarrantyAccordionCard 
-                key={step.id} 
-                step={step} 
+              <WarrantyAccordionCard
+                key={step.id}
+                step={step}
                 onDecline={handleDecline}
-                defaultOpen={index === 0 && !!step.bestValue} 
+                defaultOpen={index === 0 && !!step.bestValue}
               />
             ))}
           </div>
