@@ -7,9 +7,9 @@ import { Suspense, useState } from 'react'; // Added useState
 import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card'; // Added CardFooter
 import { Badge } from '@/components/ui/badge'; // Added Badge
-import { CheckCircle2, MailCheck, Home, Loader2, Send, ExternalLink, Tag, ShoppingCart, Check } from 'lucide-react'; // Added Check, Tag, ShoppingCart
+import { CheckCircle2, MailCheck, Home, Loader2, Send, ExternalLink, Tag, ShoppingCart, Check, AlertTriangle } from 'lucide-react'; // Added Check, Tag, ShoppingCart, AlertTriangle
 import type { WarrantyPlan } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
 
@@ -182,9 +182,9 @@ function ConfirmationPageContent() {
         <CardHeader className="items-center text-center pt-6 px-6 pb-4 bg-gradient-to-br from-destructive to-red-700 rounded-t-xl relative overflow-hidden">
             <CardTitle className="text-3xl md:text-4xl font-bold tracking-tight text-white z-10 relative">Invalid Plan</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="text-gray-700">
             <p className="text-center text-destructive py-4">No plan details found. Please try again or contact support.</p>
-            <Button asChild className="w-full mt-4">
+            <Button asChild className="w-full mt-4 bg-gradient-to-r from-[#002455] to-[#003875] text-primary-foreground hover:shadow-lg hover:shadow-[#002455]/40 hover:-translate-y-0.5 transition-all duration-300 py-3 text-base font-semibold rounded-2xl relative overflow-hidden group h-auto">
                 <Link href="/warranty">Choose a Plan</Link>
             </Button>
         </CardContent>
@@ -240,7 +240,7 @@ function ConfirmationPageContent() {
 
   // Fallback for Paid Plans (existing logic)
   return (
-    <Card className="w-full max-w-lg p-6 md:p-8 bg-white/95 backdrop-blur-sm border-0 shadow-2xl rounded-xl">
+    <Card className="w-full max-w-lg bg-white/95 backdrop-blur-sm border-0 shadow-2xl rounded-xl">
       <CardHeader className="items-center text-center pt-6 px-6 pb-4 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
         <CheckCircle2 className="h-20 w-20 text-green-400 mb-6 z-10 relative" />
@@ -293,7 +293,7 @@ function ConfirmationPageContent() {
 
 export default function ConfirmationPage() {
   return (
-    <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden p-4 py-12 bg-gradient-to-br from-muted to-slate-200"> {/* Updated background to match guide */}
+    <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden p-4 py-12 bg-white/95 backdrop-blur-sm"> {/* Updated background to match guide */}
       <Image
         src="https://igscountertops.b-cdn.net/kitchencabinets.now%20assets/Cabiets%20assets/ELITECRAFT%20Imperial%20Blue/imperial-blue-main-gallery-image-1.jpg"
         alt="Modern kitchen background"
