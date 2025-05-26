@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Alert, AlertDescription as ShadcnAlertDescription } from '@/components/ui/alert'; // Renamed to avoid conflict
 import { 
   AlertDialog,
   AlertDialogAction,
@@ -53,13 +53,13 @@ function FeaturesList({ features, isDeclineStep }: { features: WarrantyStep['fea
           : (feature.icon && iconMap[feature.icon] ? iconMap[feature.icon] : iconMap['CheckCircle']);
         
         const iconColor = isDeclineStep ? (feature.included ? 'text-emerald-500' : 'text-red-500') : 'text-emerald-500';
-        const textColor = isDeclineStep ? (feature.included ? 'text-gray-700' : 'text-gray-500 line-through') : 'text-gray-700';
+        const textColor = isDeclineStep ? (feature.included ? 'text-gray-700' : 'text-gray-500 line-through') : 'text-gray-700 leading-relaxed';
 
         return (
           <li
             key={index}
             className={cn(
-              "flex items-start gap-3 text-sm leading-relaxed opacity-0 -translate-x-2 animate-slide-in",
+              "flex items-start gap-3 text-sm opacity-0 -translate-x-2 animate-slide-in",
               textColor
             )}
             style={{ animationDelay: `${index * 50}ms` }}
@@ -81,7 +81,7 @@ interface WarrantyAccordionCardProps {
 }
 
 export default function WarrantyAccordionCard({ step, onDecline, className, defaultOpen = false }: WarrantyAccordionCardProps) {
-  const [isOpen, setIsOpen] = useState(defaultOpen);
+  const [isOpen, setIsOpen] = useState(step.isDeclineStep ? true : defaultOpen); // Decline card starts open
   const [showDeclineConfirmation, setShowDeclineConfirmation] = useState(false);
   
   const HeaderSpecificIcon = step.iconName && iconMap[step.iconName] 
@@ -94,7 +94,7 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
       <AlertDialog open={showDeclineConfirmation} onOpenChange={setShowDeclineConfirmation}>
         <TooltipProvider>
           <div className={cn("w-full max-w-[380px] mx-auto", className)}>
-            <Card className="overflow-hidden border-2 border-red-600 shadow-2xl bg-white/95 backdrop-blur-sm filter saturate-[.75] opacity-85 relative rounded-xl">
+            <Card className="overflow-hidden border-2 border-red-600 shadow-2xl bg-white/95 backdrop-blur-sm opacity-85 filter saturate-[.75] relative rounded-xl">
               <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-600 via-yellow-400 to-red-600 animate-pulse" />
               
               <CardHeader className="relative bg-gradient-to-br from-red-900 to-red-800 p-8 text-center overflow-hidden">
@@ -142,9 +142,9 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
 
                 <Alert variant="default" className="mt-5 border-2 border-yellow-400 bg-gradient-to-r from-yellow-50 to-yellow-100 text-yellow-800">
                   <AlertCircle className="h-4 w-4 text-red-600" />
-                  <AlertDescription className="font-semibold">
+                  <ShadcnAlertDescription className="font-semibold"> {/* Renamed ShadcnAlertDescription */}
                     Coverage expires after 30 days with no renewal option
-                  </AlertDescription>
+                  </ShadcnAlertDescription>
                 </Alert>
 
                 <Tooltip delayDuration={100}>
@@ -186,8 +186,12 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
             </div>
             <AlertDialogTitle className="text-2xl font-bold text-destructive">Final Warning - Are You Sure?</AlertDialogTitle>
           </AlertDialogHeader>
-          <AlertDialogDescription className="text-center text-sm text-muted-foreground space-y-3 py-2">
+          
+          <AlertDialogDescription className="text-center text-sm text-muted-foreground py-2">
             <div className="font-semibold text-foreground">You are about to proceed with minimal coverage. This means:</div>
+          </AlertDialogDescription>
+          
+          <div className="text-center text-sm text-muted-foreground space-y-3 pt-1 pb-2 px-6"> {/* Adjusted padding */}
             <ul className="list-disc list-inside text-left space-y-1 pl-4">
               <li>No long-term warranty protection.</li>
               <li>No professional care kit included.</li>
@@ -195,7 +199,8 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
               <li>Your coverage will expire in 30 days.</li>
             </ul>
             <div className="font-bold text-destructive">Are you sure you want to miss out on comprehensive protection and savings?</div>
-          </AlertDialogDescription>
+          </div>
+
           <AlertDialogFooter className="sm:justify-center gap-2 pt-4">
             <AlertDialogCancel asChild>
               <Button 
@@ -221,7 +226,7 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
     );
   }
 
-  // Regular Plan Card
+  // Regular Plan Card (Non-Decline Step)
   return (
     <TooltipProvider>
       <div className={cn("w-full max-w-[380px] mx-auto", className)}>
@@ -297,3 +302,4 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
     </TooltipProvider>
   );
 }
+
