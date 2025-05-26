@@ -70,31 +70,6 @@ export default {
         '2xl': 'calc(var(--radius) + 8px)',
   		},
   		keyframes: {
-        // Background keyframes
-        gradientShift: {
-          '0%, 100%': { backgroundPosition: '0% 50%' },
-          '50%': { backgroundPosition: '100% 50%' }
-        },
-        gridPulse: {
-          '0%, 100%': { opacity: '0.3' },
-          '50%': { opacity: '0.1' }
-        },
-        float1: {
-          '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
-          '50%': { transform: 'translateY(-20px) rotate(10deg)' }
-        },
-        float2: {
-          '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
-          '50%': { transform: 'translateY(-15px) rotate(-8deg)' }
-        },
-        float3: {
-          '0%, 100%': { transform: 'translateY(0px) rotate(45deg)' },
-          '50%': { transform: 'translateY(-25px) rotate(55deg)' }
-        },
-        float4: {
-          '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
-          '50%': { transform: 'translateY(-18px) rotate(12deg)' }
-        },
         // New animated background keyframes
         'gradient-shift': {
           '0%, 100%': {
@@ -261,27 +236,15 @@ export default {
   		},
   		animation: {
         // Background animations
-        'gradient-shift': 'gradient-shift 20s ease-in-out infinite',
+        'gradient-shift': 'gradient-shift 20s ease-in-out infinite', // Corrected to use the 'gradient-shift' keyframe
         'gradient-shift-reverse': 'gradient-shift-reverse 25s ease-in-out infinite',
-        'grid-pulse': 'gridPulse 10s ease-in-out infinite',
-        'float-1': 'float1 6s ease-in-out infinite',
-        'float-2': 'float2 6s ease-in-out infinite 2s',
-        'float-3': 'float3 6s ease-in-out infinite 4s',
-        'float-4': 'float4 6s ease-in-out infinite 3s',
         'float-slow': 'float-slow 30s ease-in-out infinite',
         'float-medium': 'float-medium 20s ease-in-out infinite',
         'float-fast': 'float-fast 15s ease-in-out infinite',
 
-        // Particle animations with individual delays
-        ...Array.from({ length: 20 }, (_, i) => ({
-          [`particle-dance-${i + 1}`]: `particleDance 12s linear infinite ${i * 0.5}s`
-        })).reduce((acc, curr) => ({ ...acc, ...curr }), {}),
-
         // Card animations
         'card-entrance': 'cardEntrance 1s ease-out',
-        'glow-pulse': 'glowPulse 2s ease-in-out infinite',
         // Button animations
-        'button-shine': 'buttonShine 0.6s ease',
         // Warning animations
         'warning-stripe': 'warningStripe 2s linear infinite', // For the repeating gradient stripe background
         'intense-pulsate-warning': 'intensePulsateWarning 1.8s ease-in-out infinite',
