@@ -55,8 +55,8 @@ function FeaturesList({ features, isDeclineStep }: { features: WarrantyStep['fea
           : (feature.icon && iconMap[feature.icon] ? iconMap[feature.icon] : iconMap['CheckCircle']);
 
         const iconColorClass = isDeclineStep
-          ? (feature.included ? 'text-emerald-500' : 'text-red-500') // Removed fill for default icons
-          : (feature.isHighlighted ? 'text-yellow-500' : 'text-emerald-500'); // Removed fill
+          ? (feature.included ? 'text-emerald-500' : 'text-red-500')
+          : (feature.isHighlighted ? 'text-yellow-500' : 'text-emerald-500');
 
         const textColorClass = isDeclineStep
           ? (feature.included ? 'text-gray-700' : 'text-gray-500 line-through')
@@ -121,12 +121,12 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
     : step.isDeclineStep ? Shield : Diamond;
 
 
-  const handleShowBetterOptions = () => {
+  const handleShowBetterOptionsFromDialog = () => {
     setShowDeclineConfirmation(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleConfirmLimited = () => {
+  const handleConfirmLimitedFromDialog = () => {
     setShowDeclineConfirmation(false);
     onDecline();
   };
@@ -137,25 +137,22 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
       <>
         <EnhancedCard
             warning
-            hover3D={false} // Explicitly false for decline card
             className={cn("w-full max-w-[380px] mx-auto animate-card-entrance", className)}
         >
-            <CardHeader className="relative bg-red-700 p-8 text-center overflow-hidden rounded-t-xl">
-              {/* Removed shimmer for solid background */}
-              <div className="absolute top-4 left-6 bg-red-600/90 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/30 flex items-center gap-1.5 text-xs font-semibold text-white z-10 animate-pulse-warning">
-                {iconMap.AlertTriangle && <AlertTriangle className="w-4 h-4 fill-yellow-400 text-yellow-400" />}
-                Limited Coverage
+             <CardHeader className="relative bg-red-700 p-8 text-center overflow-hidden rounded-t-xl">
+              <div className="flex flex-col items-center mb-4"> {/* Centering container for badge */}
+                <div className="bg-red-600/90 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/30 flex items-center gap-1.5 text-xs font-semibold text-white z-10 animate-pulse-warning">
+                  {iconMap.AlertTriangle && <AlertTriangle className="w-4 h-4 fill-yellow-400 text-yellow-400" />}
+                  Limited Coverage
+                </div>
               </div>
-
-              {HeaderSpecificIcon && <HeaderSpecificIcon className="w-6 h-6 text-white/80 mx-auto mb-4 z-10 relative" />}
-
+              {/* Icon above title removed */}
               <h2 className="text-2xl font-bold text-white mb-2 z-10 relative tracking-tight">
                 {step.title}
               </h2>
               <p className="text-white/90 text-base font-medium mb-6 z-10 relative">
                 {step.summary}
               </p>
-
               <div className="z-10 relative">
                  <div className="text-white/80 text-base mt-2">
                   30 days only • Limited benefits
@@ -256,16 +253,15 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
               </div>
               <div className="space-y-4">
                 <EnhancedButton
-                  onClick={handleConfirmLimited}
+                  onClick={handleConfirmLimitedFromDialog}
                   variant="warning"
                   size="lg"
                   className="w-full"
                 >
                   Yes, Keep Limited Coverage
                 </EnhancedButton>
-
                 <EnhancedButton
-                  onClick={handleShowBetterOptions}
+                  onClick={handleShowBetterOptionsFromDialog}
                   variant="primary"
                   size="lg"
                   className="w-full"
@@ -285,7 +281,6 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
     <TooltipProvider>
         <EnhancedCard
             premium={step.bestValue}
-            hover3D={false} // Explicitly false for these cards
             className={cn("w-full max-w-[380px] mx-auto animate-card-entrance", className)}
         >
           <CardHeader className={cn(
