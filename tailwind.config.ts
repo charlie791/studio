@@ -95,6 +95,8 @@ export default {
           '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
           '50%': { transform: 'translateY(-18px) rotate(12deg)' }
         },
+        
+        // Particle animation
         particleDance: {
           '0%': { 
             transform: 'translateY(100vh) translateX(0px) scale(0) rotate(0deg)', 
@@ -116,6 +118,7 @@ export default {
             opacity: '0' 
           }
         },
+        
         // Card animations
         cardEntrance: {
           'from': { 
@@ -131,17 +134,19 @@ export default {
           '0%, 100%': { opacity: '0.2' },
           '50%': { opacity: '0.4' }
         },
+        
         // Button animations
         buttonShine: {
           '0%': { transform: 'translateX(-100%)' },
           '100%': { transform: 'translateX(100%)' }
         },
-        // Warning animations (from confirmation page guide)
-        warningStripe: {
-          '0%': { backgroundPosition: '-24px 0' }, // for repeating-linear-gradient
+        
+        // Warning animations
+        warningStripe: { // This is for the repeating linear gradient background
+          '0%': { backgroundPosition: '-24px 0' },
           '100%': { backgroundPosition: '0 0' },
         },
-        intensePulsateWarning: { 
+        intensePulsateWarning: {
           '0%, 100%': { 
             transform: 'scale(1)', 
             boxShadow: '0 8px 24px rgba(220, 38, 38, 0.4)' 
@@ -151,16 +156,21 @@ export default {
             boxShadow: '0 12px 40px rgba(220, 38, 38, 0.7)' 
           }
         },
-        intenseWarningRing: { 
+        pulseRing: { 
           '0%': { transform: 'scale(1)', opacity: '0.8' },
           '50%': { transform: 'scale(1.2)', opacity: '0.4' },
           '100%': { transform: 'scale(1.4)', opacity: '0' }
         },
-        pulseRing: { // From previous guide, still used in globals.css
+        intenseWarningRing: { // For the ::before pseudo-element
           '0%': { transform: 'scale(1)', opacity: '0.8' },
           '50%': { transform: 'scale(1.2)', opacity: '0.4' },
           '100%': { transform: 'scale(1.4)', opacity: '0' }
         },
+        pulseWarning: { // General pulse for warning elements
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.05)' },
+        },
+        
         // Success animations
         successPulse: {
           '0%, 100%': { transform: 'scale(1)' },
@@ -170,6 +180,7 @@ export default {
           '0%': { strokeDasharray: '50', strokeDashoffset: '50' },
           '100%': { strokeDasharray: '50', strokeDashoffset: '0' }
         },
+        
         // Trade-in animations
         pulsateAttention: {
           '0%, 100%': { 
@@ -181,16 +192,17 @@ export default {
             boxShadow: '0 12px 36px rgba(253, 160, 1, 0.6)' 
           }
         },
+        
         // Utility animations
         slideUp: {
           'from': { opacity: '0', transform: 'translateY(30px)' },
           'to': { opacity: '1', transform: 'translateY(0)' }
         },
         slideIn: { 
-          'from': { opacity: '0', transform: 'translateY(10px)' },
+          'from': { opacity: '0', transform: 'translateY(10px)' }, // Changed from translateX to translateY
           'to': { opacity: '1', transform: 'translateY(0)' },
         },
-        shimmer: { // Reverted to linear glistening effect
+        shimmer: { // Linear glistening effect
           '0%': { transform: 'translateX(-100%)' },
           '100%': { transform: 'translateX(100%)' },
         },
@@ -209,11 +221,7 @@ export default {
   				to: {
   					height: '0'
   				}
-  			},
-        pulseWarning: { 
-          '0%, 100%': { transform: 'scale(1)' },
-          '50%': { transform: 'scale(1.05)' },
-        },
+  			}
   		},
   		animation: {
         // Background animations
@@ -235,10 +243,11 @@ export default {
         // Button animations
         'button-shine': 'buttonShine 0.6s ease',
         // Warning animations
-        'warning-stripe': 'warningStripe 2s linear infinite', 
+        'warning-stripe': 'warningStripe 2s linear infinite', // For the repeating gradient stripe background
         'intense-pulsate-warning': 'intensePulsateWarning 1.8s ease-in-out infinite',
-        'intense-warning-ring': 'intenseWarningRing 1.8s ease-in-out infinite', // from globals.css, ensures ::before uses it
+        'intense-warning-ring': 'intenseWarningRing 1.8s ease-in-out infinite', 
         'pulse-ring': 'pulseRing 2s ease-in-out infinite', 
+        'pulse-warning': 'pulseWarning 2s ease-in-out infinite',
         // Success animations
         'success-pulse': 'successPulse 2s ease-in-out infinite',
         'check-draw': 'checkDraw 1s ease-out 0.3s both',
@@ -246,11 +255,10 @@ export default {
         'pulsate-attention': 'pulsateAttention 2s ease-in-out infinite',
         // General utility animations
         'slide-up': 'slideUp 0.6s ease-out',
-        'slide-in': 'slideIn 0.3s ease-out forwards',
-        'shimmer': 'shimmer 8s ease-in-out infinite', // Kept at 8s for subtle card header shimmer
+        'slide-in': 'slideIn 0.3s ease-out forwards', // translateY
+        'shimmer': 'shimmer 8s ease-in-out infinite', 
   			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out',
-        'pulse-warning': 'pulseWarning 2s ease-in-out infinite', 
+  			'accordion-up': 'accordion-up 0.2s ease-out'
   		},
       // Custom utilities
       backgroundImage: {
