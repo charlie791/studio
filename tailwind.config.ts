@@ -85,32 +85,64 @@ export default {
   					height: '0'
   				}
   			},
-        shimmer: {
-          '0%, 100%': { transform: 'translateX(-100%)' },
-          '50%': { transform: 'translateX(100%)' },
+        shimmer: { /* Updated per guide */
+          '0%, 100%': { transform: 'translate(-50%, -50%) rotate(0deg)' }, /* More fitting for centered shimmer in header */
+          '50%': { transform: 'translate(-50%, -50%) rotate(180deg)' },
         },
         slideIn: {
           'from': { opacity: '0', transform: 'translateX(-10px)' },
           'to': { opacity: '1', transform: 'translateX(0)' },
         },
-        warningStripe: { // Added from guide
+        warningStripe: { 
           '0%': { transform: 'translateX(-100%)' },
           '100%': { transform: 'translateX(100%)' },
         },
-        pulseWarning: { // Added from guide
-          '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+        pulseWarning: { 
+          '0%, 100%': { transform: 'scale(1)', opacity: '1' }, /* Adjusted from guide for consistency */
           '50%': { transform: 'scale(1.05)', opacity: '0.85' },
+        },
+        slideUp: { /* From new guide */
+          'from': { opacity: '0', transform: 'translateY(30px)' },
+          'to': { opacity: '1', transform: 'translateY(0)' },
+        },
+        successPulse: { /* From new guide */
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.05)' },
+        },
+        checkDraw: { /* From new guide */
+          '0%': { strokeDasharray: '50', strokeDashoffset: '50' },
+          '100%': { strokeDasharray: '50', strokeDashoffset: '0' },
+        },
+        pulsateAttention: { /* From new guide */
+          '0%, 100%': { 
+            transform: 'scale(1)',
+            boxShadow: '0 8px 24px rgba(253, 160, 1, 0.4)' /* Lumen Gold-ish shadow */
+          },
+          '50%': { 
+            transform: 'scale(1.08)',
+            boxShadow: '0 12px 36px rgba(253, 160, 1, 0.6)'
+          },
+        },
+        pulseRing: { /* From new guide */
+          '0%': { transform: 'scale(1)', opacity: '0.7' },
+          '50%': { transform: 'scale(1.15)', opacity: '0.3' },
+          '100%': { transform: 'scale(1.3)', opacity: '0' },
         },
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out',
-        'shimmer': 'shimmer 8s ease-in-out infinite',
+        'shimmer': 'shimmer 4s ease-in-out infinite', /* Updated from 8s to 4s as per new guide's example */
         'slide-in': 'slideIn 0.3s ease-out forwards',
-        'warning-stripe': 'warningStripe 2s linear infinite', // Added from guide
-        'pulse-warning': 'pulseWarning 2s ease-in-out infinite', // Added from guide
+        'warning-stripe': 'warningStripe 2s linear infinite', 
+        'pulse-warning': 'pulseWarning 2s ease-in-out infinite',
+        'slide-up': 'slideUp 0.6s ease-out', /* From new guide */
+        'success-pulse': 'successPulse 2s ease-in-out infinite', /* From new guide */
+        'check-draw': 'checkDraw 1s ease-out 0.3s both', /* From new guide */
+        'pulsate-attention': 'pulsateAttention 2s ease-in-out infinite', /* From new guide */
+        'pulse-ring': 'pulseRing 2s ease-in-out infinite', /* From new guide */
   		},
-      saturate: { // Added from guide
+      saturate: { 
         '75': '.75',
       }
   	}
