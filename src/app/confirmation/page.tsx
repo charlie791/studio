@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { CheckCircle2, MailCheck, Home, Loader2, Send, ShoppingCart, Check, AlertTriangle } from 'lucide-react';
+import { CheckCircle2, MailCheck, Home, Loader2, Send, ShoppingCart, Check, AlertTriangle, Tag } from 'lucide-react';
 import type { WarrantyPlan } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
 
@@ -305,3 +305,4 @@ export default function ConfirmationPage() {
     </div>
   )
 }
+
