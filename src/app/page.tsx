@@ -1,4 +1,6 @@
 
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { PageLayout } from '@/components/layout/page-layout';
@@ -13,7 +15,7 @@ export default function LandingPage() {
         <div className="flex flex-col items-center">
           <div className="mb-6 lg:mb-8 h-auto flex justify-center items-center">
             <Image
-              src="/SG365_Final.svg"
+              src="/SG365_Final.svg" // Using the correct SVG path from public
               alt="Surface Guard 365 Logo"
               width={296}
               height={78}
@@ -22,10 +24,14 @@ export default function LandingPage() {
             />
           </div>
 
-          <PageTitle as="h1" className="text-primary !text-3xl sm:!text-4xl !mb-3">
-            Protect Your<br />Countertops & Cabinets
+          <PageTitle as="h1" className="text-[#002455] !text-3xl sm:!text-4xl !mb-3">
+            {' '}
+            Protect Your
+            <br />
+            Countertops & Cabinets
           </PageTitle>
-          <BodyText className="!text-base md:!text-lg text-secondary !mb-8">
+          {/* Ensure this text is the intended grey color */}
+          <BodyText className="!text-base md:!text-lg !text-[#6b7280] !mb-8">
             Warranty your new surfaces in seconds
           </BodyText>
 
@@ -33,9 +39,10 @@ export default function LandingPage() {
             <Link href="/register">ACTIVATE WARRANTY</Link>
           </EnhancedButton>
 
-          <SmallText className="mt-6 !text-sm text-muted">
+          {/* Ensure "Already activated?" is the intended grey color */}
+          <SmallText className="mt-6 !text-sm !text-[#9ca3af]">
             Already activated?{' '}
-            <Link href="/login" className="font-semibold text-accent hover:underline">
+            <Link href="/login" className="font-semibold text-[#FDA001] hover:underline">
               Sign In
             </Link>
           </SmallText>
