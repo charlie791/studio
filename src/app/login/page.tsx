@@ -89,7 +89,6 @@ function LoginPageContent() {
         router.push('/warranty');
       }
     } catch (error: any) {
-      // console.error("Firebase Auth Error on login:", error); // Kept for server-side debugging
       let errorMessage = 'Failed to log in. Please check your credentials and try again.';
       if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
         errorMessage = 'Invalid email or password. Please try again.';
@@ -117,9 +116,9 @@ function LoginPageContent() {
   );
 
   return (
-    <PageLayout className="flex flex-1 flex-col items-center justify-center py-8">
-      <EnhancedCard className="w-full max-w-md animate-card-entrance enhanced-card-mobile-margins">
-        <CardHeader className="text-center items-center p-6 sm:p-8 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
+    <PageLayout className="flex flex-1 flex-col items-center justify-center py-8 sm:py-12">
+      <EnhancedCard className="w-full max-w-md animate-card-entrance enhanced-card-mobile-margins p-0">
+        <CardHeader className="text-center items-center p-6 sm:p-8 bg-gradient-to-br from-[#002455] to-[#003875] relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
           <PageTitle as="h1" className="!text-white !mb-2 z-10 relative">Welcome Back!</PageTitle>
           <BodyText className="text-center text-white/90 !text-base z-10 relative px-2 sm:px-0">
@@ -179,8 +178,8 @@ function LoginPageContent() {
               </form>
             </Form>
           </CardContent>
-          <CardFooter className="flex flex-col items-center justify-center p-6 sm:p-8 pt-2 space-y-3">
-              <SmallText className="text-center text-card-foreground">
+          <CardFooter className="flex flex-col items-center justify-center p-6 sm:p-8 pt-2 space-y-3 sm:space-y-4">
+              <SmallText className="text-center text-muted-foreground"> {/* Changed from text-card-foreground */}
                   Need to activate?{' '}
                   <Link href="/register" className="font-semibold text-accent hover:underline">
                     Create an account
