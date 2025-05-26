@@ -3,8 +3,8 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { EnhancedButton } from '@/components/ui/enhanced-button';
+import { Button } from '@/components/ui/button'; // Using standard ShadCN Button for icon
+import { EnhancedButton } from '@/components/ui/enhanced-button'; // For the link buttons
 import { Menu, X, HomeIcon } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 
@@ -18,8 +18,8 @@ export default function Footer() {
     { href: '/register/processing', label: 'Register (Processing)' },
     { href: '/login', label: 'Login' },
     { href: '/warranty', label: 'Warranty Plans' },
-    { href: '/checkout?planId=core', label: 'Checkout (Core Plan)' },
-    { href: '/confirmation?planId=core', label: 'Confirmation (Core Plan)' },
+    { href: '/checkout?planId=core', label: 'Checkout (Core Plan)' }, // Example planId
+    { href: '/confirmation?planId=core', label: 'Confirmation (Core Plan)' }, // Example planId
     { href: '/trade-in', label: 'Trade-In Offer' },
   ];
 
@@ -42,7 +42,7 @@ export default function Footer() {
           <div className="animate-slide-up opacity-0 animation-delay-100" style={{animationFillMode: 'forwards'}}>
             <Separator className="my-4 bg-border/50" />
             <div>
-              <h4 className="text-sm font-semibold text-muted-foreground mb-3">
+              <h4 className="text-sm font-semibold text-card-foreground mb-3">
                 Quick Test Navigation
               </h4>
               <div className="flex flex-wrap justify-center gap-x-3 gap-y-2">
