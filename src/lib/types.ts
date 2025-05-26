@@ -13,8 +13,8 @@ export interface WarrantyPlan {
   priceMonthly: number; // This now represents the flex payment amount
   priceAnnually: number; // This now represents the total one-time charge
   duration: string;
-  features: { text: string; icon?: keyof LucideIconMapType }[]; // Updated to match WarrantyStep
-  icon?: keyof LucideIconMapType; // Use string keys for Lucide icons
+  features: { text: string; icon?: keyof LucideIconMapType }[];
+  icon?: keyof LucideIconMapType;
   ctaText?: string;
   popular?: boolean;
 }
@@ -53,23 +53,22 @@ export interface CheckoutData {
   cvc: string;
 }
 
-// Updated type for the warranty flow, now includes features
+// Updated type for the warranty flow
 export interface WarrantyStep {
-  id: string; // e.g., 'core-step', 'combo-step', 'decline-step'
-  iconName?: keyof LucideIconMapType; // String key for the Lucide icon (optional, as not directly used in new card header)
+  id: string;
+  iconName?: keyof LucideIconMapType;
   title: string;
   summary: string;
-  priceMonthly?: number; // Flex payment amount
-  priceAnnually?: number; // Total one-time charge (for context, if needed by checkout)
-  planId?: string; // Maps to WarrantyPlan id for checkout
-  bestValue?: boolean; // For "Most Popular" or "Best Value" badges
+  priceMonthly?: number;
+  priceAnnually?: number; // Still useful for context, even if not always displayed
+  planId?: string;
+  bestValue?: boolean;
   isDeclineStep?: boolean;
   ctaSelectText?: string;
-  ctaNextText?: string; // This might be removed or repurposed if no longer "next"
   ctaDeclineText?: string;
   tooltipText?: string;
-  features: Array<{ text: string; icon?: keyof LucideIconMapType; isHighlighted?: boolean }>; // Features list
-  specialOfferText?: string; // For text like "Best Value - Save 30%..."
+  features: Array<{ text: string; icon?: keyof LucideIconMapType; isHighlighted?: boolean; included?: boolean }>; // Added included for decline step
+  specialOfferText?: string;
 }
 
 export interface LucideIconMapType {
@@ -82,6 +81,11 @@ export interface LucideIconMapType {
   ArrowRight: LucideIconType;
   CheckCircle: LucideIconType;
   Star: LucideIconType;
-  Flame: LucideIconType; // Added for "Best Value" flame icon
-  // Add other icons used in the app here if you want a centralized type
+  Flame: LucideIconType;
+  Crown: LucideIconType;
+  Diamond: LucideIconType;
+  ChevronDown: LucideIconType;
+  AlertTriangle: LucideIconType; // Added for warning card
+  AlertCircle: LucideIconType; // Added for warning card
+  X: LucideIconType; // Added for warning card features
 }

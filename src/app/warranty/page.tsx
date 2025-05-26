@@ -74,15 +74,19 @@ const warrantyFlowStepsData: WarrantyStep[] = [
   },
   {
     id: 'decline-step',
-    iconName: 'XCircle', 
+    iconName: 'XCircle', // This icon is for the overall step type, the card itself will use Shield/AlertTriangle
     title: 'Continue with Complimentary 30-Day Protection',
-    summary: "If a full plan isn't for you right now, your complimentary 30-day protection is already active. You can upgrade to a full plan anytime within the next 30 days.",
+    summary: "Basic coverage with significant limitations",
     isDeclineStep: true,
     ctaDeclineText: 'Keep Free 30-Day Plan',
-    tooltipText: 'No immediate action needed. Consider upgrading later for long-term peace of mind.',
+    tooltipText: 'You can upgrade anytime within the next 30 days.',
     features: [ 
-        { text: 'Basic coverage for 30 days.', icon: 'CheckCircle'},
-        { text: 'Option to upgrade to a full plan.', icon: 'CheckCircle'}
+        { text: "Basic 30-day coverage only", included: true },
+        { text: "No long-term warranty protection", included: false },
+        { text: "No professional care kit included", included: false },
+        { text: "No VIP customer support", included: false },
+        { text: "No priority service response", included: false },
+        { text: "No transferable benefits", included: false }
     ], 
   },
 ];

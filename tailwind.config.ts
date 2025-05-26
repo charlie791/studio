@@ -65,8 +65,8 @@ export default {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)',
-        xl: 'calc(var(--radius) + 4px)', // Added for pricing card
-        '2xl': 'calc(var(--radius) + 8px)', // Added for pricing card button
+        xl: 'calc(var(--radius) + 4px)',
+        '2xl': 'calc(var(--radius) + 8px)',
   		},
   		keyframes: {
   			'accordion-down': {
@@ -93,13 +93,26 @@ export default {
           'from': { opacity: '0', transform: 'translateX(-10px)' },
           'to': { opacity: '1', transform: 'translateX(0)' },
         },
+        warningStripe: { // Added from guide
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(100%)' },
+        },
+        pulseWarning: { // Added from guide
+          '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+          '50%': { transform: 'scale(1.05)', opacity: '0.85' },
+        },
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out',
-        'shimmer': 'shimmer 8s ease-in-out infinite', // Changed from 5s to 8s
+        'shimmer': 'shimmer 8s ease-in-out infinite',
         'slide-in': 'slideIn 0.3s ease-out forwards',
-  		}
+        'warning-stripe': 'warningStripe 2s linear infinite', // Added from guide
+        'pulse-warning': 'pulseWarning 2s ease-in-out infinite', // Added from guide
+  		},
+      saturate: { // Added from guide
+        '75': '.75',
+      }
   	}
   },
   plugins: [require("tailwindcss-animate")],
