@@ -4,8 +4,8 @@
 // Removed useEffect and useState for particleKey as it's not needed with new Tailwind config
 
 export function AnimatedBackground() {
-  const particleSizes = ['w-3 h-3', 'w-4 h-4', 'w-5 h-5', 'w-6 h-6'];
-  const particleOpacities = ['opacity-50', 'opacity-60', 'opacity-70', 'opacity-80'];
+  // const particleSizes = ['w-3 h-3', 'w-4 h-4', 'w-5 h-5', 'w-6 h-6'];
+  // const particleOpacities = ['opacity-50', 'opacity-60', 'opacity-70', 'opacity-80'];
 
   return (
     <div className="fixed inset-0 z-[-1] overflow-hidden">
@@ -34,19 +34,25 @@ export function AnimatedBackground() {
 
       {/* Dancing Particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {Array.from({ length: 20 }, (_, i) => (
-          <div
-            key={i}
-            className={`absolute rounded-full bg-[#FDA001] animate-particle-dance-${i + 1} ${
-              particleSizes[i % particleSizes.length]
-            } ${particleOpacities[i % particleOpacities.length]}`}
-            style={{
-              left: `${5 + (i * 4.5)}%`,
-              filter: 'blur(0.5px)'
-              // animationDelay is handled by the Tailwind config's animation definition
-            }}
-          />
-        ))}
+        {Array.from({ length: 20 }, (_, i) => {
+          const size = 3 + (i % 6); // Calculate size: 3px to 8px
+          const opacity = (50 + (i % 4) * 10) / 100; // Calculate opacity: 0.5 to 0.8
+
+          return (
+            <div
+              key={i}
+              className={`absolute rounded-full bg-[#FDA001] animate-particle-dance-${i + 1}`}
+              style={{
+                width: `${size}px`,
+                height: `${size}px`,
+                opacity: opacity,
+                left: `${5 + (i * 4.5)}%`,
+                filter: 'blur(0.5px)',
+                // animationDelay is handled by the Tailwind config's animation definition
+              }}
+            />
+          );
+        })}
       </div>
     </div>
   )
