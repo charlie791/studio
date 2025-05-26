@@ -1,54 +1,51 @@
-'use client';
+'use client'
 
 export function AnimatedBackground() {
+  // Using predefined Tailwind classes for sizes and opacities as per the guide's "Fixed Component"
+  const particleSizes = ['w-3 h-3', 'w-4 h-4', 'w-5 h-5', 'w-6 h-6'];
+  const particleOpacities = ['opacity-50', 'opacity-60', 'opacity-70', 'opacity-80', 'opacity-90']; // Added opacity-90
+  
   return (
     <div className="fixed inset-0 z-[-1] overflow-hidden">
-      {/* Primary gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900" />
-      
-      {/* Animated gradient mesh */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/20 via-purple-600/20 to-transparent blur-3xl animate-gradient-shift" />
-        <div className="absolute inset-0 bg-gradient-to-bl from-indigo-600/20 via-blue-600/20 to-transparent blur-3xl animate-gradient-shift-reverse" />
-      </div>
-      
-      {/* Subtle grid pattern */}
+      {/* Animated Gradient Background */}
       <div 
-        className="absolute inset-0 opacity-[0.015]"
+        className="absolute inset-0 bg-gradient-to-br from-[#002455] via-[#003875] via-[#1e3a8a] via-[#003875] to-[#002455] animate-gradient-shift"
+        style={{ backgroundSize: '200% 200%' }} // Inline style for backgroundSize
+      />
+      
+      {/* Grid Overlay */}
+      <div 
+        className="absolute inset-0 opacity-30 animate-grid-pulse" 
         style={{
-          backgroundImage: `
-            linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)
-          `,
-          backgroundSize: '100px 100px',
+          backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px)',
+          backgroundSize: '50px 50px'
         }}
       />
       
-      {/* Floating gradient orbs */}
-      <div className="absolute inset-0">
-        {/* Large orb */}
-        <div className="absolute top-1/4 -left-48 w-96 h-96">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/30 to-purple-600/30 rounded-full blur-3xl animate-float-slow" />
-        </div>
-        
-        {/* Medium orb */}
-        <div className="absolute top-3/4 -right-32 w-64 h-64">
-          <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/25 to-blue-600/25 rounded-full blur-3xl animate-float-medium" />
-        </div>
-        
-        {/* Small orb */}
-        <div className="absolute bottom-1/4 left-1/3 w-48 h-48">
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-pink-600/20 rounded-full blur-2xl animate-float-fast" />
-        </div>
+      {/* Floating Geometric Shapes */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute w-[300px] h-[300px] top-[10%] left-[-150px] rounded-full bg-gradient-to-br from-[#FDA001] to-[#FDA001]/30 animate-float-1" />
+        <div className="absolute w-[200px] h-[200px] top-[60%] right-[-100px] rounded-full bg-gradient-to-br from-[#FDA001] to-[#FDA001]/30 animate-float-2" />
+        <div className="absolute w-[150px] h-[150px] top-[30%] right-[20%] rounded-2xl bg-gradient-to-br from-[#FDA001] to-[#FDA001]/30 rotate-45 animate-float-3" />
+        <div className="absolute w-[100px] h-[100px] bottom-[20%] left-[10%] rounded-full bg-gradient-to-br from-[#FDA001] to-[#FDA001]/30 animate-float-4" />
       </div>
       
-      {/* Subtle vignette effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20" />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/20" />
-      
-      {/* Subtle vignette effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20" />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/20" />
+      {/* Dancing Particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {Array.from({ length: 20 }, (_, i) => (
+          <div
+            key={i}
+            // Added 'particle' class for global CSS targeting for mobile optimizations
+            className={`particle absolute rounded-full bg-[#FDA001] animate-particle-dance-${i + 1} ${
+              particleSizes[i % particleSizes.length]
+            } ${particleOpacities[i % particleOpacities.length]}`}
+            style={{
+              left: `${5 + (i * 4.5)}%`, // animation-delay is now part of Tailwind animation definition
+              filter: 'blur(0.5px)'
+            }}
+          />
+        ))}
+      </div>
     </div>
-  );
+  )
 }

@@ -60,7 +60,7 @@ const mockPlans: Record<string, WarrantyPlan> = {
 
 function OrderDetailsSectionFree({ userEmail, plan }: { userEmail: string; plan: WarrantyPlan }) {
   return (
-    <div className="bg-[#002455]/5 border-2 border-[#002455]/10 rounded-2xl p-6 mb-8">
+    <div className="bg-[#002455]/5 border-2 border-[#002455]/10 rounded-2xl p-4 sm:p-6 mb-6 sm:mb-8">
       <CardTitleText as="h2" className="!text-xl text-gray-800 !mb-2">
         {plan.name}
       </CardTitleText>
@@ -68,12 +68,12 @@ function OrderDetailsSectionFree({ userEmail, plan }: { userEmail: string; plan:
         {plan.duration}
       </BodyText>
       
-      <div className="bg-white border-2 border-dashed border-gray-300 rounded-xl p-5 text-center">
-        <MailCheck className="w-8 h-8 text-primary mx-auto mb-3" />
+      <div className="bg-white border-2 border-dashed border-gray-300 rounded-xl p-4 sm:p-5 text-center">
+        <MailCheck className="w-6 h-6 sm:w-8 sm:h-8 text-primary mx-auto mb-3" />
         <BodyText className="text-gray-700 font-semibold !mb-1">
           A confirmation email has been sent to:
         </BodyText>
-        <BodyText className="text-primary !text-lg font-bold !mb-2">
+        <BodyText className="text-primary font-bold !mb-2">
           {userEmail}
         </BodyText>
         <SmallText className="text-gray-500 italic">
@@ -99,22 +99,22 @@ function TradeInOfferSection({
     <div className="text-center">
       <Badge 
         variant="secondary" 
-        className="inline-flex items-center gap-2 bg-gradient-to-r from-accent to-[#cc8001] text-white px-6 py-3 text-lg font-bold rounded-full mb-6 animate-pulsate-attention shadow-lg shadow-accent/40 hover:animate-none"
+        className="inline-flex items-center gap-2 bg-gradient-to-r from-accent to-[#cc8001] text-white px-4 py-2 sm:px-6 sm:py-3 text-base sm:text-lg font-bold rounded-full mb-6 animate-pulsate-attention shadow-lg shadow-accent/40 hover:animate-none"
       >
-        <Tag className="w-6 h-6" />
+        <Tag className="w-5 h-5 sm:w-6 sm:h-6" />
         Exclusive Trade-In Offer!
       </Badge>
       
-      <SectionTitle as="h2" className="!text-3xl text-gray-800 !mb-4 leading-tight">
+      <SectionTitle as="h2" className="text-gray-800 !mb-4 leading-tight">
         Ready to Upgrade Your Surfaces?
       </SectionTitle>
-      <BodyText className="text-gray-600 !text-lg leading-relaxed mb-8 max-w-md mx-auto">
+      <BodyText className="text-gray-600 leading-relaxed mb-8 max-w-md mx-auto">
         Since you chose minimal protection, we're guessing you might be planning something bigger! 
         Let us help you get the kitchen of your dreams with fantastic trade-in values on beautiful new countertops.
       </BodyText>
       
-      <div className="mb-8 text-left">
-        <label htmlFor="project-notes" className="block text-base font-semibold text-gray-700 mb-3">
+      <div className="mb-6 sm:mb-8 text-left">
+        <label htmlFor="project-notes" className="block text-sm sm:text-base font-semibold text-gray-700 mb-3">
           Tell us about your project (Optional)
         </label>
         <Textarea
@@ -127,7 +127,7 @@ function TradeInOfferSection({
         />
       </div>
       
-      <div className="space-y-4">
+      <div className="space-y-3 sm:space-y-4">
         <EnhancedButton 
           onClick={onSubmit}
           disabled={isSubmitting}
@@ -135,8 +135,8 @@ function TradeInOfferSection({
           size="lg"
           className="w-full"
         >
-          <Send className="w-5 h-5 mr-3" />
-          {isSubmitting ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : 'Get My Free Trade-In Quote'}
+          {isSubmitting ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : <Send className="w-5 h-5 mr-3" /> }
+          {isSubmitting ? 'Submitting...' : 'Get My Free Trade-In Quote'}
         </EnhancedButton>
         
         <EnhancedButton 
@@ -164,11 +164,10 @@ function ConfirmationPageContent() {
   const [projectNotes, setProjectNotes] = useState('');
   const [isSubmittingTradeIn, setIsSubmittingTradeIn] = useState(false);
 
-  const userEmail = "your.email@example.com"; // Placeholder
+  const userEmail = "your.email@example.com"; 
 
   async function handleTradeInSubmit() {
     setIsSubmittingTradeIn(true);
-    // console.log('Trade-In Interest Notes:', projectNotes);
     await new Promise(resolve => setTimeout(resolve, 1500));
     toast({
       title: 'Interest Submitted!',
@@ -181,12 +180,12 @@ function ConfirmationPageContent() {
 
   if (!purchasedPlan) {
     return (
-      <EnhancedCard warning className="w-full max-w-lg p-6 md:p-8 text-center animate-card-entrance">
-        <CardHeader className="items-center pt-6 px-6 pb-4 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
+      <EnhancedCard warning className="w-full max-w-lg text-center animate-card-entrance p-0 enhanced-card-mobile-margins">
+        <CardHeader className="items-center p-6 sm:p-8 pt-6 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
-            <PageTitle as="h1" className="!text-3xl md:!text-4xl text-white z-10 relative">Invalid Plan</PageTitle>
+            <PageTitle as="h1" className="!text-white z-10 relative">Invalid Plan</PageTitle>
         </CardHeader>
-        <CardContent className="pt-6">
+        <CardContent className="p-6 sm:p-8 pt-6">
             <BodyText className="text-center text-destructive py-4">No plan details found. Please try again or contact support.</BodyText>
             <EnhancedButton variant="primary" size="lg" className="w-full mt-4" asChild>
                 <Link href="/warranty">Choose a Plan</Link>
@@ -201,26 +200,26 @@ function ConfirmationPageContent() {
   if (isFreePlan) {
     return (
         <div className="w-full max-w-lg animate-slide-up">
-          <EnhancedCard className="animate-card-entrance bg-white/95 backdrop-blur-sm shadow-2xl border-0 rounded-xl">
-            <CardHeader className="relative bg-gradient-to-br from-[#002455] to-[#003875] p-8 md:p-10 text-center overflow-hidden rounded-t-xl">
+          <EnhancedCard className="animate-card-entrance enhanced-card-mobile-margins">
+            <CardHeader className="relative bg-gradient-to-br from-[#002455] to-[#003875] p-6 sm:p-8 md:p-10 text-center overflow-hidden rounded-t-xl">
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
               
-              <div className="relative z-10 w-20 h-20 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-full mx-auto mb-6 flex items-center justify-center animate-success-pulse shadow-lg shadow-emerald-500/40">
-                <Check className="w-9 h-9 text-white animate-check-draw" strokeWidth={3} />
+              <div className="relative z-10 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-full mx-auto mb-4 sm:mb-6 flex items-center justify-center animate-success-pulse shadow-lg shadow-emerald-500/40">
+                <Check className="w-8 h-8 sm:w-9 sm:h-9 text-white animate-check-draw" strokeWidth={3} />
               </div>
               
-              <PageTitle as="h1" className="text-3xl font-extrabold text-white mb-4 relative z-10">
+              <PageTitle as="h1" className="!text-white !mb-4 relative z-10">
                 Order Confirmed!
               </PageTitle>
-              <BodyText className="text-white/90 text-lg leading-relaxed relative z-10">
+              <BodyText className="text-white/90 leading-relaxed relative z-10 px-2 sm:px-0">
                 Thank you for choosing your complimentary Surface Guard 365. Your countertop protection is now active.
               </BodyText>
             </CardHeader>
 
-            <CardContent className="p-6 md:p-8">
+            <CardContent className="p-6 sm:p-8">
               <OrderDetailsSectionFree userEmail={userEmail} plan={purchasedPlan} />
               
-              <Separator className="my-8 bg-gray-300" />
+              <Separator className="my-6 sm:my-8 bg-gray-300" />
               
               <TradeInOfferSection 
                 projectNotes={projectNotes}
@@ -236,7 +235,7 @@ function ConfirmationPageContent() {
                 </SmallText>
               </div>
             </CardContent>
-             <CardFooter className="flex justify-center px-6 pb-8 pt-2">
+             <CardFooter className="flex justify-center p-6 sm:p-8 pb-8 pt-2">
               <EnhancedButton 
                 variant="primary"
                 size="lg"
@@ -254,22 +253,21 @@ function ConfirmationPageContent() {
     );
   }
 
-  // Fallback for Paid Plans (existing logic adapted to new components)
   return (
-    <EnhancedCard className="w-full max-w-lg animate-card-entrance">
-      <CardHeader className="items-center text-center pt-8 px-6 pb-6 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
+    <EnhancedCard className="w-full max-w-lg animate-card-entrance p-0 enhanced-card-mobile-margins">
+      <CardHeader className="items-center text-center p-6 sm:p-8 pt-8 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
-        <CheckCircle2 className="h-20 w-20 text-green-400 mb-6 z-10 relative" />
-        <PageTitle as="h1" className="text-3xl md:text-4xl font-bold tracking-tight text-white z-10 relative">Order Confirmed!</PageTitle>
-        <BodyText className="text-white/90 text-base mt-2 z-10 relative">
+        <CheckCircle2 className="h-16 w-16 sm:h-20 sm:w-20 text-green-400 mb-4 sm:mb-6 z-10 relative" />
+        <PageTitle as="h1" className="!text-white z-10 relative">Order Confirmed!</PageTitle>
+        <BodyText className="text-white/90 mt-2 z-10 relative px-2 sm:px-0">
             Thank you for choosing Surface Guard 365. Your countertop protection is now active.
         </BodyText>
       </CardHeader>
-      <CardContent className="space-y-6 mt-6 px-6 pt-8 pb-6">
+      <CardContent className="space-y-4 sm:space-y-6 p-6 sm:p-8 pt-6 sm:pt-8 pb-6">
         <div className="border p-4 rounded-md bg-muted/30 text-left"> 
-          <CardTitleText as="h3" className="!text-xl text-gray-800 !mb-1">{purchasedPlan.name}</CardTitleText>
+          <CardTitleText as="h3" className="text-gray-800 !mb-1">{purchasedPlan.name}</CardTitleText>
           <BodyText className="text-muted-foreground">Duration: {purchasedPlan.duration}</BodyText>
-          <p className="text-2xl font-bold text-primary mt-2">
+          <p className="text-xl sm:text-2xl font-bold text-primary mt-2">
             4 Flex Payments of ${purchasedPlan.priceMonthly.toFixed(2)}
           </p>
           <SmallText className="font-normal text-muted-foreground">
@@ -278,7 +276,7 @@ function ConfirmationPageContent() {
         </div>
 
         <div className="flex items-center justify-center p-4 border border-dashed rounded-md">
-          <MailCheck className="h-8 w-8 text-primary mr-3" />
+          <MailCheck className="h-6 w-6 sm:h-8 sm:h-8 text-primary mr-3" />
           <div>
             <BodyText className="font-medium text-gray-700">A confirmation email has been sent to:</BodyText>
             <BodyText className="text-primary font-semibold">{userEmail}</BodyText>
@@ -289,7 +287,7 @@ function ConfirmationPageContent() {
           Your warranty details and policy documents are included in the email. You can manage your warranty from your account dashboard (coming soon).
         </SmallText>
       </CardContent>
-      <CardFooter className="flex justify-center px-6 pb-8 pt-4">
+      <CardFooter className="flex justify-center p-6 sm:p-8 pb-8 pt-4">
           <EnhancedButton
             asChild
             variant="primary"
@@ -309,7 +307,7 @@ function ConfirmationPageContent() {
 
 export default function ConfirmationPage() {
   return (
-    <PageLayout className="flex flex-1 flex-col items-center justify-center p-4 py-12">
+    <PageLayout className="flex flex-1 flex-col items-center justify-center py-8 sm:py-12">
       <Suspense fallback={<div className="flex justify-center items-center h-64"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>}>
         <ConfirmationPageContent />
       </Suspense>

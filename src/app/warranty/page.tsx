@@ -21,7 +21,7 @@ const warrantyFlowStepsData: WarrantyStep[] = [
     title: 'SurfaceGuard365 – Total Combo Plan',
     summary: 'Premium 10-Year Cabinet + Countertop Protection', 
     priceMonthly: 149.75,
-    priceAnnually: 599,
+    priceAnnually: 599, 
     planId: 'total-combo',
     bestValue: true,
     isDeclineStep: false,
@@ -111,7 +111,6 @@ export default function WarrantyPage() {
   };
 
   const handleDecline = () => {
-    // console.log('User chose Free 30-Day Plan. Flagging lead for follow-up.');
     toast({
       title: 'Complimentary Protection Confirmed!',
       description: 'Your 30-day protection is active. You will be redirected to confirm.',
@@ -124,34 +123,34 @@ export default function WarrantyPage() {
 
   if (!isClient) {
     return (
-      <PageLayout className="flex flex-1 flex-col items-center justify-center p-4 py-12">
+      <PageLayout className="flex flex-1 flex-col items-center justify-center py-8 sm:py-12">
         <Loader2 className="h-12 w-12 animate-spin text-primary" />
       </PageLayout>
     );
   }
 
   return (
-    <PageLayout className="py-12 px-4">
-      <div className="container mx-auto max-w-4xl space-y-8 flex flex-col items-center">
+    <PageLayout className="py-8 sm:py-12">
+      <div className="container mx-auto max-w-4xl space-y-6 sm:space-y-8 flex flex-col items-center">
         {!stepViewActive && (
-          <EnhancedCard className="w-full max-w-2xl text-center animate-card-entrance">
-            <CardHeader className="items-center pt-8 px-6 pb-6 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
+          <EnhancedCard className="w-full max-w-2xl text-center animate-card-entrance enhanced-card-mobile-margins">
+            <CardHeader className="p-6 sm:p-8 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
-                <PageTitle className="text-white !mb-3 z-10 relative !text-3xl md:!text-4xl leading-snug">
+                <PageTitle as="h1" className="!text-white !mb-3 z-10 relative leading-snug">
                     You’ve Been Matched with Custom Protection Plans
                 </PageTitle>
             </CardHeader>
-            <CardContent className="p-6 md:p-8">
-              <BodyText className="text-gray-700 max-w-xl mx-auto mb-8">
+            <CardContent className="p-6 sm:p-8">
+              <BodyText className="text-gray-700 max-w-xl mx-auto mb-6 sm:mb-8 px-2 sm:px-0">
                 You’re about to activate your free 30-day SurfaceGuard365 warranty. Before we finalize it, take a look at your extended protection options — including personalized 5- and 10-year plans built to cover your exact surfaces.
               </BodyText>
               <EnhancedButton
                 onClick={handleSeeCoverageOptions}
                 variant="primary"
                 size="lg"
-                className="w-full max-w-xs mx-auto" 
+                className="w-full max-w-[280px] sm:max-w-xs mx-auto" // Responsive max-width
               >
-                <ArrowRight className="mr-2 h-5 w-5" />
+                <ArrowRight className="mr-2 h-4 w-4 sm:h-5 sm:w-5" /> {/* Responsive icon */}
                 Review My Coverage Options
               </EnhancedButton>
             </CardContent>
@@ -159,14 +158,21 @@ export default function WarrantyPage() {
         )}
 
         {stepViewActive && (
-          <div className="w-full space-y-6">
+          // Using grid for responsive layout of cards
+          <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {warrantyFlowStepsData.map((step, index) => (
-              <WarrantyAccordionCard
-                key={step.id}
-                step={step}
-                onDecline={handleDecline}
-                defaultOpen={index === 0 && !!step.bestValue} 
-              />
+              <div key={step.id} className={cn(
+                "flex justify-center", // Center card in its grid cell
+                // For the decline step, make it span more columns on larger screens if desired,
+                // or handle its width via max-w on the card itself.
+                // Example: step.isDeclineStep && "lg:col-span-3" 
+              )}>
+                <WarrantyAccordionCard
+                  step={step}
+                  onDecline={handleDecline}
+                  defaultOpen={index === 0 && !!step.bestValue} 
+                />
+              </div>
             ))}
           </div>
         )}

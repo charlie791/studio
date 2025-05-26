@@ -1,23 +1,19 @@
-
 'use client'
 
-import { Button as ShadcnButton, type ButtonProps as ShadcnButtonProps } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import type React from 'react';
+import { Button as ShadcnButton, type ButtonProps as ShadcnButtonProps } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
+import type React from 'react'
 
-// Define the custom variants and sizes for EnhancedButton
 type CustomEnhancedButtonVariant = 'primary' | 'secondary' | 'warning' | 'success';
 type CustomEnhancedButtonSize = 'sm' | 'md' | 'lg';
 
-// Allow standard Shadcn variants and sizes as well
 type PossibleVariants = CustomEnhancedButtonVariant | ShadcnButtonProps['variant'];
 type PossibleSizes = CustomEnhancedButtonSize | ShadcnButtonProps['size'];
 
-interface EnhancedButtonProps extends Omit<ShadcnButtonProps, 'variant' | 'size'> {
+interface EnhancedButtonProps extends Omit<ShadcnButtonProps, 'variant' | 'size' | 'children'> {
   children: React.ReactNode;
   variant?: PossibleVariants;
   size?: PossibleSizes;
-  // onClick, disabled, className, type, asChild are inherited from ShadcnButtonProps
 }
 
 export function EnhancedButton({
@@ -27,7 +23,8 @@ export function EnhancedButton({
   className,
   disabled = false,
   asChild = false,
-  // type prop will be handled by ...rest if not explicitly defined
+  type, 
+  onClick, 
   ...rest
 }: EnhancedButtonProps) {
   const baseStyles = "relative overflow-hidden font-bold transition-all duration-300 transform-gpu group";
@@ -39,50 +36,71 @@ export function EnhancedButton({
     success: "bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white shadow-[0_10px_30px_rgba(16,185,129,0.3)] hover:shadow-[0_15px_35px_rgba(16,185,129,0.4)] hover:-translate-y-1"
   };
 
+  // Mobile-first sizes, scaling up with sm: prefix
   const customSizeStyles: Record<CustomEnhancedButtonSize, string> = {
-    sm: "px-4 py-2 text-sm rounded-lg",
-    md: "px-6 py-3 text-base rounded-xl",
-    lg: "px-8 py-4 text-lg rounded-2xl"
+    sm: "px-3 py-2 text-xs rounded-lg sm:px-4 sm:py-2 sm:text-sm", // Base mobile, sm scales up
+    md: "px-4 py-3 text-sm rounded-xl sm:px-6 sm:py-3 sm:text-base", // Base mobile, sm scales up
+    lg: "px-5 py-3 text-base rounded-2xl sm:px-8 sm:py-4 sm:text-lg"  // Base mobile, sm scales up
   };
-
+  
   const isCustomVariant = variant && (variant === 'primary' || variant === 'secondary' || variant === 'warning' || variant === 'success');
   const isCustomSize = size && (size === 'sm' || size === 'md' || size === 'lg');
 
-  // Determine props to pass to ShadcnButton
   const shadcnVariantProp = isCustomVariant ? 'default' : variant as ShadcnButtonProps['variant'];
+  // For ShadcnButton, if it's a custom size, we might want to pass 'default' to avoid conflicts
+  // if ShadcnButton doesn't have 'sm', 'md', 'lg' as its direct size props.
+  // However, ShadcnButton 'size' prop typically accepts 'default', 'sm', 'lg', 'icon'.
+  // We will map our custom sizes to appropriate Shadcn sizes if needed, or rely on our customSizeStyles to override.
+  // For simplicity, if it's a custom size, we'll apply custom styles and use 'default' for Shadcn's internal sizing.
   const shadcnSizeProp = isCustomSize ? 'default' : size as ShadcnButtonProps['size'];
+  
+  const selectedVariantStyle = isCustomVariant ? customVariantStyles[variant as CustomEnhancedButtonVariant] : '';
+  const selectedSizeStyle = isCustomSize ? customSizeStyles[size as CustomEnhancedButtonSize] : '';
 
-  // Determine which styles to apply
-  const appliedCustomVariantStyle = isCustomVariant ? customVariantStyles[variant as CustomEnhancedButtonVariant] : '';
-  const appliedCustomSizeStyle = isCustomSize ? customSizeStyles[size as CustomEnhancedButtonSize] : '';
-  const shouldApplyBaseStyles = isCustomVariant; // Only apply our base (for group, etc.) if it's a custom variant
+  if (asChild) {
+    return (
+      <ShadcnButton
+        type={type}
+        asChild={true}
+        variant={shadcnVariantProp}
+        size={shadcnSizeProp} // Pass Shadcn compatible size
+        className={cn(
+          baseStyles,
+          selectedVariantStyle,
+          selectedSizeStyle, // Our custom responsive sizes
+          disabled && "opacity-50 cursor-not-allowed hover:transform-none !shadow-none",
+          className
+        )}
+        disabled={disabled}
+        onClick={onClick}
+        {...rest}
+      >
+        {children}
+      </ShadcnButton>
+    );
+  }
 
   return (
     <ShadcnButton
-      asChild={asChild}
+      type={type}
+      asChild={false}
       variant={shadcnVariantProp}
-      size={shadcnSizeProp}
+      size={shadcnSizeProp} // Pass Shadcn compatible size
       className={cn(
-        shouldApplyBaseStyles ? baseStyles : '',
-        appliedCustomVariantStyle,
-        appliedCustomSizeStyle,
+        baseStyles,
+        selectedVariantStyle,
+        selectedSizeStyle, // Our custom responsive sizes
         disabled && "opacity-50 cursor-not-allowed hover:transform-none !shadow-none",
-        className // User-provided classes
+        className
       )}
+      onClick={onClick}
       disabled={disabled}
-      {...rest} // Pass down other props like type, onClick
+      {...rest}
     >
-      {asChild ? (
-        children // If asChild, ShadcnButton (as Slot) gets the children directly
-      ) : (
-        <>
-          {/* Shine effect overlay - only for our custom variants when not asChild */}
-          {isCustomVariant && (
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
-          )}
-          {children}
-        </>
+      {isCustomVariant && (
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
       )}
+      {children}
     </ShadcnButton>
   );
 }

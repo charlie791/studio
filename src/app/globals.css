@@ -29,7 +29,7 @@ body {
     --accent: 39 100% 50%; /* Lumen Gold #FDA001 */
     --accent-foreground: 0 0% 3.9%; /* Dark text on Lumen Gold */
 
-    --destructive: 0 84.2% 60.2%; /* default: #ef4444, guide uses #dc2626 */
+    --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
     --border: 215 100% 16%; /* Dark Blue #002455 for general borders */
@@ -107,11 +107,6 @@ body {
   }
 }
 
-.animation-delay-100 { animation-delay: 100ms; }
-.animation-delay-200 { animation-delay: 200ms; }
-.animation-delay-300 { animation-delay: 300ms; }
-
-
 /* Pulsating badge with ring effect */
 .animate-pulsate-attention {
   position: relative;
@@ -167,4 +162,82 @@ body {
   );
   background-size: 24px 100%;
   animation: warningStripeKeyframe 2s linear infinite; /* Name matches keyframe in tailwind.config */
+}
+
+/* Universal Enhancement CSS from Mobile-First Guide */
+@media (max-width: 768px) {
+  /* Enhanced mobile spacing for all cards */
+  /* Using a more specific selector to avoid overly broad application */
+  .enhanced-card-mobile-margins {
+    margin-left: 1rem !important;
+    margin-right: 1rem !important;
+  }
+  
+  /* Enhanced touch targets */
+  button, [role="button"], input[type="button"], input[type="submit"] {
+    min-height: 44px;
+    /* min-width: 44px; /* Be cautious with min-width on icon buttons or small utility buttons */
+  }
+  
+  /* Enhanced text readability - applied more broadly in Tailwind base */
+  /* p, span, div {
+    line-height: 1.6; 
+  } */
+  
+  /* Enhanced form inputs */
+  input, textarea, select {
+    font-size: 16px !important; /* Prevents zoom on iOS */
+    /* padding: 12px 16px; /* Shadcn inputs already have good padding, this might be too much override */
+  }
+}
+
+/* Fluid typography enhancement classes */
+.fluid-text-4xl { font-size: clamp(1.75rem, 5vw, 2.25rem); } /* Approx 28px to 36px */
+.fluid-text-3xl { font-size: clamp(1.5rem, 4vw, 1.875rem); } /* Approx 24px to 30px */
+.fluid-text-2xl { font-size: clamp(1.25rem, 3vw, 1.5rem); }   /* Approx 20px to 24px */
+.fluid-text-xl { font-size: clamp(1.125rem, 2.5vw, 1.25rem); }/* Approx 18px to 20px */
+.fluid-text-lg { font-size: clamp(1rem, 2vw, 1.125rem); }    /* Approx 16px to 18px */
+
+/* Enhanced responsive spacing classes */
+.fluid-p-8 { padding: clamp(1rem, 4vw, 2rem); }
+.fluid-p-6 { padding: clamp(0.75rem, 3vw, 1.5rem); }
+.fluid-p-4 { padding: clamp(0.5rem, 2vw, 1rem); }
+
+.fluid-gap-8 { gap: clamp(1rem, 4vw, 2rem); }
+.fluid-gap-6 { gap: clamp(0.75rem, 3vw, 1.5rem); }
+.fluid-gap-4 { gap: clamp(0.5rem, 2vw, 1rem); }
+
+
+/* AnimatedBackground Component Mobile Optimizations & Performance */
+@media (max-width: 768px) {
+  .particle {
+    /* width: 3px !important; /* Controlled by Tailwind classes now */
+    /* height: 3px !important; */
+  }
+  
+  /* Reduce particle count on mobile for performance */
+  .particle:nth-child(n+11) { /* Hides particles from the 11th onwards */
+    display: none !important;
+  }
+
+  /* Simplify complex animations - Shimmer example */
+  .animate-shimmer { 
+    animation-duration: 6s !important; /* Slower shimmer on mobile */
+  }
+}
+
+/* Footer animation helper */
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out forwards;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

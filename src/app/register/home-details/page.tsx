@@ -47,7 +47,6 @@ export default function HomeDetailsPage() {
 
   async function onSubmit(data: HomeWarrantyInfoData) {
     await new Promise(resolve => setTimeout(resolve, 1000));
-    // console.log('Home Warranty Info:', data);
     router.push('/register/processing');
   }
 
@@ -58,19 +57,19 @@ export default function HomeDetailsPage() {
   );
 
   return (
-    <PageLayout className="flex flex-1 flex-col items-center justify-center p-4 py-8">
-      <EnhancedCard className="w-full max-w-lg animate-card-entrance">
-        <CardHeader className="text-center items-center pt-8 px-6 pb-6 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
+    <PageLayout className="flex flex-1 flex-col items-center justify-center py-8">
+      <EnhancedCard className="w-full max-w-lg animate-card-entrance enhanced-card-mobile-margins">
+        <CardHeader className="text-center items-center p-6 sm:p-8 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
-          <PageTitle as="h1" className="!text-3xl !mb-2 text-center text-white z-10 relative">You’re Almost Protected</PageTitle>
-          <BodyText className="text-center text-white/90 !text-base z-10 relative">
+          <PageTitle as="h1" className="!text-white !mb-2 z-10 relative">You’re Almost Protected</PageTitle>
+          <BodyText className="text-center text-white/90 !text-base z-10 relative px-2 sm:px-0">
             Add your address to lock in your coverage eligibility — only available for a limited time after move-in.
           </BodyText>
         </CardHeader>
         <ClientOnly fallback={ClientFallback}>
-          <CardContent className="px-6 pb-6 pt-8">
+          <CardContent className="p-6 sm:p-8 pt-6">
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-5">
                 <FormField
                   control={form.control}
                   name="streetAddress"
@@ -87,7 +86,7 @@ export default function HomeDetailsPage() {
                     </FormItem>
                   )}
                 />
-                <div className="grid grid-cols-[2fr_auto_1.5fr] gap-x-2 sm:gap-x-4 items-start">
+                <div className="grid grid-cols-[1fr_auto_0.75fr] gap-2 sm:gap-3 items-start">
                   <FormField
                     control={form.control}
                     name="city"
@@ -105,7 +104,7 @@ export default function HomeDetailsPage() {
                     control={form.control}
                     name="state"
                     render={({ field }) => (
-                      <FormItem className="w-16"> 
+                      <FormItem className="w-14 sm:w-16"> 
                         <FormLabel className="text-gray-700">State</FormLabel>
                         <FormControl>
                           <Input {...field} disabled className="text-foreground"/>
@@ -161,8 +160,8 @@ export default function HomeDetailsPage() {
               </form>
             </Form>
           </CardContent>
-          <CardFooter className="flex flex-col items-center justify-center px-6 pb-8 pt-2 space-y-3">
-            <EnhancedButton variant="secondary" size="sm" className="text-sm !font-medium !border-muted-foreground/40 !text-muted-foreground hover:!text-accent hover:!border-accent/60 !shadow-none !py-2 !px-4" asChild>
+          <CardFooter className="flex flex-col items-center justify-center p-6 sm:p-8 pt-2 space-y-3">
+            <EnhancedButton variant="secondary" size="sm" asChild>
                 <Link href="/">
                     <HomeIcon className="mr-1 h-4 w-4" />
                     Return to Home

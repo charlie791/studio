@@ -1,7 +1,7 @@
 
 'use client';
 
-import Image from 'next/image'; // Keep for now, though background handled by PageLayout
+import Image from 'next/image'; 
 import { Suspense } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -24,7 +24,7 @@ import { PageLayout } from '@/components/layout/page-layout';
 import { EnhancedCard } from '@/components/ui/enhanced-card';
 import { EnhancedButton } from '@/components/ui/enhanced-button';
 import { PageTitle, SectionTitle, BodyText, SmallText } from '@/components/ui/typography';
-import { CardHeader, CardContent, CardFooter } from '@/components/ui/card'; // Standard Card parts for structure
+import { CardHeader, CardContent, CardFooter } from '@/components/ui/card'; 
 
 
 const mockPlans: Record<string, WarrantyPlan> = {
@@ -83,7 +83,6 @@ function CheckoutPageContent() {
 
   async function onSubmit(data: CheckoutData) {
     await new Promise(resolve => setTimeout(resolve, 2500));
-    // console.log('Checkout Data (Mock Stripe):', data, 'Plan:', selectedPlan?.name);
     toast({
       title: 'Payment Successful!',
       description: `Your purchase of ${selectedPlan?.name} warranty is complete.`,
@@ -93,12 +92,12 @@ function CheckoutPageContent() {
 
   if (!selectedPlan) {
     return (
-      <EnhancedCard className="w-full max-w-md p-6 text-center animate-card-entrance">
-        <CardHeader className="items-center pt-6 px-6 pb-4 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
+      <EnhancedCard className="w-full max-w-md text-center animate-card-entrance p-0 enhanced-card-mobile-margins">
+        <CardHeader className="items-center p-6 sm:p-8 pt-6 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
-          <PageTitle as="h1" className="text-destructive !text-xl !mb-2 text-white z-10 relative">Invalid Plan</PageTitle>
+          <PageTitle as="h1" className="text-destructive !text-white !mb-2 z-10 relative">Invalid Plan</PageTitle>
         </CardHeader>
-        <CardContent className="pt-6">
+        <CardContent className="p-6 sm:p-8 pt-6">
           <BodyText className="text-destructive text-center">Invalid warranty plan selected.</BodyText>
           <EnhancedButton variant="primary" size="md" className="mt-6 w-full" asChild>
             <Link href="/warranty">Choose a Plan</Link>
@@ -109,27 +108,27 @@ function CheckoutPageContent() {
   }
 
   return (
-    <EnhancedCard className="w-full max-w-md animate-card-entrance">
-      <CardHeader className="text-center items-center pt-8 px-6 pb-6 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
+    <EnhancedCard className="w-full max-w-md animate-card-entrance p-0 enhanced-card-mobile-margins">
+      <CardHeader className="text-center items-center p-6 sm:p-8 pt-8 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
-        <CreditCard className="mx-auto h-12 w-12 text-white/80 mb-4 z-10 relative" />
-        <PageTitle as="h1" className="!text-3xl !mb-2 text-white z-10 relative">Complete Your Purchase</PageTitle>
-        <BodyText className="!text-base text-white/90 mt-2 z-10 relative">You're one step away from securing your {selectedPlan.name} plan.</BodyText>
+        <CreditCard className="mx-auto h-10 w-10 sm:h-12 sm:w-12 text-white/80 mb-4 z-10 relative" />
+        <PageTitle as="h1" className="!text-white !mb-2 z-10 relative">Complete Your Purchase</PageTitle>
+        <BodyText className="text-white/90 mt-2 z-10 relative px-2 sm:px-0">You're one step away from securing your {selectedPlan.name} plan.</BodyText>
       </CardHeader>
-      <CardContent className="space-y-6 px-6 pt-8 pb-6">
+      <CardContent className="space-y-4 sm:space-y-6 p-6 sm:p-8 pt-6 sm:pt-8 pb-6">
         <div className="border p-4 rounded-md bg-muted/30 text-center">
-          <SectionTitle as="h3" className="!text-lg text-foreground !mb-1">
+          <SectionTitle as="h3" className="!text-lg sm:!text-xl text-foreground !mb-1">
             {selectedPlan.name}
           </SectionTitle>
-          <BodyText className="!text-base text-muted-foreground">
+          <BodyText className="text-muted-foreground">
             4 Flex Payments of
           </BodyText>
-          <p className="text-3xl font-bold text-primary mt-1">
+          <p className="text-2xl sm:text-3xl font-bold text-primary mt-1">
             ${selectedPlan.priceMonthly.toFixed(2)}
           </p>
         </div>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3 sm:space-y-4">
             <FormField
               control={form.control}
               name="cardHolderName"
@@ -156,7 +155,7 @@ function CheckoutPageContent() {
                 </FormItem>
               )}
             />
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-2 sm:gap-4">
               <FormField
                 control={form.control}
                 name="expiryDate"
@@ -201,8 +200,8 @@ function CheckoutPageContent() {
           </form>
         </Form>
       </CardContent>
-        <CardFooter className="flex justify-center px-6 pb-8 pt-2">
-        <EnhancedButton variant="secondary" size="sm" className="text-sm !font-medium !border-muted-foreground/40 !text-muted-foreground hover:!text-accent hover:!border-accent/60 !shadow-none !py-2 !px-4" asChild>
+        <CardFooter className="flex justify-center p-6 sm:p-8 pb-8 pt-2">
+        <EnhancedButton variant="secondary" size="sm" className="!text-sm !font-medium !shadow-none !py-2 !px-4" asChild>
           <Link href="/warranty">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Change Plan
@@ -215,7 +214,7 @@ function CheckoutPageContent() {
 
 export default function CheckoutPage() {
   return (
-    <PageLayout className="flex flex-1 flex-col items-center justify-center p-4 py-8">
+    <PageLayout className="flex flex-1 flex-col items-center justify-center py-8">
       <Suspense fallback={<div className="flex justify-center items-center h-64"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>}>
         <CheckoutPageContent />
       </Suspense>

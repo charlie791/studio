@@ -26,7 +26,7 @@ import { PageLayout } from '@/components/layout/page-layout';
 import { EnhancedCard } from '@/components/ui/enhanced-card';
 import { EnhancedButton } from '@/components/ui/enhanced-button';
 import { PageTitle, BodyText, SmallText } from '@/components/ui/typography';
-import { CardHeader, CardContent, CardFooter } from '@/components/ui/card'; // Standard Card parts for structure
+import { CardHeader, CardContent, CardFooter } from '@/components/ui/card'; 
 
 const createAccountFormSchema = z.object({
   fullName: z.string().min(2, { message: 'Full name must be at least 2 characters.' }),
@@ -87,7 +87,7 @@ export default function CreateAccountPage() {
       });
       router.push('/register/home-details');
     } catch (error: any) {
-      console.error("Firebase Auth Error on submit:", error);
+      // console.error("Firebase Auth Error on submit:", error); // Kept for server-side debugging if needed
       let errorMessage = 'Failed to create account. Please try again.';
       if (error.code === 'auth/email-already-in-use') {
         errorMessage = 'This email address is already in use. Please try a different email or log in.';
@@ -113,29 +113,30 @@ export default function CreateAccountPage() {
 
   const ClientFallback = (
     <div className="flex justify-center items-center py-10">
-      <Loader2 className="h-8 w-8 animate-spin text-[#002455]" />
+      <Loader2 className="h-8 w-8 animate-spin text-primary" />
     </div>
   );
 
   return (
-    <PageLayout className="flex flex-1 flex-col items-center justify-center p-4">
-      <EnhancedCard className="w-full max-w-md animate-card-entrance">
-        <CardHeader className="text-center items-center pt-6 px-6 pb-4">
-          <PageTitle as="h1" className="!text-3xl !mb-2 text-center text-[#002455]">Let’s Get You Covered</PageTitle>
-          <BodyText className="text-center text-[#6b7280] !text-base">
+    <PageLayout className="flex flex-1 flex-col items-center justify-center py-8">
+      <EnhancedCard className="w-full max-w-md animate-card-entrance enhanced-card-mobile-margins">
+        <CardHeader className="text-center items-center p-6 sm:p-8 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
+          <PageTitle as="h1" className="!text-white !mb-2 z-10 relative">Let’s Get You Covered</PageTitle>
+          <BodyText className="text-center text-white/90 !text-base z-10 relative px-2 sm:px-0">
             Start by creating your account. It’s fast, easy, and just the first step toward protecting your new surfaces
           </BodyText>
         </CardHeader>
         <ClientOnly fallback={ClientFallback}>
-          <CardContent className="px-6 pb-6 pt-6">
+          <CardContent className="p-6 sm:p-8 pt-6">
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-5">
                 <FormField
                   control={form.control}
                   name="fullName"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-[#002455]">Full Name</FormLabel>
+                      <FormLabel className="text-gray-700">Full Name</FormLabel>
                       <div className="relative flex items-center">
                         <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
                         <FormControl>
@@ -151,7 +152,7 @@ export default function CreateAccountPage() {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-[#002455]">Email Address</FormLabel>
+                      <FormLabel className="text-gray-700">Email Address</FormLabel>
                        <div className="relative flex items-center">
                         <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
                         <FormControl>
@@ -167,7 +168,7 @@ export default function CreateAccountPage() {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-[#002455]">Password</FormLabel>
+                      <FormLabel className="text-gray-700">Password</FormLabel>
                        <div className="relative flex items-center">
                         <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
                         <FormControl>
@@ -193,14 +194,14 @@ export default function CreateAccountPage() {
               </form>
             </Form>
           </CardContent>
-          <CardFooter className="flex flex-col items-center justify-center px-6 pb-6 pt-2 space-y-3">
-              <SmallText className="text-center text-[#9ca3af]">
+          <CardFooter className="flex flex-col items-center justify-center p-6 sm:p-8 pt-2 space-y-3">
+              <SmallText className="text-center text-card-foreground">
                   Already activated?{' '}
-                  <Link href="/login" className="font-semibold text-[#FDA001] hover:underline">
+                  <Link href="/login" className="font-semibold text-accent hover:underline">
                     Log in
                   </Link>
               </SmallText>
-              <EnhancedButton variant="link" size="sm" className="text-sm text-muted-foreground hover:text-accent p-0 h-auto !shadow-none" asChild>
+              <EnhancedButton variant="secondary" size="sm" asChild>
                   <Link href="/">
                       <HomeIcon className="mr-1 h-4 w-4" />
                       Return to Home

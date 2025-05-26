@@ -1,6 +1,7 @@
 
 'use client';
 
+import { Suspense, useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -20,7 +21,6 @@ import { useToast } from '@/hooks/use-toast';
 import type { LoginData } from '@/lib/types';
 import { authInitializationError, getFirebaseAuthInstance } from '@/lib/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { useEffect, Suspense } from 'react';
 import ClientOnly from '@/components/client-only';
 import { PageLayout } from '@/components/layout/page-layout';
 import { EnhancedCard } from '@/components/ui/enhanced-card';
@@ -89,7 +89,7 @@ function LoginPageContent() {
         router.push('/warranty');
       }
     } catch (error: any) {
-      console.error("Firebase Auth Error on login:", error);
+      // console.error("Firebase Auth Error on login:", error); // Kept for server-side debugging
       let errorMessage = 'Failed to log in. Please check your credentials and try again.';
       if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
         errorMessage = 'Invalid email or password. Please try again.';
@@ -112,29 +112,30 @@ function LoginPageContent() {
 
   const ClientFallback = (
     <div className="flex justify-center items-center py-10">
-      <Loader2 className="h-8 w-8 animate-spin text-[#002455]" />
+      <Loader2 className="h-8 w-8 animate-spin text-primary" />
     </div>
   );
 
   return (
-    <PageLayout className="flex flex-1 flex-col items-center justify-center p-4">
-      <EnhancedCard className="w-full max-w-md animate-card-entrance">
-        <CardHeader className="text-center items-center pt-6 px-6 pb-4">
-          <PageTitle as="h1" className="!text-3xl !mb-2 text-center text-[#002455]">Welcome Back!</PageTitle>
-          <BodyText className="text-center !text-base text-[#6b7280]">
+    <PageLayout className="flex flex-1 flex-col items-center justify-center py-8">
+      <EnhancedCard className="w-full max-w-md animate-card-entrance enhanced-card-mobile-margins">
+        <CardHeader className="text-center items-center p-6 sm:p-8 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
+          <PageTitle as="h1" className="!text-white !mb-2 z-10 relative">Welcome Back!</PageTitle>
+          <BodyText className="text-center text-white/90 !text-base z-10 relative px-2 sm:px-0">
             Sign in to access your account and manage your warranties.
           </BodyText>
         </CardHeader>
         <ClientOnly fallback={ClientFallback}>
-          <CardContent className="px-6 pb-6 pt-6">
+          <CardContent className="p-6 sm:p-8 pt-6">
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-5">
                 <FormField
                   control={form.control}
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-[#002455]">Email Address</FormLabel>
+                      <FormLabel className="text-gray-700">Email Address</FormLabel>
                        <div className="relative flex items-center">
                         <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
                         <FormControl>
@@ -150,7 +151,7 @@ function LoginPageContent() {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-[#002455]">Password</FormLabel>
+                      <FormLabel className="text-gray-700">Password</FormLabel>
                        <div className="relative flex items-center">
                         <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
                         <FormControl>
@@ -178,14 +179,14 @@ function LoginPageContent() {
               </form>
             </Form>
           </CardContent>
-          <CardFooter className="flex flex-col items-center justify-center px-6 pb-6 pt-2 space-y-3">
-              <SmallText className="text-sm text-center text-[#9ca3af]">
+          <CardFooter className="flex flex-col items-center justify-center p-6 sm:p-8 pt-2 space-y-3">
+              <SmallText className="text-center text-card-foreground">
                   Need to activate?{' '}
-                  <Link href="/register" className="font-semibold text-[#FDA001] hover:underline">
+                  <Link href="/register" className="font-semibold text-accent hover:underline">
                     Create an account
                   </Link>
               </SmallText>
-              <EnhancedButton variant="link" size="sm" className="text-sm text-muted-foreground hover:text-accent p-0 h-auto !shadow-none" asChild>
+              <EnhancedButton variant="secondary" size="sm" asChild>
                   <Link href="/">
                       <HomeIcon className="mr-1 h-4 w-4" />
                       Return to Home
@@ -200,7 +201,7 @@ function LoginPageContent() {
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={<div className="flex justify-center items-center h-screen"><Loader2 className="h-12 w-12 animate-spin text-[#002455]" /></div>}>
+    <Suspense fallback={<div className="flex flex-1 flex-col items-center justify-center p-4 h-screen"><Loader2 className="h-12 w-12 animate-spin text-primary" /></div>}>
       <LoginPageContent />
     </Suspense>
   );
