@@ -187,14 +187,14 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
             <AlertDialogTitle className="text-2xl font-bold text-destructive">Final Warning - Are You Sure?</AlertDialogTitle>
           </AlertDialogHeader>
           <AlertDialogDescription className="text-center text-sm text-muted-foreground space-y-3 py-2">
-            <p className="font-semibold text-foreground">You are about to proceed with minimal coverage. This means:</p>
+            <div className="font-semibold text-foreground">You are about to proceed with minimal coverage. This means:</div>
             <ul className="list-disc list-inside text-left space-y-1 pl-4">
               <li>No long-term warranty protection.</li>
               <li>No professional care kit included.</li>
               <li>No VIP customer support or priority service.</li>
               <li>Your coverage will expire in 30 days.</li>
             </ul>
-            <p className="font-bold text-destructive">Are you sure you want to miss out on comprehensive protection and savings?</p>
+            <div className="font-bold text-destructive">Are you sure you want to miss out on comprehensive protection and savings?</div>
           </AlertDialogDescription>
           <AlertDialogFooter className="sm:justify-center gap-2 pt-4">
             <AlertDialogCancel asChild>
@@ -297,4 +297,3 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
     </TooltipProvider>
   );
 }
-
