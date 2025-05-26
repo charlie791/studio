@@ -8,7 +8,6 @@ export function AnimatedBackground() {
 
   // This effect is to force a remount of particles if their animation classes change,
   // ensuring Tailwind JIT picks up dynamically generated animation names if that strategy is used.
-  // However, the current Tailwind config uses a single particleDance keyframe.
   useEffect(() => {
     setParticleKey(prev => prev + 1); 
   }, []);
@@ -30,7 +29,7 @@ export function AnimatedBackground() {
       </div>
       
       {/* Dancing Particles */}
-      <div key={particleKey} className="absolute inset-0 overflow-hidden">
+      <div key={particleKey} className="absolute inset-0 overflow-hidden pointer-events-none">
         {Array.from({ length: 20 }, (_, i) => (
           <div
             key={i}
@@ -38,9 +37,9 @@ export function AnimatedBackground() {
             style={{
               width: `${3 + (i % 6)}px`,
               height: `${3 + (i % 6)}px`,
-              opacity: `${(50 + (i % 4) * 10) / 100}`, // Tailwind opacity is 0-1
+              opacity: `${(50 + (i % 4) * 10) / 100}`,
               left: `${5 + (i * 4.5)}%`,
-              animationDelay: `${i * 0.5}s` // Tailwind animation class handles the rest
+              animationDelay: `${i * 0.5}s`
             }}
           />
         ))}
@@ -48,3 +47,5 @@ export function AnimatedBackground() {
     </div>
   )
 }
+
+    
