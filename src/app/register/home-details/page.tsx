@@ -58,12 +58,12 @@ export default function HomeDetailsPage() {
 
   return (
     <PageLayout className="flex flex-1 flex-col items-center justify-center py-8 sm:py-12">
-      <EnhancedCard className="w-full max-w-lg animate-card-entrance enhanced-card-mobile-margins p-0">
+      <EnhancedCard className="w-full max-w-lg animate-card-entrance p-0 enhanced-card-mobile-margins">
         <CardHeader className="text-center items-center p-6 sm:p-8 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
           <PageTitle as="h1" className="!text-white !mb-2 z-10 relative">You’re Almost Protected</PageTitle>
           <BodyText className="text-center text-white/90 !text-base z-10 relative px-2 sm:px-0">
-            Add your address to lock in your coverage eligibility — only available for a limited time after move-in.
+            Add your address to lock in your coverage eligibility for the first 30 days from the close of your home.
           </BodyText>
         </CardHeader>
         <ClientOnly fallback={ClientFallback}>
