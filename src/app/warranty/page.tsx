@@ -77,9 +77,11 @@ const warrantyFlowStepsData: WarrantyStep[] = [
   },
   {
     id: 'decline-step',
-    iconName: 'Shield',
+    iconName: 'Shield', // This icon is used in the fallback card's header
     title: 'Continue with Complimentary 30-Day Protection',
     summary: "Basic coverage with significant limitations",
+    priceMonthly: 0, // Explicitly setting for clarity, though not displayed in the same way
+    priceAnnually: 0,
     planId: 'free-30-day',
     isDeclineStep: true,
     ctaDeclineText: 'Keep 30-Day Plan',
@@ -131,25 +133,25 @@ export default function WarrantyPage() {
   }
 
   return (
-    <PageLayout className="py-8 sm:py-12">
+    <PageLayout className="py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
       <div className="container mx-auto max-w-4xl space-y-6 sm:space-y-8 flex flex-col items-center">
         {!stepViewActive && (
           <EnhancedCard className="w-full max-w-2xl text-center enhanced-card-mobile-margins animate-card-entrance p-0">
             <CardHeader className="p-6 sm:p-8 bg-gradient-to-br from-[#002455] to-[#003875] rounded-t-xl relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
-                <PageTitle as="h1" className="!text-white !mb-3 z-10 relative leading-snug">
+                <PageTitle as="h1" className="!text-white !mb-3 z-10 relative leading-snug text-3xl sm:text-4xl md:text-5xl tracking-tight">
                     You’ve Been Matched with Custom Protection Plans
                 </PageTitle>
             </CardHeader>
             <CardContent className="p-6 sm:p-8">
-              <BodyText className="text-gray-700 max-w-xl mx-auto mb-6 sm:mb-8 px-2 sm:px-0">
-                You’re about to activate your 30-day SurfaceGuard365 warranty. Before we finalize it, take a look at your extended protection options — including personalized 5- and 10-year plans built to cover your exact surfaces.
+              <BodyText className="text-gray-700 max-w-xl mx-auto mb-6 sm:mb-8 text-base sm:text-lg">
+                 You’re about to activate your free 30-day SurfaceGuard365 warranty. Before we finalize it, take a look at your extended protection options — including personalized 5- and 10-year plans built to cover your exact surfaces.
               </BodyText>
               <EnhancedButton
                 onClick={handleSeeCoverageOptions}
                 variant="primary"
                 size="lg"
-                className="w-full max-w-[320px] sm:max-w-xs mx-auto" 
+                className="w-full max-w-[320px] sm:max-w-xs mx-auto"
               >
                 <ArrowRight className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                 Review My Coverage Options
@@ -159,18 +161,14 @@ export default function WarrantyPage() {
         )}
 
         {stepViewActive && (
-          <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          <div className="w-full flex flex-col items-center space-y-6 sm:space-y-8">
             {warrantyFlowStepsData.map((step, index) => (
-              <div key={step.id} className={cn(
-                "flex justify-center", 
-                step.isDeclineStep && "md:col-span-2 lg:col-span-3" 
-              )}>
-                <WarrantyAccordionCard
-                  step={step}
-                  onDecline={handleDecline}
-                  defaultOpen={index === 0 && !!step.bestValue}
-                />
-              </div>
+              <WarrantyAccordionCard
+                key={step.id}
+                step={step}
+                onDecline={handleDecline}
+                defaultOpen={index === 0 && !!step.bestValue}
+              />
             ))}
           </div>
         )}
