@@ -1,1 +1,2 @@
-/* /.netlify/functions/___netlify-handler 200
+# This file should be empty for Next.js apps using @netlify/plugin-nextjs
+# The plugin will generate the necessary redirects automatically

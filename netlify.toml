@@ -11,30 +11,6 @@
 [build.environment]
   NEXT_PRIVATE_TARGET = "server"
 
-# Handle Next.js API routes
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/___netlify-handler"
-  status = 200
-
-# Handle Next.js Image Optimization
-[[redirects]]
-  from = "/_next/image"
-  to = "/.netlify/functions/___netlify-handler"
-  status = 200
-
-# Handle static assets
-[[redirects]]
-  from = "/_next/static/*"
-  to = "/static/:splat"
-  status = 200
-
-# Handle all other routes (this should be last)
-[[redirects]]
-  from = "/*"
-  to = "/.netlify/functions/___netlify-handler"
-  status = 200
-
 [[headers]]
   for = "/*"
   [headers.values]
