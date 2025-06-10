@@ -14,6 +14,16 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
+// Debug: Log the config to see what values are being loaded
+if (typeof window !== 'undefined') {
+  console.log('Firebase config loaded:', {
+    hasApiKey: !!firebaseConfig.apiKey,
+    hasAuthDomain: !!firebaseConfig.authDomain,
+    hasProjectId: !!firebaseConfig.projectId,
+    hasAppId: !!firebaseConfig.appId,
+  });
+}
+
 let app: FirebaseApp | undefined;
 let authInstance: Auth | undefined;
 let analyticsInstance: Analytics | undefined;
