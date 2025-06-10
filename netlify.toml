@@ -1,4 +1,5 @@
 # Netlify configuration for Next.js app
+# Updated: 2025-01-10
 
 [build]
   command = "npm run build"
