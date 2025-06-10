@@ -87,7 +87,7 @@ export default function WarrantyOptionCard({ step, onViewNext, onDecline, classN
 
           {!step.isDeclineStep && onViewNext && (
             <Button onClick={onViewNext} variant="outline" className="w-full sm:w-auto flex-1">
-              {step.ctaNextText || 'View Next Option'}
+              View Next Option
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           )}
