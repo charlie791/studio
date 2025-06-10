@@ -1,7 +1,7 @@
 
 import { initializeApp, getApp, getApps, type FirebaseApp } from 'firebase/app';
 import { getAuth, type Auth } from 'firebase/auth';
-// import { getAnalytics, type Analytics } from "firebase/analytics"; // Temporarily commented out
+import { getAnalytics, type Analytics } from "firebase/analytics";
 
 // Firebase configuration using environment variables
 const firebaseConfig = {
@@ -16,7 +16,7 @@ const firebaseConfig = {
 
 let app: FirebaseApp | undefined;
 let authInstance: Auth | undefined;
-// let analyticsInstance: Analytics | undefined; // Temporarily commented out
+let analyticsInstance: Analytics | undefined;
 let authInitializationError: Error | null = null;
 
 // Check if all necessary Firebase config values are provided
@@ -42,10 +42,10 @@ if (
       app = getApp();
     }
     authInstance = getAuth(app);
-    // Temporarily comment out Analytics initialization to simplify
-    // if (firebaseConfig.measurementId && typeof window !== 'undefined') {
-    //   analyticsInstance = getAnalytics(app);
-    // }
+    // Initialize Analytics only on client side
+    if (firebaseConfig.measurementId && typeof window !== 'undefined') {
+      analyticsInstance = getAnalytics(app);
+    }
   } catch (error) {
     console.error('Firebase initialization failed:', error);
     authInitializationError = error instanceof Error ? error : new Error(String(error));
@@ -65,8 +65,4 @@ export function getFirebaseAuthInstance(): Auth {
   return authInstance;
 }
 
-// Temporarily export null for analytics
-// export { app, analyticsInstance as analytics, authInitializationError };
-export { app, authInitializationError };
-// Re-add analyticsInstance when re-enabling:
-// export { app, analyticsInstance as analytics, authInitializationError };
+export { app, analyticsInstance as analytics, authInitializationError };
