@@ -2,6 +2,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { PageLayout } from '@/components/layout/page-layout';
 import { EnhancedCard } from '@/components/ui/enhanced-card';
 import { EnhancedButton } from '@/components/ui/enhanced-button';
@@ -15,10 +16,13 @@ export default function LandingPage() {
       <EnhancedCard className="w-full max-w-lg text-center animate-card-entrance p-6 sm:p-8 md:p-10">
         <div className="flex flex-col items-center">
           <div className="mb-6 lg:mb-8 h-auto flex justify-center items-center">
-            <img
+            <Image
               src="/SG365_Final.svg"
               alt="Surface Guard 365 Logo"
+              width={280}
+              height={74}
               className="w-[180px] h-auto sm:w-[240px] md:w-[280px]"
+              priority
             />
           </div>
 
