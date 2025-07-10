@@ -402,6 +402,144 @@ export default function LandingPage() {
             box-shadow: 0 10px 30px rgba(0, 36, 85, 0.3);
         }
 
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #6b7280;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #002455;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .modal-subtitle {
+            color: #6b7280;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #FDA001;
+            box-shadow: 0 0 0 3px rgba(253, 160, 1, 0.1);
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #FDA001 0%, #cc8001 100%);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-submit::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.2) 50%, transparent 60%);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+
+        .form-submit:hover::before {
+            transform: translateX(100%);
+        }
+
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(253, 160, 1, 0.3);
+        }
+
         /* Footer */
         .footer {
             background: #002455;
@@ -648,6 +786,68 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* Modal */}
+        <div className="modal-overlay" id="leadModal">
+          <div className="modal-content">
+            <button className="modal-close" id="closeModal">×</button>
+            <h3 className="modal-title">Get Your Free Quote</h3>
+            <p className="modal-subtitle">Complete the form below and we'll send you warranty options and pricing</p>
+            
+            <form id="leadForm">
+              <div className="form-group">
+                <label className="form-label" htmlFor="fullName">Full Name *</label>
+                <input 
+                  type="text" 
+                  id="fullName" 
+                  name="fullName" 
+                  className="form-input" 
+                  placeholder="Enter your full name"
+                  required 
+                />
+              </div>
+              
+              <div className="form-group">
+                <label className="form-label" htmlFor="email">Email Address *</label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  name="email" 
+                  className="form-input" 
+                  placeholder="Enter your email address"
+                  required 
+                />
+              </div>
+              
+              <div className="form-group">
+                <label className="form-label" htmlFor="phone">Phone Number *</label>
+                <input 
+                  type="tel" 
+                  id="phone" 
+                  name="phone" 
+                  className="form-input" 
+                  placeholder="(555) 123-4567"
+                  required 
+                />
+              </div>
+              
+              <div className="form-group">
+                <label className="form-label" htmlFor="interest">I'm interested in *</label>
+                <select id="interest" name="interest" className="form-input" required>
+                  <option value="">Select your interest</option>
+                  <option value="core">Core Plan - 5 Year Countertop Warranty</option>
+                  <option value="extended">Extended Plan - 10 Year + VIP Support</option>
+                  <option value="total">Total Combo - 10 Year Cabinet + Countertop</option>
+                  <option value="quote">Custom Quote</option>
+                </select>
+              </div>
+              
+              <button type="submit" className="form-submit">
+                Get My Free Quote
+              </button>
+            </form>
+          </div>
+        </div>
+
         {/* Footer */}
         <footer className="footer">
           <div className="container">
@@ -669,6 +869,117 @@ export default function LandingPage() {
             </div>
           </div>
         </footer>
+
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            // Modal functionality
+            const modal = document.getElementById('leadModal');
+            const closeBtn = document.getElementById('closeModal');
+            const form = document.getElementById('leadForm');
+            
+            // Open modal function
+            function openModal() {
+              modal.classList.add('active');
+              document.body.style.overflow = 'hidden';
+            }
+            
+            // Close modal function
+            function closeModal() {
+              modal.classList.remove('active');
+              document.body.style.overflow = 'auto';
+            }
+            
+            // Add click handlers to all CTA buttons
+            document.addEventListener('DOMContentLoaded', function() {
+              // Hero CTA
+              const heroCTA = document.querySelector('.hero-cta');
+              if (heroCTA) {
+                heroCTA.addEventListener('click', openModal);
+              }
+              
+              // Nav CTA
+              const navCTA = document.querySelector('.nav-cta');
+              if (navCTA) {
+                navCTA.addEventListener('click', openModal);
+              }
+              
+              // Plan CTAs
+              const planCTAs = document.querySelectorAll('.plan-cta');
+              planCTAs.forEach(btn => {
+                btn.addEventListener('click', function() {
+                  const planTitle = this.closest('.plan-card').querySelector('.plan-title').textContent;
+                  openModal();
+                  
+                  // Pre-select the plan in dropdown
+                  const select = document.getElementById('interest');
+                  if (planTitle.includes('Core')) {
+                    select.value = 'core';
+                  } else if (planTitle.includes('Extended')) {
+                    select.value = 'extended';
+                  } else if (planTitle.includes('Total')) {
+                    select.value = 'total';
+                  }
+                });
+              });
+              
+              // Footer CTA
+              const footerCTA = document.querySelector('.footer-cta .cta-button');
+              if (footerCTA) {
+                footerCTA.addEventListener('click', openModal);
+              }
+            });
+            
+            // Close modal events
+            closeBtn.addEventListener('click', closeModal);
+            
+            // Close on overlay click
+            modal.addEventListener('click', function(e) {
+              if (e.target === modal) {
+                closeModal();
+              }
+            });
+            
+            // Close on Escape key
+            document.addEventListener('keydown', function(e) {
+              if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+              }
+            });
+            
+            // Form submission
+            form.addEventListener('submit', function(e) {
+              e.preventDefault();
+              
+              const formData = new FormData(this);
+              const name = formData.get('fullName');
+              const email = formData.get('email');
+              const phone = formData.get('phone');
+              const interest = formData.get('interest');
+              
+              // Here you would normally send to your backend
+              console.log('Form submitted:', { name, email, phone, interest });
+              
+              // Show success message
+              alert('Thank you! We\\'ll contact you shortly with your warranty quote.');
+              
+              // Close modal and reset form
+              closeModal();
+              this.reset();
+            });
+            
+            // Phone number formatting
+            const phoneInput = document.getElementById('phone');
+            phoneInput.addEventListener('input', function(e) {
+              let value = e.target.value.replace(/\\D/g, '');
+              if (value.length >= 6) {
+                value = value.replace(/(\\d{3})(\\d{3})(\\d{4})/, '($1) $2-$3');
+              } else if (value.length >= 3) {
+                value = value.replace(/(\\d{3})(\\d{0,3})/, '($1) $2');
+              }
+              e.target.value = value;
+            });
+          `
+        }} />
       </body>
     </html>
   );
