@@ -648,7 +648,7 @@ export default function LandingPage() {
             <div className="nav-links">
               <a href="#plans" className="nav-link">Plans</a>
               <a href="#faq" className="nav-link">FAQ</a>
-              <button className="cta-button nav-cta">Get Protected</button>
+              <button className="cta-button nav-cta">Protect My Investment</button>
             </div>
           </div>
         </nav>
@@ -668,7 +668,7 @@ export default function LandingPage() {
                 Warranty your new surfaces in seconds with comprehensive protection plans
               </p>
               <button className="cta-button hero-cta">
-                ACTIVATE WARRANTY
+                PROTECT MY INVESTMENT
               </button>
               <p className="hero-subtext">
                 Join thousands of homeowners who trust Surface Guard 365
@@ -790,8 +790,8 @@ export default function LandingPage() {
         <div className="modal-overlay" id="leadModal">
           <div className="modal-content">
             <button className="modal-close" id="closeModal">×</button>
-            <h3 className="modal-title">Get Your Free Quote</h3>
-            <p className="modal-subtitle">Complete the form below and we'll send you warranty options and pricing</p>
+            <h3 className="modal-title">Protect Your Investment</h3>
+            <p className="modal-subtitle">Complete the form below and we'll show you how to protect your countertop and cabinet investment</p>
             
             <form id="leadForm">
               <div className="form-group">
@@ -842,7 +842,7 @@ export default function LandingPage() {
               </div>
               
               <button type="submit" className="form-submit">
-                Get My Free Quote
+                Protect My Investment Now
               </button>
             </form>
           </div>
@@ -861,7 +861,7 @@ export default function LandingPage() {
                 <a href="#">Contact</a>
               </div>
               <div className="footer-cta">
-                <button className="cta-button">Get Protected Today</button>
+                <button className="cta-button">Protect My Investment Today</button>
               </div>
             </div>
             <div className="footer-bottom">
@@ -960,7 +960,7 @@ export default function LandingPage() {
               console.log('Form submitted:', { name, email, phone, interest });
               
               // Show success message
-              alert('Thank you! We\\'ll contact you shortly with your warranty quote.');
+              alert('Thank you! We\\'ll contact you shortly with investment protection options for your surfaces.');
               
               // Close modal and reset form
               closeModal();
