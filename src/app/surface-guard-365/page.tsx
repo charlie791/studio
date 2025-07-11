@@ -206,49 +206,6 @@ export default function LandingPage() {
             margin-bottom: 3rem;
         }
 
-        /* Protection Section */
-        .protection-section {
-            padding: 4rem 0;
-            background: white;
-        }
-
-        .protection-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .protection-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 1rem;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid rgba(0, 36, 85, 0.1);
-        }
-
-        .protection-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 30px 60px rgba(0, 36, 85, 0.15);
-        }
-
-        .protection-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .protection-card h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #002455;
-            margin-bottom: 1rem;
-        }
-
-        .protection-card p {
-            color: #6b7280;
-        }
 
         /* Plans Section */
         .plans-section {
@@ -677,29 +634,6 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* What We Protect Section */}
-        <section className="protection-section">
-          <div className="container">
-            <h2 className="section-title">What We Protect</h2>
-            <div className="protection-grid">
-              <div className="protection-card">
-                <div className="protection-icon">🪨</div>
-                <h3>Countertops</h3>
-                <p>Granite, quartz, marble, laminate, and more</p>
-              </div>
-              <div className="protection-card">
-                <div className="protection-icon">🚪</div>
-                <h3>Cabinets</h3>
-                <p>Wood, laminate, and painted surfaces</p>
-              </div>
-              <div className="protection-card">
-                <div className="protection-icon">🛡️</div>
-                <h3>Comprehensive Coverage</h3>
-                <p>Stains, chips, cracks, heat damage, and wear</p>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* Warranty Plans Section */}
         <section className="plans-section" id="plans">
