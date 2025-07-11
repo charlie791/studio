@@ -1,13 +1,16 @@
 
 import type { Metadata } from 'next';
-import { Geist } from 'next/font/google'; // Removed Geist_Mono as it's not explicitly used by new design system
+import { Inter, Playfair_Display } from 'next/font/google';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
-import Footer from '@/components/layout/footer';
-// Removed PageLayout import from here, it will be used on individual pages
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const inter = Inter({
+  variable: '--font-inter',
+  subsets: ['latin'],
+});
+
+const playfair = Playfair_Display({
+  variable: '--font-playfair',
   subsets: ['latin'],
 });
 
@@ -22,11 +25,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full">
-      <body className={`${geistSans.variable} antialiased flex flex-col min-h-screen bg-background`}>
-        {/* PageLayout will be applied within each page.tsx now */}
+    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+      <body className="antialiased">
         {children}
-        <Footer />
         <Toaster />
       </body>
     </html>

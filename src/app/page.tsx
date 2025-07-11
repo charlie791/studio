@@ -1,920 +1,1029 @@
 'use client';
 
-export default function LandingPage() {
+import { useEffect } from 'react';
+
+export default function HeartwarmerLandingPage() {
+  useEffect(() => {
+
+    // Modal functionality
+    const modal = document.getElementById('careModal');
+    const closeBtn = document.getElementById('closeModal');
+    const form = document.getElementById('careForm');
+    
+    // Open modal function
+    function openModal() {
+      if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+    
+    // Close modal function
+    function closeModal() {
+      if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      }
+    }
+    
+    // Hero CTA
+    const heroCTA = document.querySelector('.warm-cta');
+    if (heroCTA) {
+      heroCTA.addEventListener('click', openModal);
+    }
+    
+    // Plan CTAs
+    const planCTAs = document.querySelectorAll('.plan-cta');
+    planCTAs.forEach(btn => {
+      btn.addEventListener('click', function(this: Element) {
+        const planTitle = this.closest('.plan-card')?.querySelector('.plan-title')?.textContent;
+        openModal();
+        
+        // Pre-select the plan in dropdown
+        const select = document.getElementById('interest') as HTMLSelectElement;
+        if (select && planTitle) {
+          if (planTitle.includes('Essential')) {
+            select.value = 'essential';
+          } else if (planTitle.includes('Complete')) {
+            select.value = 'complete';
+          } else if (planTitle.includes('Total')) {
+            select.value = 'total';
+          }
+        }
+      });
+    });
+    
+    // Close modal events
+    if (closeBtn) {
+      closeBtn.addEventListener('click', closeModal);
+    }
+    
+    // Close on overlay click
+    if (modal) {
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
+    }
+    
+    // Close on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal?.classList.contains('active')) {
+        closeModal();
+      }
+    });
+    
+    // Form submission
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this as HTMLFormElement);
+        const name = formData.get('fullName');
+        const email = formData.get('email');
+        const phone = formData.get('phone');
+        const interest = formData.get('interest');
+        
+        // Here you would normally send to your backend
+        console.log('Form submitted:', { name, email, phone, interest });
+        
+        // Show warm success message
+        alert('Thank you so much! 💕 We can\'t wait to help you protect your beautiful home. We\'ll be in touch very soon with care and love.');
+        
+        // Close modal and reset form
+        closeModal();
+        (this as HTMLFormElement).reset();
+      });
+    }
+    
+    // Phone number formatting
+    const phoneInput = document.getElementById('phone') as HTMLInputElement;
+    if (phoneInput) {
+      phoneInput.addEventListener('input', function(e) {
+        const target = e.target as HTMLInputElement;
+        let value = target.value.replace(/\D/g, '');
+        if (value.length >= 6) {
+          value = value.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+        } else if (value.length >= 3) {
+          value = value.replace(/(\d{3})(\d{0,3})/, '($1) $2');
+        }
+        target.value = value;
+      });
+    }
+  }, []);
+
   return (
-    <html lang="en">
-      <head>
-        <title>Surface Guard 365 - Protect Your Countertops & Cabinets</title>
-        <meta name="description" content="Professional warranty protection for your countertops and cabinets. Choose from 5-year to 10-year coverage plans with comprehensive protection." />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link href="https://fonts.googleapis.com/css2?family=Geist+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
-        <style dangerouslySetInnerHTML={{
-          __html: `
-        /* CSS Reset and Base Styles */
+    <>
+      <style jsx global>{`
+        /* CSS Custom Properties for Warm Theme */
+        :root {
+          --warm-coral: #FF6B6B;
+          --warm-peach: #FFE5CC;
+          --warm-gold: #FFD93D;
+          --warm-sage: #6BCB77;
+          --warm-sky: #4ECDC4;
+          --warm-lavender: #95A5F5;
+          --warm-cream: #FFF8F0;
+          --warm-gray: #8B8B8B;
+          --warm-dark: #2D3436;
+          --warm-white: #FFFFFF;
+          --shadow-warm: rgba(255, 107, 107, 0.15);
+          --shadow-soft: rgba(0, 0, 0, 0.08);
+          
+          /* Darker versions for hero gradient */
+          --warm-coral-dark: #C53030;
+          --warm-peach-dark: #DD6B20;
+          --warm-gold-dark: #B7791F;
+          --warm-sky-dark: #2C7A7B;
+          --warm-purple-dark: #553C9A;
+        }
+
+        /* Reset and Base Styles */
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
         }
 
         body {
-            font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: #374151;
-            background-color: #F5F5F5;
+          font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+          line-height: 1.6;
+          color: var(--warm-dark);
+          background: linear-gradient(135deg, var(--warm-cream) 0%, var(--warm-peach) 100%);
+          overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
+        /* Champagne Bubbles Animation */
+        .champagne-bubbles {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
+          z-index: 5;
+          overflow: hidden;
         }
 
-        /* Navigation */
-        .navbar {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0, 36, 85, 0.1);
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1rem 0;
+        .bubble {
+          position: absolute;
+          border-radius: 50%;
+          background: linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.4) 0%, 
+            rgba(255, 255, 255, 0.15) 50%, 
+            rgba(255, 255, 255, 0.3) 100%);
+          backdrop-filter: blur(1px);
+          box-shadow: 
+            inset 0 1px 3px rgba(255, 255, 255, 0.5),
+            0 2px 8px rgba(255, 255, 255, 0.15);
+          animation: bubbleFloat 8s infinite ease-in-out;
         }
 
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        /* Different bubble sizes */
+        .bubble.small { width: 8px; height: 8px; }
+        .bubble.medium { width: 12px; height: 12px; }
+        .bubble.large { width: 16px; height: 16px; }
+        .bubble.tiny { width: 4px; height: 4px; }
 
-        .logo-text {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #002455;
-            text-decoration: none;
-        }
+        /* Bubble positioning and timing */
+        .bubble:nth-child(1) { left: 5%; animation-delay: 0s; animation-duration: 7s; }
+        .bubble:nth-child(2) { left: 15%; animation-delay: 1.5s; animation-duration: 9s; }
+        .bubble:nth-child(3) { left: 25%; animation-delay: 3s; animation-duration: 6s; }
+        .bubble:nth-child(4) { left: 35%; animation-delay: 0.5s; animation-duration: 8s; }
+        .bubble:nth-child(5) { left: 45%; animation-delay: 2s; animation-duration: 7.5s; }
+        .bubble:nth-child(6) { left: 55%; animation-delay: 4s; animation-duration: 6.5s; }
+        .bubble:nth-child(7) { left: 65%; animation-delay: 1s; animation-duration: 8.5s; }
+        .bubble:nth-child(8) { left: 75%; animation-delay: 3.5s; animation-duration: 7s; }
+        .bubble:nth-child(9) { left: 85%; animation-delay: 2.5s; animation-duration: 9s; }
+        .bubble:nth-child(10) { left: 95%; animation-delay: 4.5s; animation-duration: 6s; }
+        .bubble:nth-child(11) { left: 10%; animation-delay: 5s; animation-duration: 8s; }
+        .bubble:nth-child(12) { left: 30%; animation-delay: 6s; animation-duration: 7s; }
+        .bubble:nth-child(13) { left: 50%; animation-delay: 0.8s; animation-duration: 8.5s; }
+        .bubble:nth-child(14) { left: 70%; animation-delay: 2.8s; animation-duration: 6.5s; }
+        .bubble:nth-child(15) { left: 90%; animation-delay: 1.8s; animation-duration: 7.5s; }
 
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-        }
-
-        .nav-link {
-            color: #002455;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-
-        .nav-link:hover {
-            color: #FDA001;
-        }
-
-        .nav-cta {
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
+        @keyframes bubbleFloat {
+          0% { 
+            transform: translateY(100vh) translateX(0px);
+            opacity: 0;
+          }
+          5% { 
+            opacity: 0.6;
+          }
+          25% { 
+            transform: translateY(75vh) translateX(10px);
+            opacity: 0.8;
+          }
+          50% { 
+            transform: translateY(50vh) translateX(-5px);
+            opacity: 0.9;
+          }
+          75% { 
+            transform: translateY(25vh) translateX(8px);
+            opacity: 0.7;
+          }
+          95% { 
+            transform: translateY(10vh) translateX(-3px);
+            opacity: 0.4;
+          }
+          100% { 
+            transform: translateY(-10vh) translateX(0px);
+            opacity: 0;
+          }
         }
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #002455 0%, #003875 100%);
-            padding: 8rem 0 4rem;
-            text-align: center;
-            color: white;
-            position: relative;
-            overflow: hidden;
+          background: linear-gradient(135deg, 
+            #C53030 0%, 
+            #DD6B20 25%, 
+            #B7791F 50%, 
+            #2C7A7B 75%,
+            #553C9A 100%);
+          padding: 4rem 2rem;
+          text-align: center;
+          color: #FFFFFF;
+          position: relative;
+          overflow: hidden;
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
+        
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.1) 50%, transparent 60%);
-            transform: translateX(-100%);
-            animation: shimmer 3s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        .hero-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
 
         .hero-content {
-            position: relative;
-            z-index: 1;
+          max-width: 800px;
+          position: relative;
+          z-index: 10;
+          animation: fadeInUp 1s ease-out;
         }
 
-        .hero-logo {
-            margin-bottom: 2rem;
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
 
-        .hero-logo-text {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: white;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            letter-spacing: -0.5px;
+        .celebration-emoji {
+          font-size: 4rem;
+          display: block;
+          margin-bottom: 1rem;
+          animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+          0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+          40% { transform: translateY(-10px); }
+          60% { transform: translateY(-5px); }
         }
 
         .hero-title {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+          font-family: var(--font-playfair), serif;
+          font-size: 3.5rem;
+          font-weight: 700;
+          margin-bottom: 1.5rem;
+          line-height: 1.2;
+          text-shadow: 0 4px 16px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.4);
+          letter-spacing: -0.02em;
+          color: #FFFFFF;
         }
 
         .hero-subtitle {
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
-            color: rgba(255, 255, 255, 0.9);
+          font-size: 1.5rem;
+          font-weight: 400;
+          margin-bottom: 2rem;
+          line-height: 1.4;
+          text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
+          color: #FFFFFF;
         }
 
-        .hero-subtext {
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
-            margin-top: 1rem;
+        .hero-message {
+          font-size: 1.1rem;
+          margin-bottom: 3rem;
+          font-weight: 400;
+          line-height: 1.6;
+          max-width: 600px;
+          margin-left: auto;
+          margin-right: auto;
+          text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
+          color: #FFFFFF;
         }
 
-        /* CTA Button */
-        .cta-button {
-            background: linear-gradient(135deg, #002455 0%, #003875 100%);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            font-size: 1rem;
-            font-weight: 700;
-            border-radius: 0.75rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0, 36, 85, 0.3);
-            position: relative;
-            overflow: hidden;
+        /* Warm CTA Button */
+        .warm-cta {
+          background: linear-gradient(135deg, var(--warm-white) 0%, var(--warm-cream) 100%);
+          color: var(--warm-dark);
+          border: none;
+          padding: 1.25rem 2.5rem;
+          font-size: 1.1rem;
+          font-weight: 600;
+          border-radius: 50px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 8px 25px var(--shadow-warm);
+          position: relative;
+          overflow: hidden;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
         }
 
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.2) 50%, transparent 60%);
-            transform: translateX(-100%);
-            transition: transform 0.5s ease;
+        .warm-cta::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+          transition: left 0.5s ease;
         }
 
-        .cta-button:hover::before {
-            transform: translateX(100%);
+        .warm-cta:hover::before {
+          left: 100%;
         }
 
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 20px 50px rgba(0, 36, 85, 0.4);
+        .warm-cta:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 12px 35px var(--shadow-warm);
         }
 
-        .hero-cta {
-            background: linear-gradient(135deg, #FDA001 0%, #cc8001 100%);
-            font-size: 1.1rem;
-            padding: 1.25rem 2.5rem;
+        .warm-cta .heart-icon {
+          color: var(--warm-coral);
+          font-size: 1.2rem;
         }
 
-        /* Section Styling */
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #002455;
-            text-align: center;
-            margin-bottom: 1rem;
+        /* Trust Section */
+        .trust-section {
+          padding: 4rem 2rem;
+          background: var(--warm-white);
+          text-align: center;
+          position: relative;
         }
 
-        .section-subtitle {
-            font-size: 1.125rem;
-            color: #6b7280;
-            text-align: center;
-            margin-bottom: 3rem;
+        .trust-content {
+          max-width: 1000px;
+          margin: 0 auto;
         }
 
+        .trust-title {
+          font-family: var(--font-playfair), serif;
+          font-size: 2.5rem;
+          color: var(--warm-dark);
+          margin-bottom: 1rem;
+          font-weight: 500;
+        }
+
+        .trust-subtitle {
+          font-size: 1.2rem;
+          color: var(--warm-gray);
+          margin-bottom: 3rem;
+          max-width: 600px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .trust-stats {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 2rem;
+          margin-bottom: 3rem;
+        }
+
+        .trust-stat {
+          padding: 2rem;
+          background: linear-gradient(135deg, var(--warm-cream) 0%, var(--warm-peach) 100%);
+          border-radius: 20px;
+          box-shadow: 0 4px 20px var(--shadow-soft);
+          transition: transform 0.3s ease;
+        }
+
+        .trust-stat:hover {
+          transform: translateY(-5px);
+        }
+
+        .trust-stat-number {
+          font-size: 2.5rem;
+          font-weight: 700;
+          color: var(--warm-coral);
+          display: block;
+          margin-bottom: 0.5rem;
+        }
+
+        .trust-stat-label {
+          font-size: 1rem;
+          color: var(--warm-dark);
+          font-weight: 500;
+        }
 
         /* Plans Section */
         .plans-section {
-            padding: 4rem 0;
-            background: #F5F5F5;
+          padding: 4rem 2rem;
+          background: linear-gradient(135deg, var(--warm-cream) 0%, var(--warm-peach) 100%);
+          position: relative;
+        }
+
+        .plans-content {
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+
+        .plans-title {
+          font-family: var(--font-playfair), serif;
+          font-size: 2.8rem;
+          color: var(--warm-dark);
+          text-align: center;
+          margin-bottom: 1rem;
+          font-weight: 500;
+        }
+
+        .plans-subtitle {
+          font-size: 1.3rem;
+          color: var(--warm-gray);
+          text-align: center;
+          margin-bottom: 3rem;
+          max-width: 700px;
+          margin-left: auto;
+          margin-right: auto;
         }
 
         .plans-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+          gap: 2rem;
+          margin-top: 3rem;
         }
 
         .plan-card {
-            background: white;
-            border-radius: 1rem;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
+          background: var(--warm-white);
+          border-radius: 25px;
+          overflow: hidden;
+          box-shadow: 0 10px 40px var(--shadow-soft);
+          transition: all 0.3s ease;
+          position: relative;
+          border: 2px solid transparent;
         }
 
         .plan-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 30px 60px rgba(0, 36, 85, 0.15);
+          transform: translateY(-8px);
+          box-shadow: 0 20px 60px var(--shadow-warm);
+          border-color: var(--warm-coral);
         }
 
         .plan-card.featured {
-            border: 2px solid #FDA001;
-            transform: scale(1.05);
+          border-color: var(--warm-gold);
+          transform: scale(1.05);
         }
 
-        .plan-badge {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: #FDA001;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 2rem;
-            font-size: 0.8rem;
-            font-weight: 700;
-            z-index: 10;
+        .plan-card.featured::before {
+          content: '✨ Most Popular';
+          position: absolute;
+          top: 1rem;
+          right: 1rem;
+          background: linear-gradient(135deg, var(--warm-gold) 0%, var(--warm-coral) 100%);
+          color: var(--warm-white);
+          padding: 0.5rem 1rem;
+          border-radius: 15px;
+          font-size: 0.8rem;
+          font-weight: 600;
+          z-index: 10;
         }
 
         .plan-header {
-            background: linear-gradient(135deg, #002455 0%, #003875 100%);
-            color: white;
-            padding: 2rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .plan-header::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.1) 50%, transparent 60%);
-            transform: translateX(-100%);
-            animation: shimmer 3s infinite;
+          background: linear-gradient(135deg, var(--warm-coral) 0%, var(--warm-sky) 100%);
+          color: var(--warm-white);
+          padding: 2.5rem 2rem;
+          text-align: center;
+          position: relative;
         }
 
         .plan-icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
+          font-size: 3rem;
+          margin-bottom: 1rem;
+          display: block;
         }
 
         .plan-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
+          font-family: var(--font-playfair), serif;
+          font-size: 1.8rem;
+          font-weight: 600;
+          margin-bottom: 0.5rem;
         }
 
         .plan-summary {
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 1.5rem;
+          font-size: 1.1rem;
+          opacity: 0.9;
+          margin-bottom: 1.5rem;
         }
 
         .plan-price {
-            font-size: 2rem;
-            font-weight: 800;
+          font-size: 2.2rem;
+          font-weight: 700;
+          margin-bottom: 0.5rem;
         }
 
-        .price-period {
-            font-size: 1rem;
-            font-weight: 600;
+        .plan-period {
+          font-size: 1rem;
+          opacity: 0.8;
         }
 
         .plan-content {
-            padding: 2rem;
+          padding: 2.5rem 2rem;
         }
 
         .plan-features {
-            list-style: none;
-            margin-bottom: 2rem;
+          list-style: none;
+          margin-bottom: 2rem;
         }
 
         .plan-features li {
-            padding: 0.5rem 0;
-            font-size: 0.95rem;
-            color: #374151;
+          padding: 0.75rem 0;
+          font-size: 1rem;
+          color: var(--warm-dark);
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
         }
 
-        .plan-offer {
-            background: linear-gradient(135deg, #FDA001 0%, #cc8001 100%);
-            color: white;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            text-align: center;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            font-size: 0.9rem;
+        .plan-features li::before {
+          content: '💚';
+          font-size: 1.2rem;
+        }
+
+        .plan-love-note {
+          background: linear-gradient(135deg, var(--warm-peach) 0%, var(--warm-cream) 100%);
+          padding: 1.5rem;
+          border-radius: 15px;
+          text-align: center;
+          font-style: italic;
+          color: var(--warm-dark);
+          margin-bottom: 2rem;
+          font-size: 0.95rem;
         }
 
         .plan-cta {
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(135deg, #002455 0%, #003875 100%);
-            color: white;
-            border: none;
-            border-radius: 0.5rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .plan-cta.featured {
-            background: linear-gradient(135deg, #FDA001 0%, #cc8001 100%);
-        }
-
-        .plan-cta::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.2) 50%, transparent 60%);
-            transform: translateX(-100%);
-            transition: transform 0.5s ease;
-        }
-
-        .plan-cta:hover::before {
-            transform: translateX(100%);
+          width: 100%;
+          padding: 1.25rem;
+          background: linear-gradient(135deg, var(--warm-coral) 0%, var(--warm-sky) 100%);
+          color: var(--warm-white);
+          border: none;
+          border-radius: 15px;
+          font-size: 1.1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          position: relative;
+          overflow: hidden;
         }
 
         .plan-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 36, 85, 0.3);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 25px var(--shadow-warm);
+        }
+
+        .plan-cta.featured {
+          background: linear-gradient(135deg, var(--warm-gold) 0%, var(--warm-coral) 100%);
         }
 
         /* Modal Styles */
         .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.6);
+          backdrop-filter: blur(8px);
+          z-index: 9999;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 1rem;
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.3s ease;
         }
 
         .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
+          opacity: 1;
+          visibility: visible;
         }
 
         .modal-content {
-            background: white;
-            border-radius: 1rem;
-            padding: 2rem;
-            max-width: 500px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-            transform: translateY(20px);
-            transition: transform 0.3s ease;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+          background: var(--warm-white);
+          border-radius: 25px;
+          padding: 2.5rem;
+          max-width: 500px;
+          width: 100%;
+          max-height: 90vh;
+          overflow-y: auto;
+          position: relative;
+          transform: translateY(20px);
+          transition: transform 0.3s ease;
+          box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
         }
 
         .modal-overlay.active .modal-content {
-            transform: translateY(0);
+          transform: translateY(0);
         }
 
         .modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: #6b7280;
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: all 0.3s ease;
+          position: absolute;
+          top: 1rem;
+          right: 1rem;
+          background: var(--warm-cream);
+          border: none;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.2rem;
+          color: var(--warm-gray);
+          transition: all 0.3s ease;
         }
 
         .modal-close:hover {
-            background: #f3f4f6;
-            color: #374151;
+          background: var(--warm-peach);
+          color: var(--warm-dark);
         }
 
         .modal-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #002455;
-            margin-bottom: 0.5rem;
-            text-align: center;
+          font-family: var(--font-playfair), serif;
+          font-size: 1.8rem;
+          font-weight: 600;
+          color: var(--warm-dark);
+          margin-bottom: 0.5rem;
+          text-align: center;
         }
 
         .modal-subtitle {
-            color: #6b7280;
-            text-align: center;
-            margin-bottom: 2rem;
+          color: var(--warm-gray);
+          text-align: center;
+          margin-bottom: 2rem;
+          font-size: 1.1rem;
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+          margin-bottom: 1.5rem;
         }
 
         .form-label {
-            display: block;
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 0.5rem;
+          display: block;
+          font-weight: 500;
+          color: var(--warm-dark);
+          margin-bottom: 0.5rem;
+          font-size: 1rem;
         }
 
         .form-input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 0.5rem;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
+          width: 100%;
+          padding: 1rem;
+          border: 2px solid var(--warm-cream);
+          border-radius: 12px;
+          font-size: 1rem;
+          transition: all 0.3s ease;
+          background: var(--warm-white);
         }
 
         .form-input:focus {
-            outline: none;
-            border-color: #FDA001;
-            box-shadow: 0 0 0 3px rgba(253, 160, 1, 0.1);
+          outline: none;
+          border-color: var(--warm-coral);
+          box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
         }
 
         .form-submit {
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(135deg, #FDA001 0%, #cc8001 100%);
-            color: white;
-            border: none;
-            border-radius: 0.5rem;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .form-submit::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.2) 50%, transparent 60%);
-            transform: translateX(-100%);
-            transition: transform 0.5s ease;
-        }
-
-        .form-submit:hover::before {
-            transform: translateX(100%);
+          width: 100%;
+          padding: 1.25rem;
+          background: linear-gradient(135deg, var(--warm-coral) 0%, var(--warm-sky) 100%);
+          color: var(--warm-white);
+          border: none;
+          border-radius: 12px;
+          font-size: 1.1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          margin-top: 1rem;
         }
 
         .form-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(253, 160, 1, 0.3);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 25px var(--shadow-warm);
         }
 
         /* Footer */
         .footer {
-            background: #002455;
-            color: white;
-            padding: 3rem 0 1rem;
+          background: var(--warm-dark);
+          color: var(--warm-white);
+          padding: 3rem 2rem 1rem;
+          text-align: center;
         }
 
         .footer-content {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            gap: 2rem;
-            align-items: center;
-            margin-bottom: 2rem;
+          max-width: 1200px;
+          margin: 0 auto;
         }
 
-        .footer-logo-text {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: white;
+        .footer-message {
+          font-size: 1.2rem;
+          margin-bottom: 2rem;
+          opacity: 0.9;
+        }
+
+        .footer-heart {
+          color: var(--warm-coral);
+          font-size: 1.5rem;
+          margin: 0 0.5rem;
         }
 
         .footer-links {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
+          display: flex;
+          justify-content: center;
+          gap: 2rem;
+          margin-bottom: 2rem;
         }
 
         .footer-links a {
-            color: white;
-            text-decoration: none;
-            transition: color 0.3s ease;
+          color: var(--warm-white);
+          text-decoration: none;
+          opacity: 0.8;
+          transition: opacity 0.3s ease;
         }
 
         .footer-links a:hover {
-            color: #FDA001;
-        }
-
-        .footer-cta {
-            text-align: right;
+          opacity: 1;
         }
 
         .footer-bottom {
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            padding-top: 1rem;
-            text-align: center;
-            color: rgba(255, 255, 255, 0.7);
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
+          padding-top: 1rem;
+          opacity: 0.7;
+          font-size: 0.9rem;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .nav-links {
-                gap: 1rem;
-            }
+          .hero-title {
+            font-size: 2.5rem;
+          }
 
-            .nav-link {
-                display: none;
-            }
+          .hero-subtitle {
+            font-size: 1.2rem;
+          }
 
-            .hero-title {
-                font-size: 2rem;
-            }
+          .plans-grid {
+            grid-template-columns: 1fr;
+          }
 
-            .hero-subtitle {
-                font-size: 1rem;
-            }
+          .plan-card.featured {
+            transform: none;
+          }
 
-            .hero-logo-text {
-                font-size: 1.8rem;
-            }
-
-            .logo-text {
-                font-size: 1.2rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .plans-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .plan-card.featured {
-                transform: none;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .footer-cta {
-                text-align: center;
-            }
+          .trust-stats {
+            grid-template-columns: 1fr;
+          }
         }
-        `
-        }} />
-      </head>
-      <body>
-        {/* Navigation */}
-        <nav className="navbar">
-          <div className="nav-container">
-            <div className="nav-logo">
-              <div className="logo-text">Surface Guard 365</div>
+      `}</style>
+      
+      
+
+      {/* Hero Section */}
+      <section className="hero">
+        {/* Champagne Bubbles */}
+        <div className="champagne-bubbles">
+          <div className="bubble small"></div>
+          <div className="bubble medium"></div>
+          <div className="bubble tiny"></div>
+          <div className="bubble large"></div>
+          <div className="bubble small"></div>
+          <div className="bubble medium"></div>
+          <div className="bubble tiny"></div>
+          <div className="bubble small"></div>
+          <div className="bubble large"></div>
+          <div className="bubble medium"></div>
+          <div className="bubble tiny"></div>
+          <div className="bubble small"></div>
+          <div className="bubble medium"></div>
+          <div className="bubble tiny"></div>
+          <div className="bubble small"></div>
+        </div>
+        
+        <div className="hero-content">
+          <span className="celebration-emoji">🎉</span>
+          <h1 className="hero-title">
+            You Did It!<br />
+            Your Dream Home is Real
+          </h1>
+          <p className="hero-subtitle">
+            We know how much this moment means to you
+          </p>
+          <p className="hero-message">
+            Creating a beautiful home is one of life's greatest achievements. You've poured your heart into every detail, chosen every finish with care, and now you have something truly special. We're here to help you keep it that way — not because we have to, but because we want to celebrate this journey with you.
+          </p>
+          <button className="warm-cta">
+            <span className="heart-icon">💝</span>
+            Let's protect your beautiful investment
+          </button>
+        </div>
+      </section>
+
+      {/* Trust Section */}
+      <section className="trust-section">
+        <div className="trust-content">
+          <h2 className="trust-title">You're in Great Company</h2>
+          <p className="trust-subtitle">
+            Thousands of homeowners have trusted us to protect their most precious spaces
+          </p>
+          
+          <div className="trust-stats">
+            <div className="trust-stat">
+              <span className="trust-stat-number">25,000+</span>
+              <span className="trust-stat-label">Happy Homeowners</span>
             </div>
-            <div className="nav-links">
-              <a href="#plans" className="nav-link">Plans</a>
-              <a href="#faq" className="nav-link">FAQ</a>
-              <button className="cta-button nav-cta">Protect My Investment</button>
+            <div className="trust-stat">
+              <span className="trust-stat-number">40+</span>
+              <span className="trust-stat-label">Years of Care</span>
             </div>
-          </div>
-        </nav>
-
-        {/* Hero Section */}
-        <section className="hero">
-          <div className="hero-container">
-            <div className="hero-content">
-              <div className="hero-logo">
-                <div className="hero-logo-text">Surface Guard 365</div>
-              </div>
-              <h1 className="hero-title">
-                Congratulations on Your<br />
-                Beautiful New Home!
-              </h1>
-              <p className="hero-subtitle">
-                You've created something special. Now let's keep it that way.
-              </p>
-              <button className="cta-button hero-cta">
-                LEARN MORE
-              </button>
-              <p className="hero-subtext">
-                Your countertops and cabinets are the heart of your home's beauty. Let's protect them.
-              </p>
+            <div className="trust-stat">
+              <span className="trust-stat-number">98%</span>
+              <span className="trust-stat-label">Satisfaction Rate</span>
             </div>
-          </div>
-        </section>
-
-
-        {/* Warranty Plans Section */}
-        <section className="plans-section" id="plans">
-          <div className="container">
-            <h2 className="section-title">Choose Your Protection Plan</h2>
-            <p className="section-subtitle">Select the coverage level that&apos;s right for your surfaces</p>
-            
-            <div className="plans-grid">
-              {/* Core Plan */}
-              <div className="plan-card">
-                <div className="plan-header">
-                  <div className="plan-icon">🛡️</div>
-                  <h3 className="plan-title">SurfaceGuard365 – Core</h3>
-                  <p className="plan-summary">5-Year Countertop Warranty</p>
-                  <div className="plan-price">
-                    <span className="price-amount">$74.75</span>
-                    <span className="price-period">× 4 Flex Payments</span>
-                  </div>
-                </div>
-                <div className="plan-content">
-                  <ul className="plan-features">
-                    <li>✅ Solid 5-Year Countertop protection</li>
-                    <li>✅ Covers common stains (coffee, wine, oil)</li>
-                    <li>✅ Protection against minor chips and cracks</li>
-                    <li>✅ Access to standard customer support</li>
-                  </ul>
-                  <button className="plan-cta">Select Core Plan</button>
-                </div>
-              </div>
-
-              {/* Extended Plan */}
-              <div className="plan-card">
-                <div className="plan-header">
-                  <div className="plan-icon">⚡</div>
-                  <h3 className="plan-title">SurfaceGuard365 – Extended</h3>
-                  <p className="plan-summary">10-Year Countertop Warranty + VIP Support</p>
-                  <div className="plan-price">
-                    <span className="price-amount">$124.75</span>
-                    <span className="price-period">× 4 Flex Payments</span>
-                  </div>
-                </div>
-                <div className="plan-content">
-                  <ul className="plan-features">
-                    <li>✅ Comprehensive 10-Year Countertop coverage</li>
-                    <li>✅ Protection against heat marks and deep scratches</li>
-                    <li>✅ Includes accidental damage from common kitchen use</li>
-                    <li>✅ VIP priority customer support</li>
-                    <li>✅ Annual professional surface inspection eligibility</li>
-                  </ul>
-                  <button className="plan-cta">Select Extended Plan</button>
-                </div>
-              </div>
-
-              {/* Total Combo Plan */}
-              <div className="plan-card featured">
-                <div className="plan-badge">Most Popular</div>
-                <div className="plan-header">
-                  <div className="plan-icon">💎</div>
-                  <h3 className="plan-title">SurfaceGuard365 – Total Combo</h3>
-                  <p className="plan-summary">Premium 10-Year Cabinet + Countertop Protection</p>
-                  <div className="plan-price">
-                    <span className="price-amount">$149.75</span>
-                    <span className="price-period">× 4 Flex Payments</span>
-                  </div>
-                </div>
-                <div className="plan-content">
-                  <ul className="plan-features">
-                    <li>✅ Complete Cabinet warranty protection</li>
-                    <li>✅ Full kitchen surface coverage — countertops, cabinets</li>
-                    <li>✅ Accidental damage protection (chips, cracks, stains)</li>
-                    <li>✅ Professional care kit</li>
-                    <li>✅ VIP 24/7 customer support line</li>
-                    <li>✅ Priority service response</li>
-                    <li>✅ Transferable for life of the plan</li>
-                    <li>✅ Upgrade incentives first day of coverage</li>
-                  </ul>
-                  <div className="plan-offer">
-                    🔥 Best Value – Save 30% vs purchasing separately
-                  </div>
-                  <button className="plan-cta featured">Select Total Combo Plan</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Modal */}
-        <div className="modal-overlay" id="leadModal">
-          <div className="modal-content">
-            <button className="modal-close" id="closeModal">×</button>
-            <h3 className="modal-title">Protect Your Investment</h3>
-            <p className="modal-subtitle">Complete the form below and we'll show you how to protect your countertop and cabinet investment</p>
-            
-            <form id="leadForm">
-              <div className="form-group">
-                <label className="form-label" htmlFor="fullName">Full Name *</label>
-                <input 
-                  type="text" 
-                  id="fullName" 
-                  name="fullName" 
-                  className="form-input" 
-                  placeholder="Enter your full name"
-                  required 
-                />
-              </div>
-              
-              <div className="form-group">
-                <label className="form-label" htmlFor="email">Email Address *</label>
-                <input 
-                  type="email" 
-                  id="email" 
-                  name="email" 
-                  className="form-input" 
-                  placeholder="Enter your email address"
-                  required 
-                />
-              </div>
-              
-              <div className="form-group">
-                <label className="form-label" htmlFor="phone">Phone Number *</label>
-                <input 
-                  type="tel" 
-                  id="phone" 
-                  name="phone" 
-                  className="form-input" 
-                  placeholder="(555) 123-4567"
-                  required 
-                />
-              </div>
-              
-              <div className="form-group">
-                <label className="form-label" htmlFor="interest">I'm interested in *</label>
-                <select id="interest" name="interest" className="form-input" required>
-                  <option value="">Select your interest</option>
-                  <option value="core">Core Plan - 5 Year Countertop Warranty</option>
-                  <option value="extended">Extended Plan - 10 Year + VIP Support</option>
-                  <option value="total">Total Combo - 10 Year Cabinet + Countertop</option>
-                  <option value="quote">Custom Quote</option>
-                </select>
-              </div>
-              
-              <button type="submit" className="form-submit">
-                Protect My Investment Now
-              </button>
-            </form>
           </div>
         </div>
+      </section>
 
-        {/* Footer */}
-        <footer className="footer">
-          <div className="container">
-            <div className="footer-content">
-              <div className="footer-logo">
-                <div className="footer-logo-text">Surface Guard 365</div>
+      {/* Plans Section */}
+      <section className="plans-section">
+        <div className="plans-content">
+          <h2 className="plans-title">How We Can Help</h2>
+          <p className="plans-subtitle">
+            Choose the level of care that feels right for your beautiful new space
+          </p>
+          
+          <div className="plans-grid">
+            {/* Essential Care Plan */}
+            <div className="plan-card">
+              <div className="plan-header">
+                <div className="plan-icon">🛡️</div>
+                <h3 className="plan-title">Essential Care</h3>
+                <p className="plan-summary">5 Years of Gentle Protection</p>
+                <div className="plan-price">$74.75</div>
+                <div className="plan-period">4 comfortable payments</div>
               </div>
-              <div className="footer-links">
-                <a href="#plans">Plans</a>
-                <a href="#faq">FAQ</a>
-                <a href="#">Contact</a>
-              </div>
-              <div className="footer-cta">
-                <button className="cta-button">Protect My Investment Today</button>
+              <div className="plan-content">
+                <ul className="plan-features">
+                  <li>Protection against everyday kitchen mishaps</li>
+                  <li>Coverage for common stains and minor chips</li>
+                  <li>Caring customer support when you need us</li>
+                  <li>Peace of mind for 5 full years</li>
+                </ul>
+                <div className="plan-love-note">
+                  Perfect for those who want basic protection without the worry
+                </div>
+                <button className="plan-cta">This feels right for us</button>
               </div>
             </div>
-            <div className="footer-bottom">
-              <p>&copy; 2024 Surface Guard 365. All rights reserved.</p>
+
+            {/* Complete Care Plan */}
+            <div className="plan-card">
+              <div className="plan-header">
+                <div className="plan-icon">⭐</div>
+                <h3 className="plan-title">Complete Care</h3>
+                <p className="plan-summary">10 Years of Comprehensive Love</p>
+                <div className="plan-price">$124.75</div>
+                <div className="plan-period">4 comfortable payments</div>
+              </div>
+              <div className="plan-content">
+                <ul className="plan-features">
+                  <li>Everything in Essential Care, plus more</li>
+                  <li>Protection against heat marks and deeper scratches</li>
+                  <li>Priority support when you need help</li>
+                  <li>Annual check-ins to keep things beautiful</li>
+                </ul>
+                <div className="plan-love-note">
+                  For those who want to truly cherish their investment
+                </div>
+                <button className="plan-cta">This sounds perfect</button>
+              </div>
+            </div>
+
+            {/* Total Love Plan */}
+            <div className="plan-card featured">
+              <div className="plan-header">
+                <div className="plan-icon">💎</div>
+                <h3 className="plan-title">Total Love</h3>
+                <p className="plan-summary">10 Years of Complete Home Care</p>
+                <div className="plan-price">$149.75</div>
+                <div className="plan-period">4 comfortable payments</div>
+              </div>
+              <div className="plan-content">
+                <ul className="plan-features">
+                  <li>Everything your kitchen needs, covered</li>
+                  <li>Both countertops AND cabinets protected</li>
+                  <li>24/7 support whenever you need us</li>
+                  <li>Professional care kit included</li>
+                  <li>Transferable if you move homes</li>
+                </ul>
+                <div className="plan-love-note">
+                  The complete package for those who want everything protected with love
+                </div>
+                <button className="plan-cta featured">Yes, let's do this together</button>
+              </div>
             </div>
           </div>
-        </footer>
+        </div>
+      </section>
 
-        <script dangerouslySetInnerHTML={{
-          __html: `
-            // Modal functionality
-            const modal = document.getElementById('leadModal');
-            const closeBtn = document.getElementById('closeModal');
-            const form = document.getElementById('leadForm');
+      {/* Modal */}
+      <div className="modal-overlay" id="careModal">
+        <div className="modal-content">
+          <button className="modal-close" id="closeModal">×</button>
+          <h3 className="modal-title">Let's Start This Journey Together</h3>
+          <p className="modal-subtitle">
+            Tell us a bit about yourself and we'll show you exactly how we can help protect your beautiful home
+          </p>
+          
+          <form id="careForm">
+            <div className="form-group">
+              <label className="form-label" htmlFor="fullName">Your Name</label>
+              <input 
+                type="text" 
+                id="fullName" 
+                name="fullName" 
+                className="form-input" 
+                placeholder="What should we call you?"
+                required 
+              />
+            </div>
             
-            // Open modal function
-            function openModal() {
-              modal.classList.add('active');
-              document.body.style.overflow = 'hidden';
-            }
+            <div className="form-group">
+              <label className="form-label" htmlFor="email">Email Address</label>
+              <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                className="form-input" 
+                placeholder="So we can reach out with care"
+                required 
+              />
+            </div>
             
-            // Close modal function
-            function closeModal() {
-              modal.classList.remove('active');
-              document.body.style.overflow = 'auto';
-            }
+            <div className="form-group">
+              <label className="form-label" htmlFor="phone">Phone Number</label>
+              <input 
+                type="tel" 
+                id="phone" 
+                name="phone" 
+                className="form-input" 
+                placeholder="(555) 123-4567"
+                required 
+              />
+            </div>
             
-            // Add click handlers to all CTA buttons
-            document.addEventListener('DOMContentLoaded', function() {
-              // Hero CTA
-              const heroCTA = document.querySelector('.hero-cta');
-              if (heroCTA) {
-                heroCTA.addEventListener('click', openModal);
-              }
-              
-              // Nav CTA
-              const navCTA = document.querySelector('.nav-cta');
-              if (navCTA) {
-                navCTA.addEventListener('click', openModal);
-              }
-              
-              // Plan CTAs
-              const planCTAs = document.querySelectorAll('.plan-cta');
-              planCTAs.forEach(btn => {
-                btn.addEventListener('click', function() {
-                  const planTitle = this.closest('.plan-card').querySelector('.plan-title').textContent;
-                  openModal();
-                  
-                  // Pre-select the plan in dropdown
-                  const select = document.getElementById('interest');
-                  if (planTitle.includes('Core')) {
-                    select.value = 'core';
-                  } else if (planTitle.includes('Extended')) {
-                    select.value = 'extended';
-                  } else if (planTitle.includes('Total')) {
-                    select.value = 'total';
-                  }
-                });
-              });
-              
-              // Footer CTA
-              const footerCTA = document.querySelector('.footer-cta .cta-button');
-              if (footerCTA) {
-                footerCTA.addEventListener('click', openModal);
-              }
-            });
+            <div className="form-group">
+              <label className="form-label" htmlFor="interest">What feels right for you?</label>
+              <select id="interest" name="interest" className="form-input" required>
+                <option value="">Choose what speaks to you</option>
+                <option value="essential">Essential Care - 5 Year Protection</option>
+                <option value="complete">Complete Care - 10 Year Comprehensive</option>
+                <option value="total">Total Love - Everything Protected</option>
+                <option value="chat">I'd love to chat about options</option>
+              </select>
+            </div>
             
-            // Close modal events
-            closeBtn.addEventListener('click', closeModal);
-            
-            // Close on overlay click
-            modal.addEventListener('click', function(e) {
-              if (e.target === modal) {
-                closeModal();
-              }
-            });
-            
-            // Close on Escape key
-            document.addEventListener('keydown', function(e) {
-              if (e.key === 'Escape' && modal.classList.contains('active')) {
-                closeModal();
-              }
-            });
-            
-            // Form submission
-            form.addEventListener('submit', function(e) {
-              e.preventDefault();
-              
-              const formData = new FormData(this);
-              const name = formData.get('fullName');
-              const email = formData.get('email');
-              const phone = formData.get('phone');
-              const interest = formData.get('interest');
-              
-              // Here you would normally send to your backend
-              console.log('Form submitted:', { name, email, phone, interest });
-              
-              // Show success message
-              alert('Thank you! We\\'ll contact you shortly with investment protection options for your surfaces.');
-              
-              // Close modal and reset form
-              closeModal();
-              this.reset();
-            });
-            
-            // Phone number formatting
-            const phoneInput = document.getElementById('phone');
-            phoneInput.addEventListener('input', function(e) {
-              let value = e.target.value.replace(/\\D/g, '');
-              if (value.length >= 6) {
-                value = value.replace(/(\\d{3})(\\d{3})(\\d{4})/, '($1) $2-$3');
-              } else if (value.length >= 3) {
-                value = value.replace(/(\\d{3})(\\d{0,3})/, '($1) $2');
-              }
-              e.target.value = value;
-            });
-          `
-        }} />
-      </body>
-    </html>
+            <button type="submit" className="form-submit">
+              Let's protect your investment together 💕
+            </button>
+          </form>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <footer className="footer">
+        <div className="footer-content">
+          <p className="footer-message">
+            Made with <span className="footer-heart">💕</span> for homeowners who care
+          </p>
+          <div className="footer-links">
+            <a href="#plans">Our Care Plans</a>
+            <a href="#contact">Get in Touch</a>
+            <a href="#about">Our Story</a>
+          </div>
+          <div className="footer-bottom">
+            <p>&copy; 2024 Surface Guard 365. Protecting homes, nurturing dreams.</p>
+          </div>
+        </div>
+      </footer>
+    </>
   );
 }
