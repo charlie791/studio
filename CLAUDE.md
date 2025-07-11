@@ -61,6 +61,14 @@ This is a Next.js 15 application for Surface Guard 365, a warranty registration 
 - Deployment: Dual hosting on Firebase App Hosting and Netlify
 - Firebase config uses environment variables and includes robust error handling
 
+### Deployment & URLs
+- **Primary Domain**: `https://warranty.contractorsource.com/`
+- **Main Landing Page**: Comprehensive marketing page at `/` (root URL)
+- **Alternative Landing Pages**: Simple registration page at `/simple-landing` and `/surface-guard-365` routes
+- **External Domain**: Uses `buyquartztops.com` for some marketing pages
+- **Standalone HTML**: `surface-guard-365.html` exists for external hosting
+- Auto-deployment from git pushes to main branch
+
 ### Testing & Code Quality
 - No testing framework configured (no Jest, Vitest, etc.)
 - Code quality relies on TypeScript checking and Next.js linting
