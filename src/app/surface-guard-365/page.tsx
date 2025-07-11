@@ -618,17 +618,17 @@ export default function LandingPage() {
                 <div className="hero-logo-text">Surface Guard 365</div>
               </div>
               <h1 className="hero-title">
-                Protect Your<br />
-                Countertops & Cabinets
+                Congratulations on Your<br />
+                Beautiful New Home!
               </h1>
               <p className="hero-subtitle">
-                Warranty your new surfaces in seconds with comprehensive protection plans
+                You've created something special. Now let's keep it that way.
               </p>
               <button className="cta-button hero-cta">
-                PROTECT MY INVESTMENT
+                LEARN MORE
               </button>
               <p className="hero-subtext">
-                Join thousands of homeowners who trust Surface Guard 365
+                Your countertops and cabinets are the heart of your home's beauty. Let's protect them.
               </p>
             </div>
           </div>
