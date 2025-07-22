@@ -411,14 +411,14 @@ export default function ContractorSourceLandingPage() {
         }
 
         .subtitle {
-          font-size: 1.125rem;
+          font-size: 1.25rem;
           color: var(--cs-text-grey);
           margin-bottom: 2rem;
           line-height: 1.5;
         }
 
         .description-text {
-          font-size: 1rem;
+          font-size: 1.125rem;
           color: var(--cs-text-grey);
           margin-bottom: 1.5rem;
           line-height: 1.6;
@@ -430,7 +430,7 @@ export default function ContractorSourceLandingPage() {
         }
 
         .final-statement {
-          font-size: 1.125rem;
+          font-size: 1.25rem;
           color: var(--cs-text-dark);
           margin: 2rem 0;
           font-weight: 500;
@@ -442,7 +442,7 @@ export default function ContractorSourceLandingPage() {
           color: var(--cs-white);
           border: none;
           padding: 1rem 2.5rem;
-          font-size: 1rem;
+          font-size: 1.125rem;
           font-weight: 500;
           border-radius: 0;
           cursor: pointer;
@@ -775,7 +775,15 @@ export default function ContractorSourceLandingPage() {
           }
 
           .subtitle {
+            font-size: 1.125rem;
+          }
+          
+          .description-text {
             font-size: 1rem;
+          }
+          
+          .final-statement {
+            font-size: 1.125rem;
           }
         }
 
@@ -803,7 +811,7 @@ export default function ContractorSourceLandingPage() {
         }
 
         .footer-text {
-          font-size: 1rem;
+          font-size: 1.125rem;
           line-height: 1.6;
           opacity: 0.9;
         }
@@ -826,7 +834,7 @@ export default function ContractorSourceLandingPage() {
           }
           
           .footer-text {
-            font-size: 0.9rem;
+            font-size: 1rem;
           }
         }
       `}</style>
@@ -909,7 +917,7 @@ export default function ContractorSourceLandingPage() {
             </button>
             
             <div className="logo-container">
-              <p style={{ fontSize: '0.9rem', color: 'var(--cs-text-grey)', marginBottom: '0.5rem' }}>
+              <p style={{ fontSize: '1rem', color: 'var(--cs-text-grey)', marginBottom: '0.5rem' }}>
                 Home services provided by
               </p>
               <div className="logo">
