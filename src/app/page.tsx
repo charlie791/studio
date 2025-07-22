@@ -4,6 +4,48 @@ import { useEffect } from 'react';
 
 export default function ContractorSourceLandingPage() {
   useEffect(() => {
+    // Image slider functionality
+    const slides = document.querySelectorAll('.slider-slide');
+    const prevBtn = document.getElementById('prevSlide');
+    const nextBtn = document.getElementById('nextSlide');
+    const indicators = document.querySelectorAll('.slider-indicator');
+    let currentSlide = 0;
+
+    function showSlide(index: number) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+      indicators.forEach((indicator, i) => {
+        indicator.classList.toggle('active', i === index);
+      });
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }
+
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+      showSlide(currentSlide);
+    }
+
+    if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+    if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+    
+    indicators.forEach((indicator, index) => {
+      indicator.addEventListener('click', () => {
+        currentSlide = index;
+        showSlide(currentSlide);
+      });
+    });
+
+    // Auto-advance slider every 5 seconds
+    setInterval(nextSlide, 5000);
+
+    // Initialize first slide
+    if (slides.length > 0) showSlide(0);
+
     // Side panel functionality
     const hamburgerButton = document.getElementById('hamburgerButton');
     const sidePanel = document.getElementById('sidePanel');
@@ -459,19 +501,103 @@ export default function ContractorSourceLandingPage() {
           margin-top: 0;
         }
 
+        /* Image Slider */
+        .image-slider {
+          position: relative;
+          width: 100%;
+          height: 400px;
+          overflow: hidden;
+          border-radius: 8px;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .slider-container {
+          position: relative;
+          width: 100%;
+          height: 100%;
+        }
+
+        .slider-slide {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+          transition: opacity 0.5s ease-in-out;
+        }
+
+        .slider-slide.active {
+          opacity: 1;
+        }
+
+        .slider-slide img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .slider-controls {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          background: rgba(0, 0, 0, 0.5);
+          color: white;
+          border: none;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.2rem;
+          transition: all 0.3s ease;
+          z-index: 10;
+        }
+
+        .slider-controls:hover {
+          background: rgba(0, 0, 0, 0.7);
+        }
+
+        .slider-prev {
+          left: 15px;
+        }
+
+        .slider-next {
+          right: 15px;
+        }
+
+        .slider-indicators {
+          position: absolute;
+          bottom: 15px;
+          left: 50%;
+          transform: translateX(-50%);
+          display: flex;
+          gap: 8px;
+          z-index: 10;
+        }
+
+        .slider-indicator {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.5);
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+
+        .slider-indicator.active {
+          background: white;
+          transform: scale(1.2);
+        }
+
         .abstract-images {
           display: flex;
           flex-direction: column;
           gap: 1.5rem;
           align-items: center;
           height: 100%;
-        }
-
-        .abstract-block {
-          width: 100%;
-          height: 320px;
-          background-color: #E8E5E0;
-          border-radius: 8px;
         }
         
         .abstract-menu-bar {
@@ -798,13 +924,36 @@ export default function ContractorSourceLandingPage() {
 
           {/* Image Content */}
           <div className="image-content">
-            <div className="abstract-images">
-              <img 
-                src="https://igscountertops.b-cdn.net/Citrus%20Closets/Front%20view%20small%20custom%20closet%20realistic_1920x1072.webp" 
-                alt="Custom closet design" 
-                className="abstract-block"
-                style={{ objectFit: 'cover', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)' }}
-              />
+            <div className="image-slider">
+              <div className="slider-container">
+                <div className="slider-slide active">
+                  <img 
+                    src="https://igscountertops.b-cdn.net/kitchencabinets.now%20assets/Cabiets%20assets/ELITECRAFT%20Shaker%20White/shaker-white.webp" 
+                    alt="Shaker White Cabinets"
+                  />
+                </div>
+                <div className="slider-slide">
+                  <img 
+                    src="https://igscountertops.b-cdn.net/Citrus%20Closets/Front%20view%20small%20custom%20closet%20realistic_1920x1072.webp" 
+                    alt="Custom Closet Design"
+                  />
+                </div>
+                <div className="slider-slide">
+                  <img 
+                    src="https://igscountertops.b-cdn.net/Spraggins/65495537-0-2---blue-cabinets-ki.jpg" 
+                    alt="Blue Kitchen Cabinets"
+                  />
+                </div>
+              </div>
+              
+              <button className="slider-controls slider-prev" id="prevSlide">‹</button>
+              <button className="slider-controls slider-next" id="nextSlide">›</button>
+              
+              <div className="slider-indicators">
+                <div className="slider-indicator active"></div>
+                <div className="slider-indicator"></div>
+                <div className="slider-indicator"></div>
+              </div>
             </div>
           </div>
         </div>
