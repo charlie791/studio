@@ -4,6 +4,50 @@ import { useEffect } from 'react';
 
 export default function ContractorSourceLandingPage() {
   useEffect(() => {
+    // Side panel functionality
+    const hamburgerButton = document.getElementById('hamburgerButton');
+    const sidePanel = document.getElementById('sidePanel');
+    const panelBackdrop = document.getElementById('panelBackdrop');
+    const panelClose = document.getElementById('panelClose');
+    
+    // Toggle panel function
+    function togglePanel() {
+      if (hamburgerButton && sidePanel && panelBackdrop) {
+        hamburgerButton.classList.toggle('active');
+        sidePanel.classList.toggle('active');
+        panelBackdrop.classList.toggle('active');
+      }
+    }
+    
+    // Close panel function
+    function closePanel() {
+      if (hamburgerButton && sidePanel && panelBackdrop) {
+        hamburgerButton.classList.remove('active');
+        sidePanel.classList.remove('active');
+        panelBackdrop.classList.remove('active');
+      }
+    }
+    
+    // Add event listeners
+    if (hamburgerButton) {
+      hamburgerButton.addEventListener('click', togglePanel);
+    }
+    
+    if (panelClose) {
+      panelClose.addEventListener('click', closePanel);
+    }
+    
+    if (panelBackdrop) {
+      panelBackdrop.addEventListener('click', closePanel);
+    }
+    
+    // Close on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && sidePanel?.classList.contains('active')) {
+        closePanel();
+      }
+    });
+    
     // Modal functionality
     const modal = document.getElementById('consultationModal');
     const closeBtn = document.getElementById('closeModal');
@@ -25,11 +69,11 @@ export default function ContractorSourceLandingPage() {
       }
     }
     
-    // CTA button
-    const ctaButton = document.querySelector('.cta-button');
-    if (ctaButton) {
-      ctaButton.addEventListener('click', openModal);
-    }
+    // CTA buttons
+    const ctaButtons = document.querySelectorAll('.cta-button');
+    ctaButtons.forEach(button => {
+      button.addEventListener('click', openModal);
+    });
     
     // Close modal events
     if (closeBtn) {
@@ -117,8 +161,172 @@ export default function ContractorSourceLandingPage() {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
           line-height: 1.6;
           color: var(--cs-text-dark);
-          background: var(--cs-light-grey);
+          background: #006040;
           overflow-x: hidden;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+          background: #006040;
+          width: 100%;
+          padding: 1rem 0;
+        }
+
+        .navbar-content {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 2rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        .navbar-logo {
+          height: 40px;
+          width: auto;
+        }
+
+        /* Hamburger Menu */
+        .hamburger-menu {
+          position: relative;
+        }
+
+        .hamburger-button {
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 8px;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .hamburger-line {
+          width: 25px;
+          height: 3px;
+          background: var(--cs-white);
+          transition: all 0.3s ease;
+        }
+
+        .hamburger-button.active .hamburger-line:nth-child(1) {
+          transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger-button.active .hamburger-line:nth-child(2) {
+          opacity: 0;
+        }
+
+        .hamburger-button.active .hamburger-line:nth-child(3) {
+          transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* Panel Backdrop */
+        .panel-backdrop {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.5);
+          backdrop-filter: blur(4px);
+          z-index: 999;
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.3s ease;
+        }
+
+        .panel-backdrop.active {
+          opacity: 1;
+          visibility: visible;
+        }
+
+        /* Side Panel */
+        .side-panel {
+          position: fixed;
+          top: 0;
+          right: 0;
+          height: 100vh;
+          width: 350px;
+          background: var(--cs-white);
+          box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+          transform: translateX(100%);
+          transition: transform 0.3s ease;
+          z-index: 1000;
+          overflow-y: auto;
+        }
+
+        .side-panel.active {
+          transform: translateX(0);
+        }
+
+        .panel-header {
+          padding: 2rem;
+          border-bottom: 1px solid #eee;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .panel-close {
+          background: none;
+          border: none;
+          font-size: 1.5rem;
+          cursor: pointer;
+          color: var(--cs-text-grey);
+          padding: 0.5rem;
+          border-radius: 4px;
+          transition: all 0.3s ease;
+        }
+
+        .panel-close:hover {
+          background: var(--cs-light-grey);
+          color: var(--cs-text-dark);
+        }
+
+        .panel-title {
+          font-size: 1.5rem;
+          font-weight: 600;
+          color: var(--cs-text-dark);
+        }
+
+        .panel-content {
+          padding: 2rem;
+        }
+
+        .panel-item {
+          padding: 1.25rem 1rem;
+          color: var(--cs-text-dark);
+          cursor: pointer;
+          transition: all 0.3s ease;
+          border-radius: 8px;
+          font-size: 1.2rem;
+          font-weight: 500;
+          margin-bottom: 1rem;
+        }
+
+        .panel-item:last-child {
+          margin-bottom: 0;
+        }
+
+        .panel-item:hover {
+          background: #e8f5e8;
+          color: #2d5a2d;
+          transform: translateY(-2px);
+        }
+
+        .panel-cta {
+          margin-top: 2rem;
+          margin-bottom: 0;
+        }
+
+        @media (max-width: 480px) {
+          .side-panel {
+            width: 280px;
+          }
+          
+          .panel-header, .panel-content {
+            padding: 1.5rem;
+          }
         }
 
         /* Main Container */
@@ -127,7 +335,7 @@ export default function ContractorSourceLandingPage() {
           margin: 0 auto;
           padding: 3rem 2rem;
           background: var(--cs-white);
-          min-height: 100vh;
+          min-height: calc(100vh - 72px);
           box-shadow: 0 0 40px var(--cs-shadow);
         }
 
@@ -136,7 +344,7 @@ export default function ContractorSourceLandingPage() {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 4rem;
-          align-items: center;
+          align-items: start;
           min-height: 80vh;
         }
 
@@ -150,9 +358,9 @@ export default function ContractorSourceLandingPage() {
           font-weight: 300;
           line-height: 1.1;
           color: var(--cs-text-dark);
-          margin-bottom: 3rem;
+          margin-bottom: 1rem;
           font-family: Georgia, serif;
-          text-align: center;
+          text-align: left;
           width: 100%;
         }
 
@@ -188,7 +396,7 @@ export default function ContractorSourceLandingPage() {
 
         /* CTA Button */
         .cta-button {
-          background: var(--cs-dark-blue);
+          background: #006040;
           color: var(--cs-white);
           border: none;
           padding: 1rem 2.5rem;
@@ -204,7 +412,7 @@ export default function ContractorSourceLandingPage() {
         }
 
         .cta-button:hover {
-          background: #001a3d;
+          background: #004d32;
           transform: translateX(3px);
         }
 
@@ -216,6 +424,7 @@ export default function ContractorSourceLandingPage() {
         /* Logo */
         .logo-container {
           margin-top: 2rem;
+          margin-bottom: 3rem;
         }
 
         .logo {
@@ -247,6 +456,7 @@ export default function ContractorSourceLandingPage() {
         /* Image Content */
         .image-content {
           position: relative;
+          margin-top: 0;
         }
 
         .abstract-images {
@@ -254,13 +464,12 @@ export default function ContractorSourceLandingPage() {
           flex-direction: column;
           gap: 1.5rem;
           align-items: center;
-          justify-content: center;
           height: 100%;
         }
 
         .abstract-block {
           width: 100%;
-          height: 150px;
+          height: 320px;
           background-color: #E8E5E0;
           border-radius: 8px;
         }
@@ -276,18 +485,6 @@ export default function ContractorSourceLandingPage() {
           box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
         
-        .hamburger-icon {
-          display: flex;
-          flex-direction: column;
-          gap: 5px;
-        }
-
-        .hamburger-icon span {
-          width: 28px;
-          height: 3px;
-          background-color: #2D3436;
-          border-radius: 2px;
-        }
 
         /* Modal Styles */
         .modal-overlay {
@@ -401,7 +598,7 @@ export default function ContractorSourceLandingPage() {
         .form-submit {
           width: 100%;
           padding: 1rem;
-          background: var(--cs-dark-blue);
+          background: #006040;
           color: var(--cs-white);
           border: none;
           border-radius: 4px;
@@ -413,7 +610,7 @@ export default function ContractorSourceLandingPage() {
         }
 
         .form-submit:hover {
-          background: #001a3d;
+          background: #004d32;
         }
 
         /* Responsive Design */
@@ -434,6 +631,7 @@ export default function ContractorSourceLandingPage() {
 
           .image-content {
             order: 1;
+            margin-top: 1rem;
           }
 
           .main-headline {
@@ -454,24 +652,111 @@ export default function ContractorSourceLandingPage() {
             font-size: 1rem;
           }
         }
+
+        /* Footer Styles */
+        .footer {
+          background: #323232;
+          color: var(--cs-white);
+          padding: 3rem 0 2rem;
+          margin-top: 1.5rem;
+        }
+
+        .footer-content {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 2rem;
+          display: grid;
+          grid-template-columns: auto 1fr;
+          gap: 3rem;
+          align-items: center;
+        }
+
+        .footer-logo {
+          height: 60px;
+          width: auto;
+        }
+
+        .footer-text {
+          font-size: 1rem;
+          line-height: 1.6;
+          opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+          .footer {
+            padding: 2rem 0 1.5rem;
+          }
+          
+          .footer-content {
+            padding: 0 1rem;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            text-align: center;
+          }
+          
+          .footer-logo {
+            height: 50px;
+            justify-self: center;
+          }
+          
+          .footer-text {
+            font-size: 0.9rem;
+          }
+        }
       `}</style>
+      
+      <nav className="navbar">
+        <div className="navbar-content">
+          <img 
+            src="https://igscountertops.b-cdn.net/Spraggins/sprg-white-cmp.png" 
+            alt="Spraggins" 
+            className="navbar-logo" 
+          />
+          
+          <div className="hamburger-menu">
+            <button className="hamburger-button" id="hamburgerButton">
+              <div className="hamburger-line"></div>
+              <div className="hamburger-line"></div>
+              <div className="hamburger-line"></div>
+            </button>
+          </div>
+        </div>
+      </nav>
+      
+      {/* Panel Backdrop */}
+      <div className="panel-backdrop" id="panelBackdrop"></div>
+      
+      {/* Side Panel */}
+      <div className="side-panel" id="sidePanel">
+        <div className="panel-header">
+          <h3 className="panel-title">Services</h3>
+          <button className="panel-close" id="panelClose">×</button>
+        </div>
+        <div className="panel-content">
+          <div className="panel-item">Cabinets</div>
+          <div className="panel-item">Countertops</div>
+          <div className="panel-item">Closets</div>
+          
+          <button className="cta-button panel-cta">
+            Let's Make It Yours
+          </button>
+        </div>
+      </div>
       
       <div className="container">
         {/* Headline at the top */}
         <h1 className="main-headline">
-          Your Builder Chose<br />
-          the Best. Now It's Your<br />
-          <strong>Turn.</strong>
+          Your Builder Chose The Best.<br />
+          Now It's Your Turn.
         </h1>
+        <p className="subtitle">
+          The same team trusted to install your home's core finishes 
+          is here to help you complete the look—and make it truly yours.
+        </p>
         
         <div className="content-wrapper">
           {/* Text Content */}
           <div className="text-content">
-            
-            <p className="subtitle">
-              The same team trusted to install your home's core finishes 
-              is here to help you complete the look—and make it truly yours.
-            </p>
             
             <p className="description-text">
               Your builder partnered with Spraggins to deliver expert craftsmanship in your 
@@ -498,11 +783,15 @@ export default function ContractorSourceLandingPage() {
             </button>
             
             <div className="logo-container">
+              <p style={{ fontSize: '0.9rem', color: 'var(--cs-text-grey)', marginBottom: '0.5rem' }}>
+                Home services provided by
+              </p>
               <div className="logo">
-                <div className="logo-icon">
-                  <span>🏠</span>
-                </div>
-                <span className="logo-text">CONTRACTOR SOURCE</span>
+                <img 
+                  src="https://igscountertops.b-cdn.net/Spraggins/blk-cs-logo_cmp.png" 
+                  alt="ContractorSource" 
+                  style={{ height: '60px', width: 'auto' }}
+                />
               </div>
             </div>
           </div>
@@ -510,15 +799,12 @@ export default function ContractorSourceLandingPage() {
           {/* Image Content */}
           <div className="image-content">
             <div className="abstract-images">
-              <div className="abstract-block"></div>
-              <div className="abstract-menu-bar">
-                <div className="hamburger-icon">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </div>
-              </div>
-              <div className="abstract-block"></div>
+              <img 
+                src="https://igscountertops.b-cdn.net/Citrus%20Closets/Front%20view%20small%20custom%20closet%20realistic_1920x1072.webp" 
+                alt="Custom closet design" 
+                className="abstract-block"
+                style={{ objectFit: 'cover' }}
+              />
             </div>
           </div>
         </div>
@@ -575,8 +861,8 @@ export default function ContractorSourceLandingPage() {
               <select id="interest" name="interest" className="form-input" required>
                 <option value="">Select your interest</option>
                 <option value="custom-closets">Custom Closets</option>
-                <option value="finish-upgrades">Finish Upgrades</option>
-                <option value="built-ins">Built-in Storage</option>
+                <option value="custom-cabinets">Custom Cabinets</option>
+                <option value="countertops">Countertops</option>
                 <option value="kitchen-upgrades">Kitchen Upgrades</option>
                 <option value="general-consultation">General Consultation</option>
               </select>
@@ -588,6 +874,20 @@ export default function ContractorSourceLandingPage() {
           </form>
         </div>
       </div>
+
+      {/* Footer */}
+      <footer className="footer">
+        <div className="footer-content">
+          <img 
+            src="https://igscountertops.b-cdn.net/Spraggins/sprg-white-cmp.png" 
+            alt="Spraggins" 
+            className="footer-logo" 
+          />
+          <p className="footer-text">
+            Spraggins Inc. has been serving the construction industry as a supplier, distributor, and contractor since 1980. Our customers include many of the largest residential developers and builders in the country.
+          </p>
+        </div>
+      </footer>
     </>
   );
 }
