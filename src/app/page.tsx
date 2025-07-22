@@ -2,13 +2,12 @@
 
 import { useEffect } from 'react';
 
-export default function HeartwarmerLandingPage() {
+export default function ContractorSourceLandingPage() {
   useEffect(() => {
-
     // Modal functionality
-    const modal = document.getElementById('careModal');
+    const modal = document.getElementById('consultationModal');
     const closeBtn = document.getElementById('closeModal');
-    const form = document.getElementById('careForm');
+    const form = document.getElementById('consultationForm');
     
     // Open modal function
     function openModal() {
@@ -26,32 +25,11 @@ export default function HeartwarmerLandingPage() {
       }
     }
     
-    // Hero CTA
-    const heroCTA = document.querySelector('.warm-cta');
-    if (heroCTA) {
-      heroCTA.addEventListener('click', openModal);
+    // CTA button
+    const ctaButton = document.querySelector('.cta-button');
+    if (ctaButton) {
+      ctaButton.addEventListener('click', openModal);
     }
-    
-    // Plan CTAs
-    const planCTAs = document.querySelectorAll('.plan-cta');
-    planCTAs.forEach(btn => {
-      btn.addEventListener('click', function(this: Element) {
-        const planTitle = this.closest('.plan-card')?.querySelector('.plan-title')?.textContent;
-        openModal();
-        
-        // Pre-select the plan in dropdown
-        const select = document.getElementById('interest') as HTMLSelectElement;
-        if (select && planTitle) {
-          if (planTitle.includes('Essential')) {
-            select.value = 'essential';
-          } else if (planTitle.includes('Complete')) {
-            select.value = 'complete';
-          } else if (planTitle.includes('Total')) {
-            select.value = 'total';
-          }
-        }
-      });
-    });
     
     // Close modal events
     if (closeBtn) {
@@ -88,8 +66,8 @@ export default function HeartwarmerLandingPage() {
         // Here you would normally send to your backend
         console.log('Form submitted:', { name, email, phone, interest });
         
-        // Show warm success message
-        alert('Thank you so much! 💕 We can\'t wait to help you protect your beautiful home. We\'ll be in touch very soon with care and love.');
+        // Show success message
+        alert('Thank you! We\'ll be in touch soon to help make your home truly yours.');
         
         // Close modal and reset form
         closeModal();
@@ -116,27 +94,16 @@ export default function HeartwarmerLandingPage() {
   return (
     <>
       <style jsx global>{`
-        /* CSS Custom Properties for Warm Theme */
+        /* CSS Custom Properties */
         :root {
-          --warm-coral: #FF6B6B;
-          --warm-peach: #FFE5CC;
-          --warm-gold: #FFD93D;
-          --warm-sage: #6BCB77;
-          --warm-sky: #4ECDC4;
-          --warm-lavender: #95A5F5;
-          --warm-cream: #FFF8F0;
-          --warm-gray: #8B8B8B;
-          --warm-dark: #2D3436;
-          --warm-white: #FFFFFF;
-          --shadow-warm: rgba(255, 107, 107, 0.15);
-          --shadow-soft: rgba(0, 0, 0, 0.08);
-          
-          /* Darker versions for hero gradient */
-          --warm-coral-dark: #C53030;
-          --warm-peach-dark: #DD6B20;
-          --warm-gold-dark: #B7791F;
-          --warm-sky-dark: #2C7A7B;
-          --warm-purple-dark: #553C9A;
+          --cs-dark-blue: #002455;
+          --cs-gold: #FDA001;
+          --cs-light-grey: #F5F5F5;
+          --cs-white: #FFFFFF;
+          --cs-text-dark: #2D3436;
+          --cs-text-grey: #636E72;
+          --cs-shadow: rgba(0, 0, 0, 0.1);
+          --cs-shadow-hover: rgba(0, 0, 0, 0.15);
         }
 
         /* Reset and Base Styles */
@@ -147,450 +114,193 @@ export default function HeartwarmerLandingPage() {
         }
 
         body {
-          font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
           line-height: 1.6;
-          color: var(--warm-dark);
-          background: linear-gradient(135deg, var(--warm-cream) 0%, var(--warm-peach) 100%);
+          color: var(--cs-text-dark);
+          background: var(--cs-light-grey);
           overflow-x: hidden;
         }
 
-        /* Champagne Bubbles Animation */
-        .champagne-bubbles {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          pointer-events: none;
-          z-index: 5;
-          overflow: hidden;
-        }
-
-        .bubble {
-          position: absolute;
-          border-radius: 50%;
-          background: linear-gradient(135deg, 
-            rgba(255, 255, 255, 0.4) 0%, 
-            rgba(255, 255, 255, 0.15) 50%, 
-            rgba(255, 255, 255, 0.3) 100%);
-          backdrop-filter: blur(1px);
-          box-shadow: 
-            inset 0 1px 3px rgba(255, 255, 255, 0.5),
-            0 2px 8px rgba(255, 255, 255, 0.15);
-          animation: bubbleFloat 8s infinite ease-in-out;
-        }
-
-        /* Different bubble sizes */
-        .bubble.small { width: 8px; height: 8px; }
-        .bubble.medium { width: 12px; height: 12px; }
-        .bubble.large { width: 16px; height: 16px; }
-        .bubble.tiny { width: 4px; height: 4px; }
-
-        /* Bubble positioning and timing */
-        .bubble:nth-child(1) { left: 5%; animation-delay: 0s; animation-duration: 7s; }
-        .bubble:nth-child(2) { left: 15%; animation-delay: 1.5s; animation-duration: 9s; }
-        .bubble:nth-child(3) { left: 25%; animation-delay: 3s; animation-duration: 6s; }
-        .bubble:nth-child(4) { left: 35%; animation-delay: 0.5s; animation-duration: 8s; }
-        .bubble:nth-child(5) { left: 45%; animation-delay: 2s; animation-duration: 7.5s; }
-        .bubble:nth-child(6) { left: 55%; animation-delay: 4s; animation-duration: 6.5s; }
-        .bubble:nth-child(7) { left: 65%; animation-delay: 1s; animation-duration: 8.5s; }
-        .bubble:nth-child(8) { left: 75%; animation-delay: 3.5s; animation-duration: 7s; }
-        .bubble:nth-child(9) { left: 85%; animation-delay: 2.5s; animation-duration: 9s; }
-        .bubble:nth-child(10) { left: 95%; animation-delay: 4.5s; animation-duration: 6s; }
-        .bubble:nth-child(11) { left: 10%; animation-delay: 5s; animation-duration: 8s; }
-        .bubble:nth-child(12) { left: 30%; animation-delay: 6s; animation-duration: 7s; }
-        .bubble:nth-child(13) { left: 50%; animation-delay: 0.8s; animation-duration: 8.5s; }
-        .bubble:nth-child(14) { left: 70%; animation-delay: 2.8s; animation-duration: 6.5s; }
-        .bubble:nth-child(15) { left: 90%; animation-delay: 1.8s; animation-duration: 7.5s; }
-
-        @keyframes bubbleFloat {
-          0% { 
-            transform: translateY(100vh) translateX(0px);
-            opacity: 0;
-          }
-          5% { 
-            opacity: 0.6;
-          }
-          25% { 
-            transform: translateY(75vh) translateX(10px);
-            opacity: 0.8;
-          }
-          50% { 
-            transform: translateY(50vh) translateX(-5px);
-            opacity: 0.9;
-          }
-          75% { 
-            transform: translateY(25vh) translateX(8px);
-            opacity: 0.7;
-          }
-          95% { 
-            transform: translateY(10vh) translateX(-3px);
-            opacity: 0.4;
-          }
-          100% { 
-            transform: translateY(-10vh) translateX(0px);
-            opacity: 0;
-          }
-        }
-
-        /* Hero Section */
-        .hero {
-          background: linear-gradient(135deg, 
-            #C53030 0%, 
-            #DD6B20 25%, 
-            #B7791F 50%, 
-            #2C7A7B 75%,
-            #553C9A 100%);
-          padding: 4rem 2rem;
-          text-align: center;
-          color: #FFFFFF;
-          position: relative;
-          overflow: hidden;
+        /* Main Container */
+        .container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 3rem 2rem;
+          background: var(--cs-white);
           min-height: 100vh;
-          display: flex;
+          box-shadow: 0 0 40px var(--cs-shadow);
+        }
+
+        /* Content Layout */
+        .content-wrapper {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 4rem;
           align-items: center;
-          justify-content: center;
-        }
-        
-
-
-        .hero-content {
-          max-width: 800px;
-          position: relative;
-          z-index: 10;
-          animation: fadeInUp 1s ease-out;
+          min-height: 80vh;
         }
 
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+        /* Text Content */
+        .text-content {
+          padding-right: 2rem;
         }
 
-        .celebration-emoji {
-          font-size: 4rem;
-          display: block;
-          margin-bottom: 1rem;
-          animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-          0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-          40% { transform: translateY(-10px); }
-          60% { transform: translateY(-5px); }
-        }
-
-        .hero-title {
-          font-family: var(--font-playfair), serif;
+        .main-headline {
           font-size: 3.5rem;
-          font-weight: 700;
-          margin-bottom: 1.5rem;
-          line-height: 1.2;
-          text-shadow: 0 4px 16px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.4);
-          letter-spacing: -0.02em;
-          color: #FFFFFF;
-        }
-
-        .hero-subtitle {
-          font-size: 1.5rem;
-          font-weight: 400;
-          margin-bottom: 2rem;
-          line-height: 1.4;
-          text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
-          color: #FFFFFF;
-        }
-
-        .hero-message {
-          font-size: 1.1rem;
+          font-weight: 300;
+          line-height: 1.1;
+          color: var(--cs-text-dark);
           margin-bottom: 3rem;
-          font-weight: 400;
-          line-height: 1.6;
-          max-width: 600px;
-          margin-left: auto;
-          margin-right: auto;
-          text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
-          color: #FFFFFF;
+          font-family: Georgia, serif;
+          text-align: center;
+          width: 100%;
         }
 
-        /* Warm CTA Button */
-        .warm-cta {
-          background: linear-gradient(135deg, var(--warm-white) 0%, var(--warm-cream) 100%);
-          color: var(--warm-dark);
-          border: none;
-          padding: 1.25rem 2.5rem;
-          font-size: 1.1rem;
+        .main-headline strong {
+          font-weight: 400;
+        }
+
+        .subtitle {
+          font-size: 1.125rem;
+          color: var(--cs-text-grey);
+          margin-bottom: 2rem;
+          line-height: 1.5;
+        }
+
+        .description-text {
+          font-size: 1rem;
+          color: var(--cs-text-grey);
+          margin-bottom: 1.5rem;
+          line-height: 1.6;
+        }
+
+        .company-highlight {
           font-weight: 600;
-          border-radius: 50px;
+          color: var(--cs-text-dark);
+        }
+
+        .final-statement {
+          font-size: 1.125rem;
+          color: var(--cs-text-dark);
+          margin: 2rem 0;
+          font-weight: 500;
+        }
+
+        /* CTA Button */
+        .cta-button {
+          background: var(--cs-dark-blue);
+          color: var(--cs-white);
+          border: none;
+          padding: 1rem 2.5rem;
+          font-size: 1rem;
+          font-weight: 500;
+          border-radius: 0;
           cursor: pointer;
           transition: all 0.3s ease;
-          box-shadow: 0 8px 25px var(--shadow-warm);
-          position: relative;
-          overflow: hidden;
           display: inline-flex;
           align-items: center;
           gap: 0.5rem;
+          margin-bottom: 3rem;
         }
 
-        .warm-cta::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: -100%;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-          transition: left 0.5s ease;
+        .cta-button:hover {
+          background: #001a3d;
+          transform: translateX(3px);
         }
 
-        .warm-cta:hover::before {
-          left: 100%;
-        }
-
-        .warm-cta:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 12px 35px var(--shadow-warm);
-        }
-
-        .warm-cta .heart-icon {
-          color: var(--warm-coral);
+        .cta-button::after {
+          content: '→';
           font-size: 1.2rem;
         }
 
-        /* Trust Section */
-        .trust-section {
-          padding: 4rem 2rem;
-          background: var(--warm-white);
-          text-align: center;
-          position: relative;
+        /* Logo */
+        .logo-container {
+          margin-top: 2rem;
         }
 
-        .trust-content {
-          max-width: 1000px;
-          margin: 0 auto;
-        }
-
-        .trust-title {
-          font-family: var(--font-playfair), serif;
-          font-size: 2.5rem;
-          color: var(--warm-dark);
-          margin-bottom: 1rem;
-          font-weight: 500;
-        }
-
-        .trust-subtitle {
-          font-size: 1.2rem;
-          color: var(--warm-gray);
-          margin-bottom: 3rem;
-          max-width: 600px;
-          margin-left: auto;
-          margin-right: auto;
-        }
-
-        .trust-stats {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          gap: 2rem;
-          margin-bottom: 3rem;
-        }
-
-        .trust-stat {
-          padding: 2rem;
-          background: linear-gradient(135deg, var(--warm-cream) 0%, var(--warm-peach) 100%);
-          border-radius: 20px;
-          box-shadow: 0 4px 20px var(--shadow-soft);
-          transition: transform 0.3s ease;
-        }
-
-        .trust-stat:hover {
-          transform: translateY(-5px);
-        }
-
-        .trust-stat-number {
-          font-size: 2.5rem;
-          font-weight: 700;
-          color: var(--warm-coral);
-          display: block;
-          margin-bottom: 0.5rem;
-        }
-
-        .trust-stat-label {
-          font-size: 1rem;
-          color: var(--warm-dark);
-          font-weight: 500;
-        }
-
-        /* Plans Section */
-        .plans-section {
-          padding: 4rem 2rem;
-          background: linear-gradient(135deg, var(--warm-cream) 0%, var(--warm-peach) 100%);
-          position: relative;
-        }
-
-        .plans-content {
-          max-width: 1200px;
-          margin: 0 auto;
-        }
-
-        .plans-title {
-          font-family: var(--font-playfair), serif;
-          font-size: 2.8rem;
-          color: var(--warm-dark);
-          text-align: center;
-          margin-bottom: 1rem;
-          font-weight: 500;
-        }
-
-        .plans-subtitle {
-          font-size: 1.3rem;
-          color: var(--warm-gray);
-          text-align: center;
-          margin-bottom: 3rem;
-          max-width: 700px;
-          margin-left: auto;
-          margin-right: auto;
-        }
-
-        .plans-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-          gap: 2rem;
-          margin-top: 3rem;
-        }
-
-        .plan-card {
-          background: var(--warm-white);
-          border-radius: 25px;
-          overflow: hidden;
-          box-shadow: 0 10px 40px var(--shadow-soft);
-          transition: all 0.3s ease;
-          position: relative;
-          border: 2px solid transparent;
-        }
-
-        .plan-card:hover {
-          transform: translateY(-8px);
-          box-shadow: 0 20px 60px var(--shadow-warm);
-          border-color: var(--warm-coral);
-        }
-
-        .plan-card.featured {
-          border-color: var(--warm-gold);
-          transform: scale(1.05);
-        }
-
-        .plan-card.featured::before {
-          content: '✨ Most Popular';
-          position: absolute;
-          top: 1rem;
-          right: 1rem;
-          background: linear-gradient(135deg, var(--warm-gold) 0%, var(--warm-coral) 100%);
-          color: var(--warm-white);
-          padding: 0.5rem 1rem;
-          border-radius: 15px;
-          font-size: 0.8rem;
-          font-weight: 600;
-          z-index: 10;
-        }
-
-        .plan-header {
-          background: linear-gradient(135deg, var(--warm-coral) 0%, var(--warm-sky) 100%);
-          color: var(--warm-white);
-          padding: 2.5rem 2rem;
-          text-align: center;
-          position: relative;
-        }
-
-        .plan-icon {
-          font-size: 3rem;
-          margin-bottom: 1rem;
-          display: block;
-        }
-
-        .plan-title {
-          font-family: var(--font-playfair), serif;
-          font-size: 1.8rem;
-          font-weight: 600;
-          margin-bottom: 0.5rem;
-        }
-
-        .plan-summary {
-          font-size: 1.1rem;
-          opacity: 0.9;
-          margin-bottom: 1.5rem;
-        }
-
-        .plan-price {
-          font-size: 2.2rem;
-          font-weight: 700;
-          margin-bottom: 0.5rem;
-        }
-
-        .plan-period {
-          font-size: 1rem;
-          opacity: 0.8;
-        }
-
-        .plan-content {
-          padding: 2.5rem 2rem;
-        }
-
-        .plan-features {
-          list-style: none;
-          margin-bottom: 2rem;
-        }
-
-        .plan-features li {
-          padding: 0.75rem 0;
-          font-size: 1rem;
-          color: var(--warm-dark);
+        .logo {
           display: flex;
           align-items: center;
           gap: 0.75rem;
         }
 
-        .plan-features li::before {
-          content: '💚';
-          font-size: 1.2rem;
+        .logo-icon {
+          width: 32px;
+          height: 32px;
+          background: var(--cs-gold);
+          border-radius: 4px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: bold;
+          color: var(--cs-white);
+          font-size: 1.125rem;
         }
 
-        .plan-love-note {
-          background: linear-gradient(135deg, var(--warm-peach) 0%, var(--warm-cream) 100%);
-          padding: 1.5rem;
-          border-radius: 15px;
-          text-align: center;
-          font-style: italic;
-          color: var(--warm-dark);
-          margin-bottom: 2rem;
-          font-size: 0.95rem;
-        }
-
-        .plan-cta {
-          width: 100%;
-          padding: 1.25rem;
-          background: linear-gradient(135deg, var(--warm-coral) 0%, var(--warm-sky) 100%);
-          color: var(--warm-white);
-          border: none;
-          border-radius: 15px;
-          font-size: 1.1rem;
+        .logo-text {
+          font-size: 1.25rem;
           font-weight: 600;
-          cursor: pointer;
-          transition: all 0.3s ease;
+          color: var(--cs-text-dark);
+          letter-spacing: 0.5px;
+        }
+
+        /* Image Content */
+        .image-content {
+          position: relative;
+        }
+
+        .cabinet-images {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+
+        .cabinet-image {
+          width: 100%;
+          height: 300px;
+          background: #E8E5E0;
+          border-radius: 8px;
           position: relative;
           overflow: hidden;
         }
 
-        .plan-cta:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 8px 25px var(--shadow-warm);
+        .cabinet-image.top {
+          height: 250px;
+          background: linear-gradient(135deg, #F5F3F0 0%, #E8E5E0 100%);
         }
 
-        .plan-cta.featured {
-          background: linear-gradient(135deg, var(--warm-gold) 0%, var(--warm-coral) 100%);
+        .cabinet-image.bottom {
+          height: 350px;
+          background: linear-gradient(135deg, #E8E5E0 0%, #D4CFC7 100%);
+        }
+
+        /* Cabinet Details */
+        .cabinet-details {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background: rgba(255, 255, 255, 0.95);
+          padding: 1rem;
+        }
+
+        .drawer-handle {
+          width: 60px;
+          height: 4px;
+          background: var(--cs-text-dark);
+          border-radius: 2px;
+          margin: 0.5rem 0;
+        }
+
+        .cabinet-door {
+          position: absolute;
+          right: 1rem;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 12px;
+          height: 12px;
+          background: var(--cs-gold);
+          border-radius: 50%;
         }
 
         /* Modal Styles */
@@ -618,8 +328,8 @@ export default function HeartwarmerLandingPage() {
         }
 
         .modal-content {
-          background: var(--warm-white);
-          border-radius: 25px;
+          background: var(--cs-white);
+          border-radius: 8px;
           padding: 2.5rem;
           max-width: 500px;
           width: 100%;
@@ -639,39 +349,39 @@ export default function HeartwarmerLandingPage() {
           position: absolute;
           top: 1rem;
           right: 1rem;
-          background: var(--warm-cream);
+          background: var(--cs-light-grey);
           border: none;
           width: 40px;
           height: 40px;
-          border-radius: 50%;
+          border-radius: 4px;
           cursor: pointer;
           display: flex;
           align-items: center;
           justify-content: center;
           font-size: 1.2rem;
-          color: var(--warm-gray);
+          color: var(--cs-text-grey);
           transition: all 0.3s ease;
         }
 
         .modal-close:hover {
-          background: var(--warm-peach);
-          color: var(--warm-dark);
+          background: #e0e0e0;
+          color: var(--cs-text-dark);
         }
 
         .modal-title {
-          font-family: var(--font-playfair), serif;
+          font-family: Georgia, serif;
           font-size: 1.8rem;
-          font-weight: 600;
-          color: var(--warm-dark);
+          font-weight: 400;
+          color: var(--cs-text-dark);
           margin-bottom: 0.5rem;
           text-align: center;
         }
 
         .modal-subtitle {
-          color: var(--warm-gray);
+          color: var(--cs-text-grey);
           text-align: center;
           margin-bottom: 2rem;
-          font-size: 1.1rem;
+          font-size: 1rem;
         }
 
         .form-group {
@@ -681,287 +391,172 @@ export default function HeartwarmerLandingPage() {
         .form-label {
           display: block;
           font-weight: 500;
-          color: var(--warm-dark);
+          color: var(--cs-text-dark);
           margin-bottom: 0.5rem;
-          font-size: 1rem;
+          font-size: 0.95rem;
         }
 
         .form-input {
           width: 100%;
-          padding: 1rem;
-          border: 2px solid var(--warm-cream);
-          border-radius: 12px;
+          padding: 0.875rem;
+          border: 1px solid #ddd;
+          border-radius: 4px;
           font-size: 1rem;
           transition: all 0.3s ease;
-          background: var(--warm-white);
+          background: var(--cs-white);
         }
 
         .form-input:focus {
           outline: none;
-          border-color: var(--warm-coral);
-          box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+          border-color: var(--cs-dark-blue);
+          box-shadow: 0 0 0 2px rgba(0, 36, 85, 0.1);
         }
 
         .form-submit {
           width: 100%;
-          padding: 1.25rem;
-          background: linear-gradient(135deg, var(--warm-coral) 0%, var(--warm-sky) 100%);
-          color: var(--warm-white);
+          padding: 1rem;
+          background: var(--cs-dark-blue);
+          color: var(--cs-white);
           border: none;
-          border-radius: 12px;
-          font-size: 1.1rem;
-          font-weight: 600;
+          border-radius: 4px;
+          font-size: 1rem;
+          font-weight: 500;
           cursor: pointer;
           transition: all 0.3s ease;
           margin-top: 1rem;
         }
 
         .form-submit:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 8px 25px var(--shadow-warm);
-        }
-
-        /* Footer */
-        .footer {
-          background: var(--warm-dark);
-          color: var(--warm-white);
-          padding: 3rem 2rem 1rem;
-          text-align: center;
-        }
-
-        .footer-content {
-          max-width: 1200px;
-          margin: 0 auto;
-        }
-
-        .footer-message {
-          font-size: 1.2rem;
-          margin-bottom: 2rem;
-          opacity: 0.9;
-        }
-
-        .footer-heart {
-          color: var(--warm-coral);
-          font-size: 1.5rem;
-          margin: 0 0.5rem;
-        }
-
-        .footer-links {
-          display: flex;
-          justify-content: center;
-          gap: 2rem;
-          margin-bottom: 2rem;
-        }
-
-        .footer-links a {
-          color: var(--warm-white);
-          text-decoration: none;
-          opacity: 0.8;
-          transition: opacity 0.3s ease;
-        }
-
-        .footer-links a:hover {
-          opacity: 1;
-        }
-
-        .footer-bottom {
-          border-top: 1px solid rgba(255, 255, 255, 0.1);
-          padding-top: 1rem;
-          opacity: 0.7;
-          font-size: 0.9rem;
+          background: #001a3d;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-          .hero-title {
+          .container {
+            padding: 2rem 1rem;
+          }
+
+          .content-wrapper {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+          }
+
+          .text-content {
+            padding-right: 0;
+            order: 2;
+          }
+
+          .image-content {
+            order: 1;
+          }
+
+          .main-headline {
             font-size: 2.5rem;
           }
 
-          .hero-subtitle {
-            font-size: 1.2rem;
+          .modal-content {
+            padding: 2rem;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .main-headline {
+            font-size: 2rem;
           }
 
-          .plans-grid {
-            grid-template-columns: 1fr;
-          }
-
-          .plan-card.featured {
-            transform: none;
-          }
-
-          .trust-stats {
-            grid-template-columns: 1fr;
+          .subtitle {
+            font-size: 1rem;
           }
         }
       `}</style>
       
-      
-
-      {/* Hero Section */}
-      <section className="hero">
-        {/* Champagne Bubbles */}
-        <div className="champagne-bubbles">
-          <div className="bubble small"></div>
-          <div className="bubble medium"></div>
-          <div className="bubble tiny"></div>
-          <div className="bubble large"></div>
-          <div className="bubble small"></div>
-          <div className="bubble medium"></div>
-          <div className="bubble tiny"></div>
-          <div className="bubble small"></div>
-          <div className="bubble large"></div>
-          <div className="bubble medium"></div>
-          <div className="bubble tiny"></div>
-          <div className="bubble small"></div>
-          <div className="bubble medium"></div>
-          <div className="bubble tiny"></div>
-          <div className="bubble small"></div>
-        </div>
+      <div className="container">
+        {/* Headline at the top */}
+        <h1 className="main-headline">
+          Your Builder Chose<br />
+          the Best. Now It's Your<br />
+          <strong>Turn.</strong>
+        </h1>
         
-        <div className="hero-content">
-          <span className="celebration-emoji">🎉</span>
-          <h1 className="hero-title">
-            You Did It!<br />
-            Your Dream Home is Real
-          </h1>
-          <p className="hero-subtitle">
-            We know how much this moment means to you
-          </p>
-          <p className="hero-message">
-            Creating a beautiful home is one of life's greatest achievements. You've poured your heart into every detail, chosen every finish with care, and now you have something truly special. We're here to help you keep it that way — not because we have to, but because we want to celebrate this journey with you.
-          </p>
-          <button className="warm-cta">
-            <span className="heart-icon">💝</span>
-            Let's protect your beautiful investment
-          </button>
-        </div>
-      </section>
-
-      {/* Trust Section */}
-      <section className="trust-section">
-        <div className="trust-content">
-          <h2 className="trust-title">You're in Great Company</h2>
-          <p className="trust-subtitle">
-            Thousands of homeowners have trusted us to protect their most precious spaces
-          </p>
-          
-          <div className="trust-stats">
-            <div className="trust-stat">
-              <span className="trust-stat-number">25,000+</span>
-              <span className="trust-stat-label">Happy Homeowners</span>
-            </div>
-            <div className="trust-stat">
-              <span className="trust-stat-number">40+</span>
-              <span className="trust-stat-label">Years of Care</span>
-            </div>
-            <div className="trust-stat">
-              <span className="trust-stat-number">98%</span>
-              <span className="trust-stat-label">Satisfaction Rate</span>
+        <div className="content-wrapper">
+          {/* Text Content */}
+          <div className="text-content">
+            
+            <p className="subtitle">
+              The same team trusted to install your home's core finishes 
+              is here to help you complete the look—and make it truly yours.
+            </p>
+            
+            <p className="description-text">
+              Your builder partnered with Spraggins to deliver expert craftsmanship in your 
+              floors, cabinets, and countertops. Now, Spraggins' homeowner facing 
+              team—<span className="company-highlight">ContractorSource</span>—is here to 
+              help you personalize the rest.
+            </p>
+            
+            <p className="description-text">
+              From custom closets to thoughtful finish upgrades, we make it easy 
+              to elevate what's already great.
+            </p>
+            
+            <p className="description-text">
+              No stress. Just tailored service, built on trust.
+            </p>
+            
+            <p className="final-statement">
+              Because this isn't just a house anymore. It's your home.
+            </p>
+            
+            <button className="cta-button">
+              Let's Make It Yours
+            </button>
+            
+            <div className="logo-container">
+              <div className="logo">
+                <div className="logo-icon">
+                  <span>🏠</span>
+                </div>
+                <span className="logo-text">CONTRACTOR SOURCE</span>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Plans Section */}
-      <section className="plans-section">
-        <div className="plans-content">
-          <h2 className="plans-title">How We Can Help</h2>
-          <p className="plans-subtitle">
-            Choose the level of care that feels right for your beautiful new space
-          </p>
-          
-          <div className="plans-grid">
-            {/* Essential Care Plan */}
-            <div className="plan-card">
-              <div className="plan-header">
-                <div className="plan-icon">🛡️</div>
-                <h3 className="plan-title">Essential Care</h3>
-                <p className="plan-summary">5 Years of Gentle Protection</p>
-                <div className="plan-price">$74.75</div>
-                <div className="plan-period">4 comfortable payments</div>
-              </div>
-              <div className="plan-content">
-                <ul className="plan-features">
-                  <li>Protection against everyday kitchen mishaps</li>
-                  <li>Coverage for common stains and minor chips</li>
-                  <li>Caring customer support when you need us</li>
-                  <li>Peace of mind for 5 full years</li>
-                </ul>
-                <div className="plan-love-note">
-                  Perfect for those who want basic protection without the worry
+          {/* Image Content */}
+          <div className="image-content">
+            <div className="cabinet-images">
+              <div className="cabinet-image top">
+                <div className="cabinet-details">
+                  <div className="drawer-handle"></div>
+                  <div className="drawer-handle"></div>
+                  <div className="drawer-handle"></div>
                 </div>
-                <button className="plan-cta">This feels right for us</button>
               </div>
-            </div>
-
-            {/* Complete Care Plan */}
-            <div className="plan-card">
-              <div className="plan-header">
-                <div className="plan-icon">⭐</div>
-                <h3 className="plan-title">Complete Care</h3>
-                <p className="plan-summary">10 Years of Comprehensive Love</p>
-                <div className="plan-price">$124.75</div>
-                <div className="plan-period">4 comfortable payments</div>
-              </div>
-              <div className="plan-content">
-                <ul className="plan-features">
-                  <li>Everything in Essential Care, plus more</li>
-                  <li>Protection against heat marks and deeper scratches</li>
-                  <li>Priority support when you need help</li>
-                  <li>Annual check-ins to keep things beautiful</li>
-                </ul>
-                <div className="plan-love-note">
-                  For those who want to truly cherish their investment
-                </div>
-                <button className="plan-cta">This sounds perfect</button>
-              </div>
-            </div>
-
-            {/* Total Love Plan */}
-            <div className="plan-card featured">
-              <div className="plan-header">
-                <div className="plan-icon">💎</div>
-                <h3 className="plan-title">Total Love</h3>
-                <p className="plan-summary">10 Years of Complete Home Care</p>
-                <div className="plan-price">$149.75</div>
-                <div className="plan-period">4 comfortable payments</div>
-              </div>
-              <div className="plan-content">
-                <ul className="plan-features">
-                  <li>Everything your kitchen needs, covered</li>
-                  <li>Both countertops AND cabinets protected</li>
-                  <li>24/7 support whenever you need us</li>
-                  <li>Professional care kit included</li>
-                  <li>Transferable if you move homes</li>
-                </ul>
-                <div className="plan-love-note">
-                  The complete package for those who want everything protected with love
-                </div>
-                <button className="plan-cta featured">Yes, let's do this together</button>
+              <div className="cabinet-image bottom">
+                <div className="cabinet-door"></div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
       {/* Modal */}
-      <div className="modal-overlay" id="careModal">
+      <div className="modal-overlay" id="consultationModal">
         <div className="modal-content">
           <button className="modal-close" id="closeModal">×</button>
-          <h3 className="modal-title">Let's Start This Journey Together</h3>
+          <h3 className="modal-title">Let's Make It Yours</h3>
           <p className="modal-subtitle">
-            Tell us a bit about yourself and we'll show you exactly how we can help protect your beautiful home
+            Tell us about your vision and we'll help you create the perfect space
           </p>
           
-          <form id="careForm">
+          <form id="consultationForm">
             <div className="form-group">
-              <label className="form-label" htmlFor="fullName">Your Name</label>
+              <label className="form-label" htmlFor="fullName">Full Name</label>
               <input 
                 type="text" 
                 id="fullName" 
                 name="fullName" 
                 className="form-input" 
-                placeholder="What should we call you?"
+                placeholder="Enter your full name"
                 required 
               />
             </div>
@@ -973,7 +568,7 @@ export default function HeartwarmerLandingPage() {
                 id="email" 
                 name="email" 
                 className="form-input" 
-                placeholder="So we can reach out with care"
+                placeholder="Enter your email"
                 required 
               />
             </div>
@@ -991,39 +586,23 @@ export default function HeartwarmerLandingPage() {
             </div>
             
             <div className="form-group">
-              <label className="form-label" htmlFor="interest">What feels right for you?</label>
+              <label className="form-label" htmlFor="interest">What are you interested in?</label>
               <select id="interest" name="interest" className="form-input" required>
-                <option value="">Choose what speaks to you</option>
-                <option value="essential">Essential Care - 5 Year Protection</option>
-                <option value="complete">Complete Care - 10 Year Comprehensive</option>
-                <option value="total">Total Love - Everything Protected</option>
-                <option value="chat">I'd love to chat about options</option>
+                <option value="">Select your interest</option>
+                <option value="custom-closets">Custom Closets</option>
+                <option value="finish-upgrades">Finish Upgrades</option>
+                <option value="built-ins">Built-in Storage</option>
+                <option value="kitchen-upgrades">Kitchen Upgrades</option>
+                <option value="general-consultation">General Consultation</option>
               </select>
             </div>
             
             <button type="submit" className="form-submit">
-              Let's protect your investment together 💕
+              Start My Consultation
             </button>
           </form>
         </div>
       </div>
-
-      {/* Footer */}
-      <footer className="footer">
-        <div className="footer-content">
-          <p className="footer-message">
-            Made with <span className="footer-heart">💕</span> for homeowners who care
-          </p>
-          <div className="footer-links">
-            <a href="#plans">Our Care Plans</a>
-            <a href="#contact">Get in Touch</a>
-            <a href="#about">Our Story</a>
-          </div>
-          <div className="footer-bottom">
-            <p>&copy; 2024 Surface Guard 365. Protecting homes, nurturing dreams.</p>
-          </div>
-        </div>
-      </footer>
     </>
   );
 }
