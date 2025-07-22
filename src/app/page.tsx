@@ -803,7 +803,7 @@ export default function ContractorSourceLandingPage() {
                 src="https://igscountertops.b-cdn.net/Citrus%20Closets/Front%20view%20small%20custom%20closet%20realistic_1920x1072.webp" 
                 alt="Custom closet design" 
                 className="abstract-block"
-                style={{ objectFit: 'cover' }}
+                style={{ objectFit: 'cover', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)' }}
               />
             </div>
           </div>
