@@ -249,58 +249,44 @@ export default function ContractorSourceLandingPage() {
           position: relative;
         }
 
-        .cabinet-images {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 1rem;
+        .abstract-images {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+          align-items: center;
+          justify-content: center;
+          height: 100%;
         }
 
-        .cabinet-image {
+        .abstract-block {
           width: 100%;
-          height: 300px;
-          background: #E8E5E0;
+          height: 150px;
+          background-color: #E8E5E0;
           border-radius: 8px;
-          position: relative;
-          overflow: hidden;
+        }
+        
+        .abstract-menu-bar {
+          width: 100%;
+          height: 60px;
+          background-color: white;
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .hamburger-icon {
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
         }
 
-        .cabinet-image.top {
-          height: 250px;
-          background: linear-gradient(135deg, #F5F3F0 0%, #E8E5E0 100%);
-        }
-
-        .cabinet-image.bottom {
-          height: 350px;
-          background: linear-gradient(135deg, #E8E5E0 0%, #D4CFC7 100%);
-        }
-
-        /* Cabinet Details */
-        .cabinet-details {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          background: rgba(255, 255, 255, 0.95);
-          padding: 1rem;
-        }
-
-        .drawer-handle {
-          width: 60px;
-          height: 4px;
-          background: var(--cs-text-dark);
+        .hamburger-icon span {
+          width: 28px;
+          height: 3px;
+          background-color: #2D3436;
           border-radius: 2px;
-          margin: 0.5rem 0;
-        }
-
-        .cabinet-door {
-          position: absolute;
-          right: 1rem;
-          top: 50%;
-          transform: translateY(-50%);
-          width: 12px;
-          height: 12px;
-          background: var(--cs-gold);
-          border-radius: 50%;
         }
 
         /* Modal Styles */
@@ -523,17 +509,16 @@ export default function ContractorSourceLandingPage() {
 
           {/* Image Content */}
           <div className="image-content">
-            <div className="cabinet-images">
-              <div className="cabinet-image top">
-                <div className="cabinet-details">
-                  <div className="drawer-handle"></div>
-                  <div className="drawer-handle"></div>
-                  <div className="drawer-handle"></div>
+            <div className="abstract-images">
+              <div className="abstract-block"></div>
+              <div className="abstract-menu-bar">
+                <div className="hamburger-icon">
+                  <span></span>
+                  <span></span>
+                  <span></span>
                 </div>
               </div>
-              <div className="cabinet-image bottom">
-                <div className="cabinet-door"></div>
-              </div>
+              <div className="abstract-block"></div>
             </div>
           </div>
         </div>
