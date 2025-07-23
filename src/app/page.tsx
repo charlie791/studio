@@ -182,8 +182,8 @@ export default function ContractorSourceLandingPage() {
       <style jsx global>{`
         /* CSS Custom Properties */
         :root {
-          --cs-dark-blue: #002455;
-          --cs-gold: #FDA001;
+          --cs-dark-blue: #ab3f31;
+          --cs-gold: #ab3f31;
           --cs-light-grey: #F5F5F5;
           --cs-white: #FFFFFF;
           --cs-text-dark: #2D3436;
@@ -203,7 +203,7 @@ export default function ContractorSourceLandingPage() {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
           line-height: 1.6;
           color: var(--cs-text-dark);
-          background: #006040;
+          background: #FFFFFF;
           overflow-x: hidden;
         }
 
@@ -438,7 +438,7 @@ export default function ContractorSourceLandingPage() {
 
         /* CTA Button */
         .cta-button {
-          background: #006040;
+          background: #ab3f31;
           color: var(--cs-white);
           border: none;
           padding: 1rem 2.5rem;
@@ -454,7 +454,7 @@ export default function ContractorSourceLandingPage() {
         }
 
         .cta-button:hover {
-          background: #004d32;
+          background: #8b2f23;
           transform: translateX(3px);
         }
 
@@ -642,8 +642,6 @@ export default function ContractorSourceLandingPage() {
           padding: 2.5rem;
           max-width: 500px;
           width: 100%;
-          max-height: 90vh;
-          overflow-y: auto;
           position: relative;
           transform: translateY(20px);
           transition: transform 0.3s ease;
@@ -724,7 +722,7 @@ export default function ContractorSourceLandingPage() {
         .form-submit {
           width: 100%;
           padding: 1rem;
-          background: #006040;
+          background: #ab3f31;
           color: var(--cs-white);
           border: none;
           border-radius: 4px;
@@ -736,7 +734,7 @@ export default function ContractorSourceLandingPage() {
         }
 
         .form-submit:hover {
-          background: #004d32;
+          background: #8b2f23;
         }
 
         /* Responsive Design */
@@ -764,8 +762,23 @@ export default function ContractorSourceLandingPage() {
             font-size: 2.5rem;
           }
 
+          /* Modal responsive adjustments */
           .modal-content {
             padding: 2rem;
+          }
+
+          .modal-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+          }
+
+          .modal-subtitle {
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+          }
+
+          .form-group {
+            margin-bottom: 1.25rem;
           }
         }
 
@@ -785,6 +798,86 @@ export default function ContractorSourceLandingPage() {
           .final-statement {
             font-size: 1.125rem;
           }
+
+          /* Modal mobile optimizations */
+          .modal-overlay {
+            padding: 0.5rem;
+          }
+
+          .modal-content {
+            padding: 1.5rem;
+          }
+
+          .modal-title {
+            font-size: 1.3rem;
+          }
+
+          .modal-subtitle {
+            font-size: 0.85rem;
+            margin-bottom: 1.25rem;
+          }
+
+          .form-group {
+            margin-bottom: 1rem;
+          }
+
+          .form-label {
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+          }
+
+          .form-input {
+            padding: 0.75rem;
+            font-size: 0.95rem;
+          }
+
+          .form-submit {
+            padding: 0.875rem;
+            font-size: 0.95rem;
+            margin-top: 0.75rem;
+          }
+
+          .modal-close {
+            width: 35px;
+            height: 35px;
+            top: 0.75rem;
+            right: 0.75rem;
+            font-size: 1.1rem;
+          }
+        }
+
+        /* Very small mobile devices */
+        @media (max-width: 360px) {
+          .modal-content {
+            padding: 1.25rem;
+          }
+
+          .modal-title {
+            font-size: 1.2rem;
+          }
+
+          .modal-subtitle {
+            display: none; /* Hide subtitle on very small screens to save space */
+          }
+
+          .form-group {
+            margin-bottom: 0.875rem;
+          }
+
+          .form-input {
+            padding: 0.625rem;
+          }
+
+          .form-submit {
+            padding: 0.75rem;
+          }
+        }
+
+        /* Green Band Styles */
+        .green-band {
+          background: #006040;
+          height: 20px;
+          width: 100%;
         }
 
         /* Footer Styles */
@@ -792,7 +885,7 @@ export default function ContractorSourceLandingPage() {
           background: #323232;
           color: var(--cs-white);
           padding: 3rem 0 2rem;
-          margin-top: 1.5rem;
+          margin-top: 0;
         }
 
         .footer-content {
@@ -842,7 +935,7 @@ export default function ContractorSourceLandingPage() {
       <nav className="navbar">
         <div className="navbar-content">
           <img 
-            src="https://igscountertops.b-cdn.net/Spraggins/sprg-white-cmp.png" 
+            src="https://igscountertops.b-cdn.net/Spraggins/spraggins_logo.png" 
             alt="Spraggins" 
             className="navbar-logo" 
           />
@@ -936,20 +1029,32 @@ export default function ContractorSourceLandingPage() {
               <div className="slider-container">
                 <div className="slider-slide active">
                   <img 
-                    src="https://igscountertops.b-cdn.net/kitchencabinets.now%20assets/Cabiets%20assets/ELITECRAFT%20Shaker%20White/shaker-white.webp" 
-                    alt="Shaker White Cabinets"
+                    src="https://igscountertops.b-cdn.net/Spraggins/1.jpg" 
+                    alt="Home Design 1"
                   />
                 </div>
                 <div className="slider-slide">
                   <img 
-                    src="https://igscountertops.b-cdn.net/Citrus%20Closets/Front%20view%20small%20custom%20closet%20realistic_1920x1072.webp" 
-                    alt="Custom Closet Design"
+                    src="https://igscountertops.b-cdn.net/Spraggins/2.jpg" 
+                    alt="Home Design 2"
                   />
                 </div>
                 <div className="slider-slide">
                   <img 
-                    src="https://igscountertops.b-cdn.net/Spraggins/65495537-0-2---blue-cabinets-ki.jpg" 
-                    alt="Blue Kitchen Cabinets"
+                    src="https://igscountertops.b-cdn.net/Spraggins/3.jpg" 
+                    alt="Home Design 3"
+                  />
+                </div>
+                <div className="slider-slide">
+                  <img 
+                    src="https://igscountertops.b-cdn.net/Spraggins/4.jpg" 
+                    alt="Home Design 4"
+                  />
+                </div>
+                <div className="slider-slide">
+                  <img 
+                    src="https://igscountertops.b-cdn.net/Spraggins/5.jpg" 
+                    alt="Home Design 5"
                   />
                 </div>
               </div>
@@ -959,6 +1064,8 @@ export default function ContractorSourceLandingPage() {
               
               <div className="slider-indicators">
                 <div className="slider-indicator active"></div>
+                <div className="slider-indicator"></div>
+                <div className="slider-indicator"></div>
                 <div className="slider-indicator"></div>
                 <div className="slider-indicator"></div>
               </div>
@@ -1032,11 +1139,14 @@ export default function ContractorSourceLandingPage() {
         </div>
       </div>
 
+      {/* Green Band */}
+      <div className="green-band"></div>
+
       {/* Footer */}
       <footer className="footer">
         <div className="footer-content">
           <img 
-            src="https://igscountertops.b-cdn.net/Spraggins/sprg-white-cmp.png" 
+            src="https://igscountertops.b-cdn.net/Spraggins/spraggins_logo.png" 
             alt="Spraggins" 
             className="footer-logo" 
           />

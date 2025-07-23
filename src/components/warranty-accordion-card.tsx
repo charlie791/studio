@@ -186,20 +186,20 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
         </EnhancedCard>
 
         <Dialog open={showDeclineConfirmation} onOpenChange={setShowDeclineConfirmation}>
-          <DialogContent className="max-w-lg mx-4 p-0 sm:p-0 border-4 border-red-600 bg-background overflow-hidden rounded-xl">
+          <DialogContent className="max-w-lg mx-4 p-0 sm:p-0 border-4 border-red-600 bg-gray-900 overflow-hidden rounded-xl max-h-[85vh] sm:max-h-[90vh]">
              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-red-600 via-yellow-400 to-red-600 animate-warning-stripe" />
 
             <EnhancedButton
               variant="secondary" 
               size="sm"
               onClick={() => setShowDeclineConfirmation(false)}
-              className="absolute top-2 right-2 sm:top-4 sm:right-4 w-8 h-8 sm:w-10 sm:h-10 !rounded-full bg-red-600/10 hover:!bg-red-600/20 !shadow-none z-10 transition-all duration-300 hover:scale-110 !p-0"
+              className="absolute top-2 right-2 sm:top-4 sm:right-4 w-8 h-8 sm:w-10 sm:h-10 !rounded-full bg-red-600/20 hover:!bg-red-600/30 !shadow-none z-10 transition-all duration-300 hover:scale-110 !p-0"
               aria-label="Close dialog"
             >
               {iconMap.X && <X className="w-5 h-5 sm:w-6 sm:h-6 text-red-600" />}
             </EnhancedButton>
 
-            <div className="pt-12 sm:pt-16 pb-8 sm:pb-10 px-6 sm:px-10 text-center">
+            <div className="pt-12 sm:pt-16 pb-8 sm:pb-10 px-4 sm:px-10 text-center overflow-y-auto max-h-[calc(85vh-2rem)] sm:max-h-[calc(90vh-2rem)]">
               <Badge
                 variant="destructive"
                 className="inline-flex items-center gap-2 bg-gradient-to-r from-red-600 to-red-700 text-white px-4 py-2 sm:px-6 sm:py-3 text-base sm:text-lg font-bold rounded-full mb-6 sm:mb-8 animate-intense-pulsate-warning shadow-lg shadow-red-600/40 relative"
@@ -213,8 +213,8 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
                   Final Warning - Are You Sure?
                 </DialogTitle>
               </DialogHeader>
-               <div className="text-center text-sm sm:text-base text-gray-700 space-y-3 py-2">
-                <div className="font-semibold text-foreground">You are about to proceed with minimal coverage. This means:</div>
+               <div className="text-center text-sm sm:text-base text-gray-200 space-y-3 py-2">
+                <div className="font-semibold text-white">You are about to proceed with minimal coverage. This means:</div>
                   <WarningList />
                 <div className="font-bold text-red-600">Are you sure you want to miss out on comprehensive protection and savings?</div>
               </div>
@@ -257,7 +257,7 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
 
           {step.bestValue && (
              <Badge variant="default" className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-white/20 backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-1.5 rounded-full border border-white/30 flex items-center gap-1.5 text-xs font-semibold text-white z-10">
-              {iconMap.Crown && <Crown className="w-3 h-3 sm:w-4 sm:h-4 fill-[#FDA001] text-[#FDA001]" />}
+              {iconMap.Crown && <Crown className="w-3 h-3 sm:w-4 sm:h-4 fill-[#ab3f31] text-[#ab3f31]" />}
               Most Popular
             </Badge>
           )}
@@ -290,7 +290,7 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
                 className="w-full justify-between !p-3 sm:!p-4 !h-auto !text-left font-semibold !text-base text-gray-700 hover:!bg-[#002455]/10 !rounded-lg !shadow-none !border-0"
               >
                 What's included in this plan?
-                {iconMap.ChevronDown && <ChevronDown className={`w-5 h-5 text-[#FDA001] transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />}
+                {iconMap.ChevronDown && <ChevronDown className={`w-5 h-5 text-[#ab3f31] transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />}
               </EnhancedButton>
             </CollapsibleTrigger>
 
@@ -302,7 +302,7 @@ export default function WarrantyAccordionCard({ step, onDecline, className, defa
           </Collapsible>
 
           {step.specialOfferText && (
-            <div className="bg-gradient-to-r from-[#FDA001] to-[#cc8001] text-white px-4 py-2 sm:px-5 sm:py-3 rounded-xl font-semibold text-xs sm:text-sm text-center mt-4 sm:mt-5 flex items-center justify-center gap-1.5 sm:gap-2">
+            <div className="bg-gradient-to-r from-[#ab3f31] to-[#8b2f23] text-white px-4 py-2 sm:px-5 sm:py-3 rounded-xl font-semibold text-xs sm:text-sm text-center mt-4 sm:mt-5 flex items-center justify-center gap-1.5 sm:gap-2">
               {iconMap.Flame && <Flame className="w-3 h-3 sm:w-4 sm:h-4 fill-white" />}
               {step.specialOfferText.replace('🔥 ', '')}
             </div>

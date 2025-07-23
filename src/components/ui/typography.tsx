@@ -13,7 +13,7 @@ export function PageTitle({ children, className, as = 'h1' }: TypographyProps) {
   return (
     <Component className={cn(
       // Mobile-first: text-2xl, sm: scales up, lg: scales up further
-      "text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#002455] leading-tight mb-4 sm:mb-6",
+      "text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#ab3f31] leading-tight mb-4 sm:mb-6",
       "text-shadow", 
       className
     )}>
@@ -26,7 +26,7 @@ export function SectionTitle({ children, className, as = 'h2' }: TypographyProps
   const Component = as;
   return (
     <Component className={cn(
-      "text-xl sm:text-2xl lg:text-3xl font-bold text-[#002455] leading-tight mb-3 sm:mb-4",
+      "text-xl sm:text-2xl lg:text-3xl font-bold text-[#ab3f31] leading-tight mb-3 sm:mb-4",
       className
     )}>
       {children}
@@ -38,7 +38,7 @@ export function CardTitleText({ children, className, as = 'h3' }: TypographyProp
   const Component = as;
   return (
     <Component className={cn(
-      "text-lg sm:text-xl lg:text-2xl font-bold text-[#002455] leading-tight mb-2 sm:mb-3",
+      "text-lg sm:text-xl lg:text-2xl font-bold text-[#ab3f31] leading-tight mb-2 sm:mb-3",
       className
     )}>
       {children}

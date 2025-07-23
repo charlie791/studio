@@ -30,8 +30,8 @@ export function EnhancedButton({
   const baseStyles = "relative overflow-hidden font-bold transition-all duration-300 transform-gpu group";
 
   const customVariantStyles: Record<CustomEnhancedButtonVariant, string> = {
-    primary: "bg-gradient-to-r from-[#002455] to-[#003875] hover:from-[#003875] hover:to-[#1e3a8a] text-primary-foreground shadow-[0_10px_30px_rgba(0,36,85,0.3)] hover:shadow-[0_20px_50px_rgba(0,36,85,0.4)] hover:-translate-y-1",
-    secondary: "bg-white text-[#002455] border-2 border-[#002455] hover:bg-[#002455] hover:text-white shadow-[0_8px_24px_rgba(0,36,85,0.2)] hover:shadow-[0_15px_35px_rgba(0,36,85,0.3)] hover:-translate-y-1",
+    primary: "bg-gradient-to-r from-[#ab3f31] to-[#8b2f23] hover:from-[#8b2f23] hover:to-[#6b1f13] text-white shadow-[0_10px_30px_rgba(171,63,49,0.3)] hover:shadow-[0_20px_50px_rgba(171,63,49,0.4)] hover:-translate-y-1",
+    secondary: "bg-white text-[#ab3f31] border-2 border-[#ab3f31] hover:bg-[#ab3f31] hover:text-white shadow-[0_8px_24px_rgba(171,63,49,0.2)] hover:shadow-[0_15px_35px_rgba(171,63,49,0.3)] hover:-translate-y-1",
     warning: "bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-destructive-foreground shadow-[0_10px_30px_rgba(220,38,38,0.3)] hover:shadow-[0_15px_35px_rgba(220,38,38,0.4)] hover:-translate-y-1",
     success: "bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white shadow-[0_10px_30px_rgba(16,185,129,0.3)] hover:shadow-[0_15px_35px_rgba(16,185,129,0.4)] hover:-translate-y-1"
   };
