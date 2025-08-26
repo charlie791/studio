@@ -205,25 +205,25 @@ export default function ContractorSourceLandingPage() {
           if (response.ok) {
             console.log('Form submitted successfully to webhook');
             
-            // Show success message
-            alert('Thank you! We\'ll be in touch soon to help make your home truly yours.');
-            
             // Close modal and reset form
             closeModal();
             (this as HTMLFormElement).reset();
+            
+            // Redirect to thank you page
+            window.location.href = 'https://contractorsource.com/registration-thank-you/';
           } else {
             console.error('Webhook submission failed:', response.status);
-            // Still show success to user even if webhook fails
-            alert('Thank you! We\'ll be in touch soon to help make your home truly yours.');
+            // Still redirect to thank you page even if webhook fails
             closeModal();
             (this as HTMLFormElement).reset();
+            window.location.href = 'https://contractorsource.com/registration-thank-you/';
           }
         } catch (error) {
           console.error('Error submitting to webhook:', error);
-          // Still show success to user even if webhook fails
-          alert('Thank you! We\'ll be in touch soon to help make your home truly yours.');
+          // Still redirect to thank you page even if webhook fails
           closeModal();
           (this as HTMLFormElement).reset();
+          window.location.href = 'https://contractorsource.com/registration-thank-you/';
         }
       });
     }
