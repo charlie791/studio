@@ -140,7 +140,7 @@ export default function ContractorSourceLandingPage() {
     
     // Form submission
     if (form) {
-      form.addEventListener('submit', function(e) {
+      form.addEventListener('submit', async function(e) {
         e.preventDefault();
         
         const formData = new FormData(this as HTMLFormElement);
@@ -149,15 +149,49 @@ export default function ContractorSourceLandingPage() {
         const phone = formData.get('phone');
         const interest = formData.get('interest');
         
-        // Here you would normally send to your backend
-        console.log('Form submitted:', { name, email, phone, interest });
+        // Prepare data for webhook
+        const webhookData = {
+          fullName: name,
+          email: email,
+          phone: phone,
+          interest: interest,
+          timestamp: new Date().toISOString(),
+          source: 'ContractorSource Landing Page'
+        };
         
-        // Show success message
-        alert('Thank you! We\'ll be in touch soon to help make your home truly yours.');
-        
-        // Close modal and reset form
-        closeModal();
-        (this as HTMLFormElement).reset();
+        try {
+          // Send data to Zapier webhook
+          const response = await fetch('https://hooks.zapier.com/hooks/catch/18351/uhb8mr5/', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(webhookData)
+          });
+          
+          if (response.ok) {
+            console.log('Form submitted successfully to webhook');
+            
+            // Show success message
+            alert('Thank you! We\'ll be in touch soon to help make your home truly yours.');
+            
+            // Close modal and reset form
+            closeModal();
+            (this as HTMLFormElement).reset();
+          } else {
+            console.error('Webhook submission failed:', response.status);
+            // Still show success to user even if webhook fails
+            alert('Thank you! We\'ll be in touch soon to help make your home truly yours.');
+            closeModal();
+            (this as HTMLFormElement).reset();
+          }
+        } catch (error) {
+          console.error('Error submitting to webhook:', error);
+          // Still show success to user even if webhook fails
+          alert('Thank you! We\'ll be in touch soon to help make your home truly yours.');
+          closeModal();
+          (this as HTMLFormElement).reset();
+        }
       });
     }
     
@@ -1124,9 +1158,9 @@ export default function ContractorSourceLandingPage() {
               <label className="form-label" htmlFor="interest">What are you interested in?</label>
               <select id="interest" name="interest" className="form-input" required>
                 <option value="">Select your interest</option>
+                <option value="special-offers">Special Offers</option>
+                <option value="cabinet-countertops">Cabinet/Countertops</option>
                 <option value="custom-closets">Custom Closets</option>
-                <option value="custom-cabinets">Custom Cabinets</option>
-                <option value="countertops">Countertops</option>
                 <option value="kitchen-upgrades">Kitchen Upgrades</option>
                 <option value="general-consultation">General Consultation</option>
               </select>
