@@ -143,18 +143,36 @@ export default function ContractorSourceLandingPage() {
       form.addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        const formData = new FormData(this as HTMLFormElement);
-        const name = formData.get('fullName');
-        const email = formData.get('email');
-        const phone = formData.get('phone');
-        const interest = formData.get('interest');
+        // Get values directly from form elements
+        const nameInput = document.getElementById('fullName') as HTMLInputElement;
+        const emailInput = document.getElementById('email') as HTMLInputElement;
+        const phoneInput = document.getElementById('phone') as HTMLInputElement;
+        const interestSelect = document.getElementById('interest') as HTMLSelectElement;
         
-        // Prepare data for webhook - using URLSearchParams for form-encoded data
+        // Extract values with fallbacks
+        const name = nameInput?.value || '';
+        const email = emailInput?.value || '';
+        const phone = phoneInput?.value || '';
+        const interest = interestSelect?.value || '';
+        
+        // Debug: Log raw values
+        console.log('Raw form values:', {
+          fullName: name,
+          email: email,
+          phone: phone,
+          interest: interest,
+          hasNameInput: !!nameInput,
+          hasEmailInput: !!emailInput,
+          hasPhoneInput: !!phoneInput,
+          hasInterestSelect: !!interestSelect
+        });
+        
+        // Prepare data for webhook - only append non-empty values
         const webhookData = new URLSearchParams();
-        webhookData.append('fullName', name as string);
-        webhookData.append('email', email as string);
-        webhookData.append('phone', phone as string);
-        webhookData.append('interest', interest as string);
+        if (name) webhookData.append('fullName', name);
+        if (email) webhookData.append('email', email);
+        if (phone) webhookData.append('phone', phone);
+        if (interest) webhookData.append('interest', interest);
         webhookData.append('timestamp', new Date().toISOString());
         webhookData.append('source', 'ContractorSource Landing Page');
         
@@ -166,6 +184,13 @@ export default function ContractorSourceLandingPage() {
           interest: interest
         });
         console.log('Form-encoded data:', webhookData.toString());
+        
+        // Validate we have at least some data
+        if (!name && !email && !phone) {
+          console.error('Form submission error: No data to send');
+          alert('Please fill in the form fields before submitting.');
+          return;
+        }
         
         try {
           // Send data to Zapier webhook as form-encoded data
