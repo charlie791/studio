@@ -15,8 +15,18 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: 'Surface Guard 365',
-  description: 'Ultimate Protection for Your Countertops',
+  title: 'ContractorSource - Custom Cabinets, Countertops & Closets | Spraggins',
+  description: 'Your builder trusted Spraggins for your home\'s core finishes. Now let ContractorSource help you personalize your space with custom closets, cabinet upgrades, and premium countertops. Expert craftsmanship, tailored service.',
+  icons: {
+    icon: 'https://contractorsource.com/wp-content/uploads/cropped-fav-icon-contractor-source-1.png',
+    shortcut: 'https://contractorsource.com/wp-content/uploads/cropped-fav-icon-contractor-source-1.png',
+    apple: 'https://contractorsource.com/wp-content/uploads/cropped-fav-icon-contractor-source-1.png',
+  },
+  openGraph: {
+    title: 'ContractorSource - Make Your House Truly Yours',
+    description: 'The same team trusted to install your home\'s core finishes is here to help you complete the look with custom closets, cabinets, and countertops.',
+    type: 'website',
+  },
 };
 
 export default function RootLayout({
