@@ -149,24 +149,32 @@ export default function ContractorSourceLandingPage() {
         const phone = formData.get('phone');
         const interest = formData.get('interest');
         
-        // Prepare data for webhook
-        const webhookData = {
+        // Prepare data for webhook - using URLSearchParams for form-encoded data
+        const webhookData = new URLSearchParams();
+        webhookData.append('fullName', name as string);
+        webhookData.append('email', email as string);
+        webhookData.append('phone', phone as string);
+        webhookData.append('interest', interest as string);
+        webhookData.append('timestamp', new Date().toISOString());
+        webhookData.append('source', 'ContractorSource Landing Page');
+        
+        // Debug: Log what we're sending
+        console.log('Sending data to Zapier:', {
           fullName: name,
           email: email,
           phone: phone,
-          interest: interest,
-          timestamp: new Date().toISOString(),
-          source: 'ContractorSource Landing Page'
-        };
+          interest: interest
+        });
+        console.log('Form-encoded data:', webhookData.toString());
         
         try {
-          // Send data to Zapier webhook
+          // Send data to Zapier webhook as form-encoded data
           const response = await fetch('https://hooks.zapier.com/hooks/catch/18351/uhb8mr5/', {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json',
+              'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: JSON.stringify(webhookData)
+            body: webhookData.toString()
           });
           
           if (response.ok) {
