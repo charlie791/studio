@@ -259,6 +259,19 @@ export default function ContractorSourceLandingPage() {
           --cs-shadow-hover: rgba(0, 0, 0, 0.15);
         }
 
+        /* Shimmer Animation */
+        @keyframes shimmer {
+          0% {
+            background-position: -100% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: -100% 50%;
+          }
+        }
+
         /* Reset and Base Styles */
         * {
           margin: 0;
@@ -488,19 +501,25 @@ export default function ContractorSourceLandingPage() {
           font-size: 1.125rem;
           color: var(--cs-text-grey);
           margin-bottom: 1.5rem;
-          line-height: 1.6;
+          line-height: 1.7;
+          letter-spacing: 0.2px;
         }
 
         .company-highlight {
-          font-weight: 600;
+          font-weight: 700;
           color: var(--cs-text-dark);
+          display: inline-block;
+          position: relative;
         }
 
         .final-statement {
-          font-size: 1.25rem;
+          font-size: 1.35rem;
           color: var(--cs-text-dark);
-          margin: 2rem 0;
-          font-weight: 500;
+          margin: 2.5rem 0 2rem;
+          font-weight: 600;
+          line-height: 1.4;
+          padding-top: 1.5rem;
+          border-top: 2px solid #f0f0f0;
         }
 
         /* CTA Button */
@@ -807,7 +826,19 @@ export default function ContractorSourceLandingPage() {
         /* Responsive Design */
         @media (max-width: 768px) {
           .container {
-            padding: 2rem 1rem;
+            padding: 2rem 1.25rem;
+          }
+          
+          .description-text {
+            font-size: 1.05rem;
+            line-height: 1.75;
+            margin-bottom: 1.75rem;
+          }
+          
+          .final-statement {
+            font-size: 1.2rem;
+            margin: 2rem 0 1.5rem;
+            padding-top: 1.25rem;
           }
 
           .content-wrapper {
@@ -1031,6 +1062,24 @@ export default function ContractorSourceLandingPage() {
           <div className="panel-item">Countertops</div>
           <div className="panel-item">Closets</div>
           
+          <div style={{ 
+            marginTop: '1.5rem',
+            marginBottom: '1rem',
+            padding: '0.75rem',
+            background: 'linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%)',
+            borderLeft: '3px solid #FDA001',
+            borderRadius: '4px'
+          }}>
+            <p style={{
+              fontSize: '0.8rem',
+              fontWeight: '500',
+              color: '#555',
+              margin: 0,
+              lineHeight: '1.3'
+            }}>
+              📘 Get your maintenance guide
+            </p>
+          </div>
           <button className="cta-button panel-cta">
             Let's Make It Yours
           </button>
@@ -1053,9 +1102,19 @@ export default function ContractorSourceLandingPage() {
           <div className="text-content">
             
             <p className="description-text">
-              Your builder partnered with Spraggins to deliver expert craftsmanship in your 
-              floors, cabinets, and countertops. Now, Spraggins' homeowner facing 
-              team—<span className="company-highlight">ContractorSource</span>—is here to 
+              Your builder partnered with <span style={{ fontWeight: '600' }}>Spraggins</span> to deliver expert craftsmanship in your 
+              floors, cabinets, and countertops.
+            </p>
+            
+            <p className="description-text" style={{ marginTop: '0.75rem' }}>
+              Now, Spraggins' homeowner-facing team, <span className="company-highlight" style={{ 
+                background: 'linear-gradient(90deg, #002455, #004080)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                fontWeight: '700',
+                letterSpacing: '0.5px'
+              }}>ContractorSource</span>, is here to 
               help you personalize the rest.
             </p>
             
@@ -1072,6 +1131,24 @@ export default function ContractorSourceLandingPage() {
               Because this isn't just a house anymore. It's your home.
             </p>
             
+            <div style={{ 
+              marginTop: '2rem',
+              marginBottom: '1.5rem',
+              padding: '1rem',
+              background: 'linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%)',
+              borderLeft: '3px solid #FDA001',
+              borderRadius: '4px'
+            }}>
+              <p style={{
+                fontSize: '0.875rem',
+                fontWeight: '500',
+                color: '#555',
+                margin: 0,
+                lineHeight: '1.4'
+              }}>
+                📘 Sign up below to get your home maintenance guide with exclusive care tips
+              </p>
+            </div>
             <button className="cta-button">
               Let's Make It Yours
             </button>
